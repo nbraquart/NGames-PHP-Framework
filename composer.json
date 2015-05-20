@@ -1,0 +1,16 @@
+{
+    "name": "ngames/framework",
+    "description": "NGames PHP Framework",
+    "license": "MIT",
+    "authors": [{
+        "name": "Nicolas Braquart",
+        "email": "nicolas.braquart@gmail.com"
+    }],
+    "autoload": {
+        "psr-0": { "Framework": "lib/" }
+    },
+    "require": {
+        "php": ">=5.3.2",
+        "doctrine/common": "2.3.0"
+    }
+}
