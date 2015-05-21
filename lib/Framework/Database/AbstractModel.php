@@ -144,7 +144,7 @@ abstract class AbstractModel
     protected function getAnnotationsReader()
     {
         if (! self::$autoloadNamespaceRegistered) {
-            $sourceDirectory = dirname(__DIR__);
+            $sourceDirectory = dirname(__DIR__ . '/..');
             \Framework\Logger::logInfo('Register annotations with source directory "' . $sourceDirectory . '"');
             \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(self::$autoloadNamespace, $sourceDirectory);
             self::$autoloadNamespaceRegistered = true;
