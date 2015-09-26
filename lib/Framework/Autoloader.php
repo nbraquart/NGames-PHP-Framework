@@ -5,8 +5,9 @@ use Doctrine\Common\ClassLoader;
 
 class Autoloader
 {
+
     protected $classLoaders = array();
-    
+
     public function register()
     {
         $namespaces = array(
@@ -19,7 +20,7 @@ class Autoloader
             $this->classLoaders[] = $classLoader;
         }
     }
-    
+
     public function canLoadClass($className)
     {
         foreach ($this->classLoaders as $classLoader) {

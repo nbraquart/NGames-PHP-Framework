@@ -7,5 +7,6 @@ namespace Framework\Database\Annotations;
  */
 class Reference
 {
+
     public $targetClass;
 }

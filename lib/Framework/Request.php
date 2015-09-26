@@ -5,63 +5,81 @@ use Framework\Storage\PhpSession;
 
 class Request
 {
+
     const HTTP_METHOD_OPTIONS = 'OPTIONS';
-    const HTTP_METHOD_GET = 'GET'; // Safe, idempotent method
-    const HTTP_METHOD_HEAD = 'HEAD'; // Safe, idempotent method
+
+    const HTTP_METHOD_GET = 'GET';
+
+    const HTTP_METHOD_HEAD = 'HEAD';
+
     const HTTP_METHOD_POST = 'POST';
-    const HTTP_METHOD_PUT = 'PUT'; // Idempotent methood
-    const HTTP_METHOD_DELETE = 'DELETE'; // Idempotent methood
+
+    const HTTP_METHOD_PUT = 'PUT';
+
+    const HTTP_METHOD_DELETE = 'DELETE';
+
     const HTTP_METHOD_TRACE = 'TRACE';
+
     const HTTP_METHOD_CONNECT = 'CONNECT';
-    
+
     /**
-     * The request method. Can be only one of the constants HTTP_METHOD*
+     * The request method.
+     * Can be only one of the constants HTTP_METHOD*
+     * 
      * @var string
      */
     protected $method;
-    
+
     /**
-     * The requested URI. Does not contain protocol, hostname nor query string
+     * The requested URI.
+     * Does not contain protocol, hostname nor query string
+     * 
      * @var unknown
      */
     protected $requestUri;
-    
+
     /**
      * URL Parameters of the request
+     * 
      * @var array
      */
     protected $getParameters;
-    
+
     /**
      * POST parameters (form data)
+     * 
      * @var array
      */
     protected $postParameters;
-    
+
     /**
      * Cookies from the request (at request start, ie changes during request processing are not reflected here)
+     * 
      * @var array
      */
     protected $cookies;
-    
+
     /**
      * Server variables
+     * 
      * @var array
      */
     protected $server;
 
     /**
      * Session variables at request start (as for cookies, changes during request processing are not reflected here)
+     * 
      * @var PhpSession
      */
     protected $session;
 
     /**
      * Files sent in current request
+     * 
      * @var array
      */
     protected $files;
-    
+
     public function __construct($method, $requestUri, $getParameters, $postParameters, $cookies, PhpSession $session, $server, $files)
     {
         $this->method = $method;
@@ -73,7 +91,7 @@ class Request
         $this->server = $server;
         $this->files = $files;
     }
-    
+
     public static function createRequestFromGlobals()
     {
         // Get the URI (only if not CLI)
@@ -89,15 +107,16 @@ class Request
         $request = new \Framework\Request($requestMethod, $uri, $_GET, $_POST, $_COOKIE, PhpSession::getInstance(), $_SERVER, $_FILES);
         return $request;
     }
-    
+
     /**
+     *
      * @return PhpSession
      */
     public function getSession()
     {
         return $this->session;
     }
-    
+
     public function getMethod()
     {
         return $this->method;
@@ -122,18 +141,18 @@ class Request
     {
         return $this->method == self::HTTP_METHOD_PUT;
     }
-    
+
     public function getRequestUri()
     {
         return $this->requestUri;
     }
-    
+
     public function setRequestUri($uri)
     {
         $this->requestUri = $uri;
         return $this;
     }
-    
+
     public function getRemoteAddress()
     {
         if (! empty($this->server['HTTP_X_FORWARDED_FOR'])) {

@@ -5,18 +5,19 @@ use Framework\Exception;
 
 class PhpArray extends AbstractStorage implements StorageInterface
 {
+
     protected $storage;
-    
+
     public function __construct(array $array = array())
     {
         $this->storage = $array;
     }
-    
+
     public function has($name)
     {
         return array_key_exists($name, $this->storage);
     }
-    
+
     public function set($name, $value)
     {
         $this->storage[$name] = $value;

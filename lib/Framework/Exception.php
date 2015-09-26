@@ -6,17 +6,20 @@ namespace Framework;
  */
 class Exception extends \Exception
 {
+
     /**
-     * Enhanced trace printer for exceptions. Strongly inspired by http://php.net/manual/fr/exception.gettraceasstring.php#114980
-     * @param \Exception $e
-     * @param array $seen
+     * Enhanced trace printer for exceptions.
+     * Strongly inspired by http://php.net/manual/fr/exception.gettraceasstring.php#114980
+     * 
+     * @param \Exception $e            
+     * @param array $seen            
      * @return string
      */
     public static function trace($e, array $seen = array())
     {
         $starter = $seen ? 'Caused by: ' : '';
         $result = array();
-        $trace  = $e->getTrace();
+        $trace = $e->getTrace();
         $result[] = sprintf('%s%s: %s', $starter, get_class($e), $e->getMessage() == '' ? '[no message set]' : $e->getMessage());
         $file = $e->getFile();
         $line = $e->getLine();
@@ -26,18 +29,20 @@ class Exception extends \Exception
             
             // Stop if already displayed
             if (in_array($current, $seen)) {
-                $result[] = sprintf('    ... %d more', count($trace)+1);
+                $result[] = sprintf('    ... %d more', count($trace) + 1);
                 break;
             }
-                
+            
             // Add the current formatted trace element
             if (count($trace) && array_key_exists('function', $trace[0])) {
                 $args = array();
                 
                 if (count($trace) && array_key_exists('args', $trace[0]) && is_array($trace[0]['args'])) {
-                    $args = array_map(function($arg) {
+                    $args = array_map(function ($arg) {
                         if (is_scalar($arg) || is_array($arg)) {
-                            return preg_replace('/\s+/', ' ', str_replace(array("\n"), '', var_export($arg, true)));
+                            return preg_replace('/\s+/', ' ', str_replace(array(
+                                "\n"
+                            ), '', var_export($arg, true)));
                         } elseif (is_object($arg)) {
                             return get_class($arg);
                         } else {
@@ -45,7 +50,7 @@ class Exception extends \Exception
                         }
                     }, $trace[0]['args']);
                 }
-
+                
                 // Build the function with args
                 $function = array_key_exists('class', $trace[0]) ? $trace[0]['class'] . '::' : '';
                 $function .= $trace[0]['function'];
@@ -53,13 +58,13 @@ class Exception extends \Exception
             } else {
                 $function = '(main)';
             }
-
+            
             $location = str_replace(ROOT_DIR, null, $file) . ($line === null ? '' : ':' . $line);
             $result[] = sprintf('    at %s (%s)', $function, $location);
             $seen[] = $current;
-
+            
             // Reached the end
-            if (!count($trace)) {
+            if (! count($trace)) {
                 break;
             }
             
@@ -73,9 +78,9 @@ class Exception extends \Exception
         
         // Append previous exception trace
         if ($e->getPrevious()) {
-            $result  .= "\n" . self::trace($e->getPrevious(), $seen);
+            $result .= "\n" . self::trace($e->getPrevious(), $seen);
         }
-    
+        
         return $result;
     }
 }

@@ -5,6 +5,7 @@ use Framework\Exception;
 
 class PhpArrayRecursive extends \Framework\Storage\PhpArray implements StorageInterface
 {
+
     public function __construct(array $array = array())
     {
         foreach ($array as $key => $value) {

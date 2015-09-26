@@ -3,14 +3,19 @@ namespace Framework;
 
 class Logger
 {
+
     const LEVEL_DEBUG = 0;
+
     const LEVEL_INFO = 1;
+
     const LEVEL_WARNING = 3;
+
     const LEVEL_ERROR = 4;
 
     public static $destination = null;
+
     public static $minLevel = null;
-    
+
     public static function initialize($destination, $minLevel)
     {
         self::$destination = $destination;
@@ -21,7 +26,7 @@ class Logger
     {
         self::$destination = $destination;
     }
-    
+
     public static function logDebug($message)
     {
         self::log(self::LEVEL_DEBUG, $message, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0]);
@@ -41,7 +46,7 @@ class Logger
     {
         self::log(self::LEVEL_INFO, $message, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0]);
     }
-    
+
     public static function log($level, $message, $trace = null)
     {
         if (self::$destination != null && self::$minLevel <= $level) {
@@ -55,16 +60,24 @@ class Logger
             }
         }
     }
-    
+
     protected static function assembleLogLine($level, $message, $trace)
     {
         $levelString = null;
         
         switch ($level) {
-            case self::LEVEL_DEBUG:     $levelString = 'DEBUG'; break;
-            case self::LEVEL_INFO:      $levelString = 'INFO '; break;
-            case self::LEVEL_WARNING:   $levelString = 'WARN '; break;
-            case self::LEVEL_ERROR:     $levelString = 'ERROR'; break;
+            case self::LEVEL_DEBUG:
+                $levelString = 'DEBUG';
+                break;
+            case self::LEVEL_INFO:
+                $levelString = 'INFO ';
+                break;
+            case self::LEVEL_WARNING:
+                $levelString = 'WARN ';
+                break;
+            case self::LEVEL_ERROR:
+                $levelString = 'ERROR';
+                break;
         }
         
         $time = microtime(true);

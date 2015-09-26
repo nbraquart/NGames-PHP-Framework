@@ -3,6 +3,7 @@ namespace Framework\Utility;
 
 class FileSystem
 {
+
     public static function unlink($path)
     {
         if (is_file($path)) {
@@ -17,7 +18,7 @@ class FileSystem
             rmdir($path);
         }
     }
-    
+
     public static function fwriteStream($fp, $string)
     {
         for ($written = 0; $written < strlen($string); $written += $fwrite) {

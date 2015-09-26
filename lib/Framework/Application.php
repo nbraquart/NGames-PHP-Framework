@@ -6,13 +6,17 @@ use Framework\Storage\PhpSession;
 
 class Application
 {
+
     protected static $instance = null;
 
     protected $autoloader = null;
+
     protected $configuration = null;
+
     protected $request = null;
+
     protected $timer = null;
-    
+
     public static function initialize($configurationFile)
     {
         // First check an instance does not already exists
@@ -23,7 +27,7 @@ class Application
         
         return self::$instance = new self($configurationFile);
     }
-    
+
     public static function getInstance()
     {
         // Ensure instance exists
@@ -41,13 +45,13 @@ class Application
         require_once __DIR__ . '/Autoloader.php';
         $this->autoloader = new Autoloader();
         $this->autoloader->register();
-
+        
         // Initialize the timer
         $this->timer = new \Framework\Timer();
         
         // Parse the configuration
         $this->configuration = new IniFile($configurationFile);
-
+        
         // Intialize the logging facility if needed
         if ($this->configuration->has('log')) {
             $destination = $this->configuration->log->destination;
@@ -59,12 +63,13 @@ class Application
                 \Framework\Logger::initialize($destination, $level);
             }
         }
-
+        
         // Parse the request
         $this->request = \Framework\Request::createRequestFromGlobals();
     }
 
     /**
+     *
      * @return \Framework\Storage\IniFile
      */
     public function getConfiguration()
@@ -73,14 +78,16 @@ class Application
     }
 
     /**
+     *
      * @return \Framework\Autoloader
      */
     public function getAutoloader()
     {
         return $this->autoloader;
     }
-    
+
     /**
+     *
      * @return \Framework\Request
      */
     public function getRequest()
@@ -89,18 +96,19 @@ class Application
     }
 
     /**
+     *
      * @return \Framework\Timer
      */
     public function getTimer()
     {
         return $this->timer;
     }
-    
+
     public function isDebug()
     {
         return $this->configuration->debug == '1' || $this->configuration->debug == 'true';
     }
-    
+
     public function run()
     {
         try {
@@ -120,8 +128,7 @@ class Application
             
             // Send the response
             $response->send();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $content = "Internal server error.\n\n" . \Framework\Exception::trace($e);
             \Framework\Logger::logError($content);
             

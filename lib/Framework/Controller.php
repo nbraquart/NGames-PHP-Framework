@@ -5,22 +5,28 @@ use Framework\Utility\Inflector;
 
 class Controller
 {
+
     const CONTROLLER_NAMESPACE = 'Controller';
+
     const CONTROLLER_SUFFIX = 'Controller';
+
     const ACTION_SUFFIX = 'Action';
-    
+
     /**
+     *
      * @var View
      */
     protected $view;
-    
+
     /**
+     *
      * @var Request
      */
     protected $request;
-    
+
     /**
-     * Default constructor. A view is created with default layout.
+     * Default constructor.
+     * A view is created with default layout.
      */
     public function __construct()
     {
@@ -29,37 +35,37 @@ class Controller
     }
 
     /**
-     * Pre-execute. Does nothing by default, but can be overriden by application.
+     * Pre-execute.
+     * Does nothing by default, but can be overriden by application.
      */
     protected function preExecute()
-    {
-    }
+    {}
 
     /**
-     * Post-execute. Does nothing by default, but can be overriden by application.
+     * Post-execute.
+     * Does nothing by default, but can be overriden by application.
      */
     protected function postExecute()
-    {
-    }
-    
+    {}
+
     /**
-     * Sets the controller request. Default view script is set at that time.
-     * 
-     * @param Request $request
+     * Sets the controller request.
+     * Default view script is set at that time.
+     *
+     * @param Request $request            
      */
     public function setRequest(Request $request)
     {
         $this->request = $request;
         $this->view->setScriptFromRouter(new Router($this->request->getRequestUri()));
     }
-
-    /// Status methods
-
+    
+    // / Status methods
     protected function ok($content = null)
     {
         return Response::createOkResponse($content);
     }
-    
+
     protected function redirect($url)
     {
         return Response::createRedirectResponse($url);
@@ -74,12 +80,12 @@ class Controller
     {
         return Response::createBadRequestResponse($message);
     }
-    
+
     protected function internalError($message = null)
     {
         return Response::createInternalErrorResponse($message);
     }
-    
+
     protected function forward($actionName, $controllerName = null, $moduleName = null)
     {
         // If module or controller not provided, use router to determine current ones and use it
@@ -102,12 +108,13 @@ class Controller
         return self::execute($request);
     }
     
-    /// Util methods
+    // / Util methods
     
     /**
      * Output a JSON
-     * @param mixed $json
-     * @param string $options
+     *
+     * @param mixed $json            
+     * @param string $options            
      * @return \Framework\Response
      */
     protected function json($json, $options = JSON_PRETTY_PRINT)
@@ -118,11 +125,11 @@ class Controller
         
         return $response;
     }
-    
+
     /**
      * Execute the provided request.
-     * 
-     * @param Request $request
+     *
+     * @param Request $request            
      */
     public static function execute(Request $request)
     {
@@ -133,7 +140,7 @@ class Controller
         $actionName = $router->getActionName();
         
         // Build controller class name
-        $controllerClassName  = self::CONTROLLER_NAMESPACE . '\\';
+        $controllerClassName = self::CONTROLLER_NAMESPACE . '\\';
         $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $moduleName))) . '\\';
         $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $controllerName)));
         $controllerClassName .= self::CONTROLLER_SUFFIX;
@@ -142,8 +149,7 @@ class Controller
         $actionMethodName = Inflector::camelize(str_replace('-', '_', $actionName)) . self::ACTION_SUFFIX;
         
         // Handle not found (test if class is loadable, exists and method exists)
-        if (! \Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName)
-            || ! class_exists($controllerClassName) || !method_exists($controllerClassName, $actionMethodName)) {
+        if (! \Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName) || ! class_exists($controllerClassName) || ! method_exists($controllerClassName, $actionMethodName)) {
             $message = 'Not found: ' . $controllerClassName . '::' . $actionMethodName . '()';
             \Framework\Logger::logWarning($message);
             
@@ -155,7 +161,11 @@ class Controller
         $controllerInstance->setRequest($request);
         
         // Execute preExecute, action and postExecute. First not null return value is returned
-        $methods = array('preExecute', $actionMethodName, 'postExecute');
+        $methods = array(
+            'preExecute',
+            $actionMethodName,
+            'postExecute'
+        );
         $actionResult = null;
         
         foreach ($methods as $method) {
