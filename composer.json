@@ -10,7 +10,7 @@
         "psr-0": { "Framework": "lib/" }
     },
     "require": {
-        "php": ">=5.3.2",
-        "doctrine/common": "2.3.0"
+        "php": ">=5.6",
+        "doctrine/common": "2.5.1"
     }
 }
