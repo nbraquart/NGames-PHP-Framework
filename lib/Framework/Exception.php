@@ -10,7 +10,7 @@ class Exception extends \Exception
     /**
      * Enhanced trace printer for exceptions.
      * Strongly inspired by http://php.net/manual/fr/exception.gettraceasstring.php#114980
-     * 
+     *
      * @param \Exception $e            
      * @param array $seen            
      * @return string

@@ -18,7 +18,7 @@ class Finder
 
     /**
      * Return a new finder for the provided class
-     * 
+     *
      * @param string $className            
      */
     public function __construct($className)
@@ -28,7 +28,7 @@ class Finder
 
     /**
      * Return a instance of the targeted class
-     * 
+     *
      * @param string $query            
      * @param array $params            
      * @return \Framework\Database\AbstractModel
@@ -46,7 +46,7 @@ class Finder
 
     /**
      * Return a list of targeted class instances
-     * 
+     *
      * @param string $query            
      * @param array $params            
      * @return array[\Framework\Database\AbstractModel]
@@ -70,7 +70,7 @@ class Finder
 
     /**
      * Return a new instance of targeted class
-     * 
+     *
      * @return \Framework\Database\AbstractModel
      */
     private function createInstance()

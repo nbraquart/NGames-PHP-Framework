@@ -25,7 +25,7 @@ class Request
     /**
      * The request method.
      * Can be only one of the constants HTTP_METHOD*
-     * 
+     *
      * @var string
      */
     protected $method;
@@ -33,49 +33,49 @@ class Request
     /**
      * The requested URI.
      * Does not contain protocol, hostname nor query string
-     * 
+     *
      * @var unknown
      */
     protected $requestUri;
 
     /**
      * URL Parameters of the request
-     * 
+     *
      * @var array
      */
     protected $getParameters;
 
     /**
      * POST parameters (form data)
-     * 
+     *
      * @var array
      */
     protected $postParameters;
 
     /**
      * Cookies from the request (at request start, ie changes during request processing are not reflected here)
-     * 
+     *
      * @var array
      */
     protected $cookies;
 
     /**
      * Server variables
-     * 
+     *
      * @var array
      */
     protected $server;
 
     /**
      * Session variables at request start (as for cookies, changes during request processing are not reflected here)
-     * 
+     *
      * @var PhpSession
      */
     protected $session;
 
     /**
      * Files sent in current request
-     * 
+     *
      * @var array
      */
     protected $files;

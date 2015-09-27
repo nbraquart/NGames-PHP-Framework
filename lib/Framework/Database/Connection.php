@@ -195,7 +195,7 @@ class Connection
 
     /**
      * Return all executed queries with their text and execution time
-     * 
+     *
      * @return array
      */
     public static function getQueries()
@@ -205,7 +205,7 @@ class Connection
 
     /**
      * Logs the query and its execution time
-     * 
+     *
      * @param string $queryString            
      * @param float $duration            
      */

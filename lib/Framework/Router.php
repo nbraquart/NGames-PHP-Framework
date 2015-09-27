@@ -34,7 +34,7 @@ class Router
         $uriParts = array_values(array_filter(explode('/', $uri), function ($uriPart) {
             return ! empty($uriPart);
         }));
-
+        
         if (count($uriParts) == 0) {
             $this->moduleName = self::DEFAULT_MODULE;
             $this->controllerName = self::DEFAULT_CONTROLLER;

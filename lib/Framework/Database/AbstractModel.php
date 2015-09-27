@@ -23,21 +23,21 @@ abstract class AbstractModel
     /**
      * The autoload namespace for annotations.
      * Could be a const, but PHP consts are always public.
-     * 
+     *
      * @var string
      */
     protected static $autoloadNamespace = '\Framework\Database\Annotations';
 
     /**
      * Boolean storing whether annotations autoload namespace was already registered (for as long as the object is in memory)
-     * 
+     *
      * @var boolean
      */
     protected static $autoloadNamespaceRegistered = false;
 
     /**
      * Return the finder instance able to query the database and return instances of current class
-     * 
+     *
      * @return \Framework\Database\Finder:
      */
     public static function getFinder()
@@ -47,7 +47,7 @@ abstract class AbstractModel
 
     /**
      * Sets values of current class from an array
-     * 
+     *
      * @param array $array            
      * @return \Framework\Database\AbstractModel
      */

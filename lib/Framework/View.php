@@ -3,7 +3,7 @@ namespace Framework;
 
 /**
  * This class represents a view
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart@gmail.com>
  */
 class View
@@ -11,7 +11,7 @@ class View
 
     /**
      * Define the default layout when not explicitely set
-     * 
+     *
      * @var string
      */
     const DEFAULT_LAYOUT = 'default';
@@ -19,7 +19,7 @@ class View
     /**
      * Extension used for views.
      * Not changeable but could be
-     * 
+     *
      * @var string
      */
     const VIEWS_EXTENSION = '.phtml';
@@ -27,14 +27,21 @@ class View
     /**
      * Variable name storing placeholders.
      * If overriden by client application, an exception is thrown.
-     * 
+     *
      * @var string
      */
     const VARIABLE_PLACEHOLDERS = '__PLACEHOLDERS__';
 
     /**
+     * Variable name storing stylesheets.
+     *
+     * @var string
+     */
+    const VARIABLE_STYLESHEETS = '__STYLESHEETS__';
+
+    /**
      * View script template to render
-     * 
+     *
      * @var string
      */
     protected $script = null;
@@ -42,21 +49,21 @@ class View
     /**
      * Directory into which templates are fetched
      * Defaults to ROOT/src/View
-     * 
+     *
      * @var string
      */
     protected $directory = null;
 
     /**
      * A view which will be rendered with the content of the current view in $content variable
-     * 
+     *
      * @var View
      */
     protected $parentView = null;
 
     /**
      * Store all the variables set by the user
-     * 
+     *
      * @var array
      */
     protected $variables = array();
@@ -73,7 +80,8 @@ class View
         $this->script = $script;
         $this->directory = ROOT_DIR . '/src/views/';
         $this->variables = array(
-            self::VARIABLE_PLACEHOLDERS => array()
+            self::VARIABLE_PLACEHOLDERS => array(),
+            self::VARIABLE_STYLESHEETS => array()
         );
     }
 
@@ -138,9 +146,10 @@ class View
      * This function is used for both set/get placeholder.
      * Switch relies on $value being null or not.
      * In getter mode, non-existing values are returned as empty string.
-     * 
+     *
      * @param unknown $name            
-     * @param string $value            
+     * @param string $value
+     *            Default null, meaning get value
      */
     public function placeholder($name, $value = null)
     {
@@ -158,7 +167,7 @@ class View
     /**
      * Starts a placeholder.
      * Always use placeHolderStop() or an exception will be thrown.
-     * 
+     *
      * @param string $name            
      */
     public function startPlaceHolder($name)
@@ -191,9 +200,51 @@ class View
     }
 
     /**
+     * Prepend a stylesheet: add it to the list, at the begining
+     *
+     * @param string $path            
+     */
+    public function prependStylesheet($path)
+    {
+        if (in_array($path, $this->variables[self::VARIABLE_STYLESHEETS])) {
+            unset($this->variables[self::VARIABLE_STYLESHEETS][array_search($path, $this->variables[self::VARIABLE_STYLESHEETS])]);
+        }
+        
+        array_unshift($this->variables[self::VARIABLE_STYLESHEETS], $path);
+    }
+
+    /**
+     * Append a stylesheet: add it to the list, at the end
+     *
+     * @param string $path            
+     */
+    public function appendStylesheet($path)
+    {
+        if (in_array($path, $this->variables[self::VARIABLE_STYLESHEETS])) {
+            unset($this->variables[self::VARIABLE_STYLESHEETS][array_search($path, $this->variables[self::VARIABLE_STYLESHEETS])]);
+        }
+        
+        array_push($this->variables[self::VARIABLE_STYLESHEETS], $path);
+    }
+
+    /**
+     * Return a string containing the HTML to include the stylesheets
+     */
+    public function renderStylesheets()
+    {
+        $result = '';
+        
+        foreach ($this->variables[self::VARIABLE_STYLESHEETS] as $stylesheet) {
+            $result .= '<link rel="stylesheet" href="' . $stylesheet . '" />';
+        }
+        
+        return $result;
+    }
+
+    /**
      * Helper function to set layout (actually parent view), from a string.
      * It also changes the script directory.
-     * 
+     *
      * @param string $layout            
      * @return \Framework\View
      */
