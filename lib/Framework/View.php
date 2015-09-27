@@ -26,11 +26,24 @@ class View
 
     /**
      * Variable name storing placeholders.
-     * If overriden by client application, an exception is thrown.
      * 
      * @var string
      */
     const VARIABLE_PLACEHOLDERS = '__PLACEHOLDERS__';
+
+    /**
+     * Variable name storing stylesheets.
+     * 
+     * @var string
+     */
+    const VARIABLE_STYLESHEETS = '__STYLESHEETS__';
+
+    /**
+     * Variable name storing stylesheets.
+     * 
+     * @var string
+     */
+    const VARIABLE_JAVASCRIPTS = '__JAVASCRIPTS__';
 
     /**
      * View script template to render
@@ -73,16 +86,14 @@ class View
         $this->script = $script;
         $this->directory = ROOT_DIR . '/src/views/';
         $this->variables = array(
-            self::VARIABLE_PLACEHOLDERS => array()
+            self::VARIABLE_PLACEHOLDERS => array(),
+            self::VARIABLE_STYLESHEETS => array(),
+            self::VARIABLE_JAVASCRIPTS => array()
         );
     }
 
     public function __set($name, $value)
     {
-        if ($name == self::VARIABLE_PLACEHOLDERS) {
-            throw new \Framework\Exception('Cannot used reserved variable ' . self::VARIABLE_PLACEHOLDERS);
-        }
-        
         // Add to the list of user variables
         $this->variables[$name] = $value;
     }
@@ -140,7 +151,8 @@ class View
      * In getter mode, non-existing values are returned as empty string.
      * 
      * @param unknown $name            
-     * @param string $value            
+     * @param string $value
+     *            Default null, meaning get value
      */
     public function placeholder($name, $value = null)
     {
@@ -188,6 +200,48 @@ class View
         $this->currentPlaceHolder = null;
         
         return $placeHolderContent;
+    }
+
+    /**
+     * Prepend a stylesheet: add it to the list, at the begining
+     * 
+     * @param string $path            
+     */
+    public function prependStylesheet($path)
+    {
+        if (in_array($path, $this->variables[self::VARIABLE_STYLESHEETS])) {
+            unset($this->variables[self::VARIABLE_STYLESHEETS][array_search($path, $this->variables[self::VARIABLE_STYLESHEETS])]);
+        }
+        
+        array_unshift($this->variables[self::VARIABLE_STYLESHEETS], $path);
+    }
+
+    /**
+     * Append a stylesheet: add it to the list, at the end
+     * 
+     * @param string $path            
+     */
+    public function appendStylesheet($path)
+    {
+        if (in_array($path, $this->variables[self::VARIABLE_STYLESHEETS])) {
+            unset($this->variables[self::VARIABLE_STYLESHEETS][array_search($path, $this->variables[self::VARIABLE_STYLESHEETS])]);
+        }
+        
+        array_push($this->variables[self::VARIABLE_STYLESHEETS], $path);
+    }
+
+    /**
+     * Return a string containing the HTML to include the stylesheets
+     */
+    public function renderStylesheets()
+    {
+        $result = '';
+        
+        foreach ($this->variables[self::VARIABLE_STYLESHEETS] as $stylesheet) {
+            $result .= '<link rel="stylesheet" href="' . $stylesheet . '" />';
+        }
+        
+        return $result;
     }
 
     /**
