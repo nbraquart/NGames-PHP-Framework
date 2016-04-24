@@ -1,8 +1,6 @@
 <?php
 namespace Framework\Storage;
 
-use Framework\Exception;
-
 class PhpArray extends AbstractStorage implements StorageInterface
 {
 

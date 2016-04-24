@@ -16,10 +16,16 @@ class Logger
 
     public static $minLevel = null;
 
+    private static $file = null;
+    
     public static function initialize($destination, $minLevel)
     {
         self::$destination = $destination;
         self::$minLevel = $minLevel;
+
+        if (!self::$file = fopen(self::$destination, "a")) {
+            throw new \Exception('Cannot open log file for writing');
+        }
     }
 
     public static function setDestination($destination)
@@ -50,14 +56,11 @@ class Logger
     public static function log($level, $message, $trace = null)
     {
         if (self::$destination != null && self::$minLevel <= $level) {
-            if ($fp = fopen(self::$destination, "a")) {
-                if ($trace == null) {
-                    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0];
-                }
-                $logLine = self::assembleLogLine($level, $message, $trace);
-                \Framework\Utility\FileSystem::fwriteStream($fp, $logLine);
-                fclose($fp);
+            if ($trace == null) {
+                $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0];
             }
+            $logLine = self::assembleLogLine($level, $message, $trace);
+            \Framework\Utility\FileSystem::fwriteStream(self::$file, $logLine);
         }
     }
 
