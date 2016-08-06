@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/nbraquart/ngames-framework.svg?branch=master)](https://travis-ci.org/nbraquart/ngames-framework)
 [![Latest Stable Version](https://poser.pugx.org/ngames/framework/v/stable)](https://packagist.org/packages/ngames/framework)
 [![Latest Unstable Version](https://poser.pugx.org/ngames/framework/v/unstable)](https://packagist.org/packages/ngames/framework)
-
-## TODOs
-Put Travis in place and other tags:
-- StyleCI: https://styleci.io
-- Code coverage: https://codeclimate.com
+[![Code Climate](https://codeclimate.com/github/nbraquart/ngames-framework/badges/gpa.svg)](https://codeclimate.com/github/nbraquart/ngames-framework)
+[![Test Coverage](https://codeclimate.com/github/nbraquart/ngames-framework/badges/coverage.svg)](https://codeclimate.com/github/nbraquart/ngames-framework/coverage)
+[![Issue Count](https://codeclimate.com/github/nbraquart/ngames-framework/badges/issue_count.svg)](https://codeclimate.com/github/nbraquart/ngames-framework)
