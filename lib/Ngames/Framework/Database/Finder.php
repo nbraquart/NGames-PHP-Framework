@@ -32,13 +32,13 @@ class Finder
      * @param string $query
      * @param array  $params
      *
-     * @return \Ngames\Framework\Database\AbstractModel
+     * @return \Ngames\Framework\Database\AbstractModel|boolean
      */
     public function queryOne($query, array $params = [])
     {
         $result = \Ngames\Framework\Database\Connection::queryOne($query, $params);
 
-        if ($result !== false) {
+        if (is_array($result)) {
             $result = $this->createInstance()->fromArray($result);
         }
 
