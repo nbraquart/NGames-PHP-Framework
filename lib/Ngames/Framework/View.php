@@ -166,7 +166,7 @@ class View
      */
     public function placeholder($name, $value = null)
     {
-        if ($value != null) {
+        if ($value !== null) {
             $this->variables[self::VARIABLE_PLACEHOLDERS][$name] = $value;
         } else {
             if (array_key_exists($name, $this->variables[self::VARIABLE_PLACEHOLDERS])) {

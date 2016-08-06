@@ -156,7 +156,7 @@ class Connection
         }, $keys);
         $query = 'INSERT INTO `'.$tableName.'` ('.implode(', ', $keys).') VALUES ('.implode(', ', $placeholders).')';
 
-        if (!self::exec($query, $data)) {
+        if (self::exec($query, $data) === false) {
             return false;
         }
 
