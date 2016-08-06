@@ -152,14 +152,11 @@ abstract class AbstractModel
     protected function getAnnotationsReader()
     {
         if (! self::$autoloadNamespaceRegistered) {
-            $sourceDirectory = dirname(__DIR__) . '/..'; // TODO define an annotation folder and an initialize method called at application initialization (like controllers)
-            \Ngames\Framework\Logger::logDebug('Register annotations with source directory "' . $sourceDirectory . '"');
-            \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(self::$autoloadNamespace, $sourceDirectory);
+            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Id.php');
+            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Reference.php');
             self::$autoloadNamespaceRegistered = true;
         }
         
-        $reader = new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcCache() : new \Doctrine\Common\Cache\ArrayCache(), $debug = true);
-        
-        return $reader;
+        return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcCache() : new \Doctrine\Common\Cache\ArrayCache());
     }
 }
