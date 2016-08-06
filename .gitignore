@@ -2,5 +2,4 @@
 /vendor/
 /.buildpath
 /.project
-/composer.lock
 /coverage

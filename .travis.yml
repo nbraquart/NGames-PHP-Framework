@@ -1,17 +1,19 @@
 language: php
+
 php:
     - '5.6'
     - '7.0'
-    - 'hhvm'
     - 'nightly'
+
 install:
     - composer self-update
     - composer install --no-interaction --prefer-source --dev
-script:
-    - phpunit --verbose
+
+script: phpunit --verbose --coverage-text --coverage-clover=coverage-clover.xml
+
+after_script:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover coverage-clover.xml
+
 allow_failures:
     - php: nightly
-    - php: hhvm
-addons:
-    code_climate:
-        repo_token: 19c72c8c438c5ea3b1a91074b40165da945c75c631f71564640b81da8ba3be35
