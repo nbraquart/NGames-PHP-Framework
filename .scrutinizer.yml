@@ -7,12 +7,10 @@ tools:
     php_pdepend: true
     external_code_coverage:
         timeout: 600
-        runs: 4
+        runs: 3
     php_code_sniffer:
         config:
             standard: PSR4
-        filter:
-            paths: ['src']
     php_loc:
         enabled: true
         excluded_dirs: [vendor, tests]
@@ -21,13 +19,10 @@ tools:
         excluded_dirs: [vendor, tests]
 
 checks:
-    php:
-        code_rating: true
-        duplication: true
+    php: true
 
 before_commands:
     - 'composer install --dev'
 
 filter:
-    paths: [ lib/* ]
-    excluded_paths: [ vendor/* ]
+    excluded_paths: [ vendor/*, tests/* ]
