@@ -1,4 +1,5 @@
 <?php
+
 namespace Ngames\Framework\Database\Annotations;
 
 /**

@@ -1,8 +1,9 @@
 <?php
+
 namespace Framework\Tests;
 
-use Ngames\Framework\Router\Router;
 use Ngames\Framework\Router\Matcher;
+use Ngames\Framework\Router\Router;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,16 +11,16 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $router = new Router();
     }
-    
+
     public function testGetRoute_noRouteDefined()
     {
         $router = new Router();
-        
+
         // No route defined
         $route = $router->getRoute('/');
         $this->assertNull($route);
     }
-    
+
     public function testGetRoute_match()
     {
         $router = new Router();
@@ -29,7 +30,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default-controller', $route->getControllerName());
         $this->assertEquals('default-action', $route->getActionName());
     }
-    
+
     public function testGetRoute_noMatch()
     {
         $router = new Router();
@@ -37,7 +38,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $route = $router->getRoute('/test1');
         $this->assertNull($route);
     }
-    
+
     public function testGetRoute_routeOrder()
     {
         $router = new Router();

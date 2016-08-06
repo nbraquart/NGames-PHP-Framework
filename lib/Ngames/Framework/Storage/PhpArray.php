@@ -1,12 +1,12 @@
 <?php
+
 namespace Ngames\Framework\Storage;
 
 class PhpArray extends AbstractStorage implements StorageInterface
 {
-
     protected $storage;
 
-    public function __construct(array $array = array())
+    public function __construct(array $array = [])
     {
         $this->storage = $array;
     }
@@ -28,7 +28,7 @@ class PhpArray extends AbstractStorage implements StorageInterface
 
     public function reset()
     {
-        $this->storage = array();
+        $this->storage = [];
     }
 
     public function clear($name)

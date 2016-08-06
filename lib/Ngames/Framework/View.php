@@ -1,18 +1,18 @@
 <?php
+
 namespace Ngames\Framework;
 
 use Ngames\Framework\Router\Route;
 
 /**
- * This class represents a view
+ * This class represents a view.
  *
  * @author Nicolas Braquart <nicolas.braquart@gmail.com>
  */
 class View
 {
-
     /**
-     * Define the default layout when not explicitely set
+     * Define the default layout when not explicitely set.
      *
      * @var string
      */
@@ -20,7 +20,7 @@ class View
 
     /**
      * Extension used for views.
-     * Not changeable but could be
+     * Not changeable but could be.
      *
      * @var string
      */
@@ -49,7 +49,7 @@ class View
     const VARIABLE_SCRIPTS = '__SCRIPTS__';
 
     /**
-     * View script template to render
+     * View script template to render.
      *
      * @var string
      */
@@ -57,25 +57,25 @@ class View
 
     /**
      * Directory into which templates are fetched
-     * Defaults to ROOT/src/View
+     * Defaults to ROOT/src/View.
      *
      * @var string
      */
     protected $directory = null;
 
     /**
-     * A view which will be rendered with the content of the current view in $content variable
+     * A view which will be rendered with the content of the current view in $content variable.
      *
      * @var View
      */
     protected $parentView = null;
 
     /**
-     * Store all the variables set by the user
+     * Store all the variables set by the user.
      *
      * @var array
      */
-    protected $variables = array();
+    protected $variables = [];
 
     /**
      * Stores the current placeholder for the two-phase placeholder definition.
@@ -87,20 +87,20 @@ class View
     public function __construct($script = null)
     {
         $this->script = $script;
-        $this->directory = ROOT_DIR . '/src/views/';
-        $this->variables = array(
-            self::VARIABLE_PLACEHOLDERS => array(),
-            self::VARIABLE_STYLESHEETS => array(),
-            self::VARIABLE_SCRIPTS => array()
-        );
+        $this->directory = ROOT_DIR.'/src/views/';
+        $this->variables = [
+            self::VARIABLE_PLACEHOLDERS => [],
+            self::VARIABLE_STYLESHEETS  => [],
+            self::VARIABLE_SCRIPTS      => [],
+        ];
     }
 
     public function __set($name, $value)
     {
         if ($name == self::VARIABLE_PLACEHOLDERS || $name == self::VARIABLE_SCRIPTS || $name == self::VARIABLE_STYLESHEETS) {
-            throw new \Ngames\Framework\Exception('Cannot used reserved variable ' . $name);
+            throw new \Ngames\Framework\Exception('Cannot used reserved variable '.$name);
         }
-        
+
         // Add to the list of user variables
         $this->variables[$name] = $value;
     }
@@ -118,6 +118,7 @@ class View
     public function setScript($script)
     {
         $this->script = $script;
+
         return $this;
     }
 
@@ -126,8 +127,8 @@ class View
         $moduleName = $route->getModuleName();
         $controllerName = $route->getControllerName();
         $actionName = $route->getActionName();
-        
-        $this->script = $moduleName . '/' . $controllerName . '/' . $actionName;
+
+        $this->script = $moduleName.'/'.$controllerName.'/'.$actionName;
     }
 
     public function getDirectory()
@@ -138,6 +139,7 @@ class View
     public function setDirectory($directory)
     {
         $this->directory = $directory;
+
         return $this;
     }
 
@@ -149,6 +151,7 @@ class View
     public function setParentView($parentView)
     {
         $this->parentView = $parentView;
+
         return $this;
     }
 
@@ -157,9 +160,9 @@ class View
      * Switch relies on $value being null or not.
      * In getter mode, non-existing values are returned as empty string.
      *
-     * @param unknown $name            
-     * @param string $value
-     *            Default null, meaning get value
+     * @param unknown $name
+     * @param string  $value
+     *                       Default null, meaning get value
      */
     public function placeholder($name, $value = null)
     {
@@ -178,14 +181,14 @@ class View
      * Starts a placeholder.
      * Always use placeHolderStop() or an exception will be thrown.
      *
-     * @param string $name            
+     * @param string $name
      */
     public function startPlaceHolder($name)
     {
         if ($this->currentPlaceHolder != null) {
             throw new \Ngames\Framework\Exception('Cannot start a new placeholder, previous not stopped');
         }
-        
+
         $this->currentPlaceHolder = $name;
         ob_start();
     }
@@ -199,97 +202,97 @@ class View
         if ($this->currentPlaceHolder == null) {
             throw new \Ngames\Framework\Exception('Cannot stop a new placeholder: none started');
         }
-        
+
         $placeHolderContent = ob_get_contents();
         ob_end_clean();
-        
+
         $this->variables[self::VARIABLE_PLACEHOLDERS][$this->currentPlaceHolder] = $placeHolderContent;
         $this->currentPlaceHolder = null;
-        
+
         return $placeHolderContent;
     }
 
     /**
-     * Prepend a stylesheet: add it to the list, at the begining
+     * Prepend a stylesheet: add it to the list, at the begining.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function prependStylesheet($path)
     {
         if (in_array($path, $this->variables[self::VARIABLE_STYLESHEETS])) {
             unset($this->variables[self::VARIABLE_STYLESHEETS][array_search($path, $this->variables[self::VARIABLE_STYLESHEETS])]);
         }
-        
+
         array_unshift($this->variables[self::VARIABLE_STYLESHEETS], $path);
     }
 
     /**
-     * Append a stylesheet: add it to the list, at the end
+     * Append a stylesheet: add it to the list, at the end.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function appendStylesheet($path)
     {
         if (in_array($path, $this->variables[self::VARIABLE_STYLESHEETS])) {
             unset($this->variables[self::VARIABLE_STYLESHEETS][array_search($path, $this->variables[self::VARIABLE_STYLESHEETS])]);
         }
-        
+
         array_push($this->variables[self::VARIABLE_STYLESHEETS], $path);
     }
 
     /**
-     * Return a string containing the HTML to include the stylesheets
+     * Return a string containing the HTML to include the stylesheets.
      */
     public function renderStylesheets()
     {
         $result = '';
-        
+
         foreach ($this->variables[self::VARIABLE_STYLESHEETS] as $stylesheet) {
-            $result .= '<link rel="stylesheet" href="' . $stylesheet . '" />';
+            $result .= '<link rel="stylesheet" href="'.$stylesheet.'" />';
         }
-        
+
         return $result;
     }
 
     /**
-     * Prepend a script: add it to the list, at the begining
+     * Prepend a script: add it to the list, at the begining.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function prependScript($path)
     {
         if (in_array($path, $this->variables[self::VARIABLE_SCRIPTS])) {
             unset($this->variables[self::VARIABLE_SCRIPTS][array_search($path, $this->variables[self::VARIABLE_SCRIPTS])]);
         }
-        
+
         array_unshift($this->variables[self::VARIABLE_SCRIPTS], $path);
     }
 
     /**
-     * Append a script: add it to the list, at the end
+     * Append a script: add it to the list, at the end.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function appendScript($path)
     {
         if (in_array($path, $this->variables[self::VARIABLE_SCRIPTS])) {
             unset($this->variables[self::VARIABLE_SCRIPTS][array_search($path, $this->variables[self::VARIABLE_SCRIPTS])]);
         }
-        
+
         array_push($this->variables[self::VARIABLE_SCRIPTS], $path);
     }
 
     /**
-     * Return a string containing the HTML to include the scripts
+     * Return a string containing the HTML to include the scripts.
      */
     public function renderScripts()
     {
         $result = '';
-        
+
         foreach ($this->variables[self::VARIABLE_SCRIPTS] as $script) {
-            $result .= '<script src="' . $script . '"></script>';
+            $result .= '<script src="'.$script.'"></script>';
         }
-        
+
         return $result;
     }
 
@@ -297,19 +300,20 @@ class View
      * Helper function to set layout (actually parent view), from a string.
      * It also changes the script directory.
      *
-     * @param string $layout            
+     * @param string $layout
+     *
      * @return \Ngames\Framework\View
      */
     public function setLayout($layout)
     {
         if ($layout != null) {
-            $view = new View($layout);
-            $view->setDirectory($view->directory . 'layouts/');
+            $view = new self($layout);
+            $view->setDirectory($view->directory.'layouts/');
             $this->setParentView($view);
         } else {
             $this->disableLayout();
         }
-        
+
         return $this;
     }
 
@@ -324,23 +328,23 @@ class View
         if ($script != null) {
             $this->setScript($script);
         }
-        
+
         // Check the script path
-        $scriptFullPath = $this->directory . $this->getScript() . self::VIEWS_EXTENSION;
-        if (! is_readable($scriptFullPath)) {
-            throw new Exception($scriptFullPath . ' not found');
+        $scriptFullPath = $this->directory.$this->getScript().self::VIEWS_EXTENSION;
+        if (!is_readable($scriptFullPath)) {
+            throw new Exception($scriptFullPath.' not found');
         }
-        
+
         // Put the variables in scope
         foreach ($this->variables as $variableName => $variableValue) {
             $$variableName = $variableValue;
         }
-        
+
         // Render
         ob_start();
         try {
             include $scriptFullPath;
-            
+
             // Check that after script rendering, a placeholder was not being defined
             if ($this->currentPlaceHolder != null) {
                 throw new \Ngames\Framework\Exception('Placeholder not stopped at the end of view rendering');
@@ -351,25 +355,25 @@ class View
         }
         $renderContent = ob_get_contents();
         ob_end_clean();
-        
+
         // Call parent if needed
         if ($this->parentView != null) {
             // Save parent variables
             $parentVariables = $this->parentView->variables;
-            
+
             // Add child view variables to parent
             $this->parentView->variables = array_merge_recursive($this->variables, $parentVariables);
-            
+
             // Set parent view 'content' variable
             $this->parentView->content = $renderContent;
-            
+
             // Render parent
             $renderContent = $this->parentView->render();
-            
+
             // Restore parent user variables
             $this->parentView->variables = $parentVariables;
         }
-        
+
         return $renderContent;
     }
 }

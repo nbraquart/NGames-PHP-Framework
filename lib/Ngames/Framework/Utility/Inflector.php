@@ -1,9 +1,9 @@
 <?php
+
 namespace Ngames\Framework\Utility;
 
 class Inflector
 {
-
     public static function camelize($string)
     {
         return lcfirst(str_replace(' ', '', self::humanize($string)));
@@ -27,9 +27,9 @@ class Inflector
     public static function ellipsis($string, $maxLength)
     {
         if (strlen($string) > $maxLength) {
-            $string = substr($string, 0, $maxLength - 4) . ' ...';
+            $string = substr($string, 0, $maxLength - 4).' ...';
         }
-        
+
         return $string;
     }
 }

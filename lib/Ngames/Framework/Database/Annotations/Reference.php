@@ -1,4 +1,5 @@
 <?php
+
 namespace Ngames\Framework\Database\Annotations;
 
 /**
@@ -7,6 +8,5 @@ namespace Ngames\Framework\Database\Annotations;
  */
 class Reference
 {
-
     public $targetClass;
 }

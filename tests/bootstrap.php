@@ -1,3 +1,5 @@
 <?php
-$autoloader = require dirname(__DIR__) . '/vendor/autoload.php';
+
+$autoloader = require dirname(__DIR__).'/vendor/autoload.php';
+
 return $autoloader;

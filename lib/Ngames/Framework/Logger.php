@@ -1,9 +1,9 @@
 <?php
+
 namespace Ngames\Framework;
 
 class Logger
 {
-
     const LEVEL_DEBUG = 0;
 
     const LEVEL_INFO = 1;
@@ -27,8 +27,8 @@ class Logger
     public static function setDestination($destination)
     {
         self::$destination = $destination;
-        
-        if (! self::$file = fopen(self::$destination, "a")) {
+
+        if (!self::$file = fopen(self::$destination, 'a')) {
             throw new \Exception('Cannot open log file for writing');
         }
     }
@@ -67,7 +67,7 @@ class Logger
     protected static function assembleLogLine($level, $message, $trace)
     {
         $levelString = null;
-        
+
         switch ($level) {
             case self::LEVEL_DEBUG:
                 $levelString = 'DEBUG';
@@ -82,14 +82,14 @@ class Logger
                 $levelString = 'ERROR';
                 break;
         }
-        
+
         $time = microtime(true);
         $dateTimeString = date('Y-m-d H:i:s');
-        $dateTimeString .= ',' . sprintf("%06d", ($time - floor($time)) * 1000000);
-        
+        $dateTimeString .= ','.sprintf('%06d', ($time - floor($time)) * 1000000);
+
         $lineNumber = $trace['line'];
         $fileName = str_replace(ROOT_DIR, '', $trace['file']);
-        
-        return $dateTimeString . ' [' . $levelString . '] ' . $fileName . ':' . $lineNumber . ' - ' . $message . "\n";
+
+        return $dateTimeString.' ['.$levelString.'] '.$fileName.':'.$lineNumber.' - '.$message."\n";
     }
 }

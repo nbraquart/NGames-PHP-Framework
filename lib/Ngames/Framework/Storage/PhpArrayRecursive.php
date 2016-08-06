@@ -1,12 +1,10 @@
 <?php
-namespace Ngames\Framework\Storage;
 
-use Ngames\Framework\Exception;
+namespace Ngames\Framework\Storage;
 
 class PhpArrayRecursive extends \Ngames\Framework\Storage\PhpArray implements StorageInterface
 {
-
-    public function __construct(array $array = array())
+    public function __construct(array $array = [])
     {
         foreach ($array as $key => $value) {
             if (is_scalar($value)) {

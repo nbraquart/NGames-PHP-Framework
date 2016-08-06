@@ -1,9 +1,9 @@
 <?php
+
 namespace Ngames\Framework\Storage;
 
 class PhpSession extends PhpArray implements StorageInterface
 {
-
     protected $storage;
 
     protected static $instance = null;
@@ -13,12 +13,12 @@ class PhpSession extends PhpArray implements StorageInterface
         if (self::$instance == null) {
             self::$instance = new self();
         }
-        
+
         return self::$instance;
     }
 
     /**
-     * Should not be public but PHP does not allow it
+     * Should not be public but PHP does not allow it.
      */
     public function __construct()
     {
@@ -29,7 +29,7 @@ class PhpSession extends PhpArray implements StorageInterface
     public function reset()
     {
         session_destroy();
-        $_SESSION = $this->storage = array();
+        $_SESSION = $this->storage = [];
         $this->initializePhpSession();
     }
 
