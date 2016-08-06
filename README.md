@@ -1,4 +1,4 @@
-# NGames PHP Framework
+# NGames Framework
 
 ## TODOs
 Put Travis in place and other tags:
