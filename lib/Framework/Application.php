@@ -2,7 +2,6 @@
 namespace Framework;
 
 use Framework\Storage\IniFile;
-use Framework\Storage\PhpSession;
 
 class Application
 {
@@ -11,9 +10,9 @@ class Application
 
     protected $autoloader = null;
 
-    protected $configuration = null;
+    protected $router = null;
 
-    protected $request = null;
+    protected $configuration = null;
 
     protected $timer = null;
 
@@ -39,12 +38,15 @@ class Application
         return self::$instance;
     }
 
-    protected function __construct($configurationFile)
+    private function __construct($configurationFile)
     {
         // Register autoload
         require_once __DIR__ . '/Autoloader.php';
         $this->autoloader = new Autoloader();
         $this->autoloader->register();
+        
+        // Initialize the router
+        $this->router = new \Framework\Router\Router();
         
         // Initialize the timer
         $this->timer = new \Framework\Timer();
@@ -63,9 +65,6 @@ class Application
                 \Framework\Logger::initialize($destination, $level);
             }
         }
-        
-        // Parse the request
-        $this->request = \Framework\Request::createRequestFromGlobals();
     }
 
     /**
@@ -88,15 +87,6 @@ class Application
 
     /**
      *
-     * @return \Framework\Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     *
      * @return \Framework\Timer
      */
     public function getTimer()
@@ -104,6 +94,14 @@ class Application
         return $this->timer;
     }
 
+    /**
+     * @return \Framework\Router\Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+    
     public function isDebug()
     {
         return $this->configuration->debug == '1' || $this->configuration->debug == 'true';
@@ -113,17 +111,27 @@ class Application
     {
         try {
             // Execute the module/controller/action
-            $actionResult = Controller::execute($this->request);
+            $request = \Framework\Request::createRequestFromGlobals();
+            $route = $this->router->getRoute($request->getRequestUri());
+            $response = null;
             
-            // If not a response object (string typically), constructs it (but it's a default instance)
-            if ($actionResult instanceof Response) {
-                $response = $actionResult;
-            } elseif (is_string($actionResult)) {
-                $response = new Response();
-                $response->setHeader('Content-Type', 'text/html; charset=utf-8');
-                $response->setContent($actionResult);
+            if ($route == null) {
+                $response = Response::createNotFoundResponse($this->isDebug() ? 'No route matched the requested URI' : null);
             } else {
-                throw new Exception('Invalid output');
+                $actionResult = Controller::execute($route, $request);
+                
+                // If not a response object (string typically), constructs it (but it's a default instance)
+                if ($actionResult instanceof Response) {
+                    $response = $actionResult;
+                } elseif (is_string($actionResult)) {
+                    $response = new Response();
+                    $response->setHeader('Content-Type', 'text/html; charset=utf-8');
+                    $response->setContent($actionResult);
+                }
+            }
+            
+            if ($response == null) {
+                throw new Exception('Invalid response');
             }
             
             // Send the response

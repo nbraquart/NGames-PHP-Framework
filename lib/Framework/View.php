@@ -1,6 +1,8 @@
 <?php
 namespace Framework;
 
+use Framework\Router\Route;
+
 /**
  * This class represents a view
  *
@@ -38,6 +40,13 @@ class View
      * @var string
      */
     const VARIABLE_STYLESHEETS = '__STYLESHEETS__';
+
+    /**
+     * Variable name storing scripts.
+     *
+     * @var string
+     */
+    const VARIABLE_SCRIPTS = '__SCRIPTS__';
 
     /**
      * View script template to render
@@ -81,14 +90,15 @@ class View
         $this->directory = ROOT_DIR . '/src/views/';
         $this->variables = array(
             self::VARIABLE_PLACEHOLDERS => array(),
-            self::VARIABLE_STYLESHEETS => array()
+            self::VARIABLE_STYLESHEETS => array(),
+            self::VARIABLE_SCRIPTS => array()
         );
     }
 
     public function __set($name, $value)
     {
-        if ($name == self::VARIABLE_PLACEHOLDERS) {
-            throw new \Framework\Exception('Cannot used reserved variable ' . self::VARIABLE_PLACEHOLDERS);
+        if ($name == self::VARIABLE_PLACEHOLDERS || $name == self::VARIABLE_SCRIPTS || $name == self::VARIABLE_STYLESHEETS) {
+            throw new \Framework\Exception('Cannot used reserved variable ' . $name);
         }
         
         // Add to the list of user variables
@@ -111,11 +121,11 @@ class View
         return $this;
     }
 
-    public function setScriptFromRouter(Router $router)
+    public function setScriptFromRoute(Route $route)
     {
-        $moduleName = $router->getModuleName();
-        $controllerName = $router->getControllerName();
-        $actionName = $router->getActionName();
+        $moduleName = $route->getModuleName();
+        $controllerName = $route->getControllerName();
+        $actionName = $route->getActionName();
         
         $this->script = $moduleName . '/' . $controllerName . '/' . $actionName;
     }
@@ -236,6 +246,48 @@ class View
         
         foreach ($this->variables[self::VARIABLE_STYLESHEETS] as $stylesheet) {
             $result .= '<link rel="stylesheet" href="' . $stylesheet . '" />';
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Prepend a script: add it to the list, at the begining
+     *
+     * @param string $path            
+     */
+    public function prependScript($path)
+    {
+        if (in_array($path, $this->variables[self::VARIABLE_SCRIPTS])) {
+            unset($this->variables[self::VARIABLE_SCRIPTS][array_search($path, $this->variables[self::VARIABLE_SCRIPTS])]);
+        }
+        
+        array_unshift($this->variables[self::VARIABLE_SCRIPTS], $path);
+    }
+
+    /**
+     * Append a script: add it to the list, at the end
+     *
+     * @param string $path            
+     */
+    public function appendScript($path)
+    {
+        if (in_array($path, $this->variables[self::VARIABLE_SCRIPTS])) {
+            unset($this->variables[self::VARIABLE_SCRIPTS][array_search($path, $this->variables[self::VARIABLE_SCRIPTS])]);
+        }
+        
+        array_push($this->variables[self::VARIABLE_SCRIPTS], $path);
+    }
+
+    /**
+     * Return a string containing the HTML to include the scripts
+     */
+    public function renderScripts()
+    {
+        $result = '';
+        
+        foreach ($this->variables[self::VARIABLE_SCRIPTS] as $script) {
+            $result .= '<script src="' . $script . '"></script>';
         }
         
         return $result;

@@ -2,6 +2,7 @@
 namespace Framework;
 
 use Framework\Utility\Inflector;
+use Framework\Router\Route;
 
 class Controller
 {
@@ -17,6 +18,12 @@ class Controller
      * @var View
      */
     protected $view;
+
+    /**
+     *
+     * @var Route
+     */
+    protected $route;
 
     /**
      *
@@ -50,17 +57,27 @@ class Controller
 
     /**
      * Sets the controller request.
-     * Default view script is set at that time.
      *
      * @param Request $request            
      */
     public function setRequest(Request $request)
     {
         $this->request = $request;
-        $this->view->setScriptFromRouter(new Router($this->request->getRequestUri()));
+    }
+
+    /**
+     * Sets the route identified during this request.
+     * Default view script is set at this stage
+     *
+     * @param Route $route            
+     */
+    public function setRoute(Route $route)
+    {
+        $this->route = $route;
+        $this->view->setScriptFromRoute($this->route);
     }
     
-    // / Status methods
+    // Status helper methods
     protected function ok($content = null)
     {
         return Response::createOkResponse($content);
@@ -88,15 +105,13 @@ class Controller
 
     protected function forward($actionName, $controllerName = null, $moduleName = null)
     {
-        // If module or controller not provided, use router to determine current ones and use it
+        // If module or controller not provided, use current route to determine current ones and use them
         if ($moduleName == null || $controllerName == null) {
-            $router = new Router($this->request->getRequestUri());
-            
             if ($moduleName == null) {
-                $moduleName = $router->getModuleName();
+                $moduleName = $this->route->getModuleName();
             }
             if ($controllerName == null) {
-                $controllerName = $router->getControllerName();
+                $controllerName = $this->route->getControllerName();
             }
         }
         
@@ -131,13 +146,12 @@ class Controller
      *
      * @param Request $request            
      */
-    public static function execute(Request $request)
+    public static function execute(Route $route, Request $request)
     {
-        // Get module, controller and action from the request using a router
-        $router = new Router($request->getRequestUri());
-        $moduleName = $router->getModuleName();
-        $controllerName = $router->getControllerName();
-        $actionName = $router->getActionName();
+        // Get module, controller and action from the route
+        $moduleName = $route->getModuleName();
+        $controllerName = $route->getControllerName();
+        $actionName = $route->getActionName();
         
         // Build controller class name
         $controllerClassName = self::CONTROLLER_NAMESPACE . '\\';
@@ -159,6 +173,7 @@ class Controller
         // Create the controller
         $controllerInstance = new $controllerClassName();
         $controllerInstance->setRequest($request);
+        $controllerInstance->setRoute($route);
         
         // Execute preExecute, action and postExecute. First not null return value is returned
         $methods = array(

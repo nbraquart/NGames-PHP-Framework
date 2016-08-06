@@ -7,6 +7,11 @@ namespace Framework;
 class Exception extends \Exception
 {
 
+    public function __construct($message = null, $code = null, $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+
     /**
      * Enhanced trace printer for exceptions.
      * Strongly inspired by http://php.net/manual/fr/exception.gettraceasstring.php#114980

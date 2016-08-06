@@ -17,7 +17,7 @@ class Logger
     public static $minLevel = null;
 
     private static $file = null;
-    
+
     public static function initialize($destination, $minLevel)
     {
         self::$minLevel = $minLevel;
@@ -27,8 +27,8 @@ class Logger
     public static function setDestination($destination)
     {
         self::$destination = $destination;
-
-        if (!self::$file = fopen(self::$destination, "a")) {
+        
+        if (! self::$file = fopen(self::$destination, "a")) {
             throw new \Exception('Cannot open log file for writing');
         }
     }
