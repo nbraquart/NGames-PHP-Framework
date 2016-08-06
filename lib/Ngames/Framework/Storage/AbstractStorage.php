@@ -1,9 +1,9 @@
 <?php
+
 namespace Ngames\Framework\Storage;
 
 abstract class AbstractStorage implements StorageInterface, \ArrayAccess
 {
-
     public function offsetExists($offset)
     {
         return $this->has($offset);

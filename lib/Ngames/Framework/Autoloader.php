@@ -1,19 +1,19 @@
 <?php
+
 namespace Ngames\Framework;
 
 use Doctrine\Common\ClassLoader;
 
 class Autoloader
 {
-
-    protected $classLoaders = array();
+    protected $classLoaders = [];
 
     public function register()
     {
-        $namespaces = array(
-            'Controller' => ROOT_DIR . '/src'
-        );
-        
+        $namespaces = [
+            'Controller' => ROOT_DIR.'/src',
+        ];
+
         foreach ($namespaces as $namespace => $includePath) {
             $classLoader = new ClassLoader($namespace, $includePath);
             $classLoader->register();
@@ -28,7 +28,7 @@ class Autoloader
                 return true;
             }
         }
-        
+
         return false;
     }
 }

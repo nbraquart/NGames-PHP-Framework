@@ -1,14 +1,14 @@
 <?php
+
 namespace Ngames\Framework\Router;
 
 class Matcher
 {
+    const MODULE_KEY = ':module';
 
-    const MODULE_KEY = ":module";
+    const CONTROLLER_KEY = ':controller';
 
-    const CONTROLLER_KEY = ":controller";
-
-    const ACTION_KEY = ":action";
+    const ACTION_KEY = ':action';
 
     private $pattern;
 
@@ -27,10 +27,10 @@ class Matcher
      * /:controller/:action + module=default
      * Etc.
      *
-     * @param String $pattern            
-     * @param String $moduleName            
-     * @param String $controllerName            
-     * @param String $actionName            
+     * @param string $pattern
+     * @param string $moduleName
+     * @param string $controllerName
+     * @param string $actionName
      */
     public function __construct($pattern, $moduleName = null, $controllerName = null, $actionName = null)
     {
@@ -38,7 +38,7 @@ class Matcher
         $this->moduleName = $moduleName;
         $this->controllerName = $controllerName;
         $this->actionName = $actionName;
-        
+
         $this->check();
     }
 
@@ -46,7 +46,8 @@ class Matcher
      * Tries to match the input URI.
      * Output is null if no match, a route otherwise.
      *
-     * @param String $uri            
+     * @param string $uri
+     *
      * @return Route
      */
     public function match($uri)
@@ -58,56 +59,54 @@ class Matcher
         $actionName = $this->actionName;
         $countPattern = count($pattern);
         $match = true;
-        
+
         if ($countPattern !== count($uri)) {
             $match = false;
         } else {
-            for ($i = 0; $i < $countPattern; $i ++) {
+            for ($i = 0; $i < $countPattern; $i++) {
                 $currentPatternPart = $pattern[$i];
                 $currentUriPart = $uri[$i];
-                
+
                 if ($currentPatternPart !== $currentUriPart) {
                     if ($currentPatternPart === self::MODULE_KEY) {
                         $moduleName = $currentUriPart;
-                    } else 
-                        if ($currentPatternPart === self::CONTROLLER_KEY) {
-                            $controllerName = $currentUriPart;
-                        } else 
-                            if ($currentPatternPart === self::ACTION_KEY) {
-                                $actionName = $currentUriPart;
-                            } else {
-                                $match = false;
-                                break;
-                            }
+                    } elseif ($currentPatternPart === self::CONTROLLER_KEY) {
+                        $controllerName = $currentUriPart;
+                    } elseif ($currentPatternPart === self::ACTION_KEY) {
+                        $actionName = $currentUriPart;
+                    } else {
+                        $match = false;
+                        break;
+                    }
                 }
             }
         }
-        
+
         return $match ? new Route($moduleName, $controllerName, $actionName) : null;
     }
 
     private function check()
     {
-        if (! ($this->moduleName !== null xor strpos($this->pattern, self::MODULE_KEY) !== false)) {
+        if (!($this->moduleName !== null xor strpos($this->pattern, self::MODULE_KEY) !== false)) {
             throw new InvalidMatcherException('Missing module key or module value, or provided both');
         }
-        if (! ($this->controllerName !== null xor strpos($this->pattern, self::CONTROLLER_KEY) !== false)) {
+        if (!($this->controllerName !== null xor strpos($this->pattern, self::CONTROLLER_KEY) !== false)) {
             throw new InvalidMatcherException('Missing controller key or controller value, or provided both');
         }
-        if (! ($this->actionName !== null xor strpos($this->pattern, self::ACTION_KEY) !== false)) {
+        if (!($this->actionName !== null xor strpos($this->pattern, self::ACTION_KEY) !== false)) {
             throw new InvalidMatcherException('Missing action key or action value, or provided both');
         }
     }
 
     /**
-     * Return an array containing the URI/pattern parts
+     * Return an array containing the URI/pattern parts.
      *
-     * @param unknown $uri            
+     * @param unknown $uri
      */
     private function prepareForMatching($uri)
     {
         return array_values(array_filter(explode('/', $uri), function ($uriPart) {
-            return ! empty($uriPart);
+            return !empty($uriPart);
         }));
     }
 }

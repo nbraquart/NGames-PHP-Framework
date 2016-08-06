@@ -1,9 +1,9 @@
 <?php
+
 namespace Ngames\Framework;
 
 class Timer
 {
-
     public $time;
 
     public function __construct($time = null)

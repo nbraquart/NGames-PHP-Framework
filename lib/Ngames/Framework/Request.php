@@ -1,11 +1,11 @@
 <?php
+
 namespace Ngames\Framework;
 
 use Ngames\Framework\Storage\PhpSession;
 
 class Request
 {
-
     const HTTP_METHOD_OPTIONS = 'OPTIONS';
 
     const HTTP_METHOD_GET = 'GET';
@@ -24,7 +24,7 @@ class Request
 
     /**
      * The request method.
-     * Can be only one of the constants HTTP_METHOD*
+     * Can be only one of the constants HTTP_METHOD*.
      *
      * @var string
      */
@@ -32,49 +32,49 @@ class Request
 
     /**
      * The requested URI.
-     * Does not contain protocol, hostname nor query string
+     * Does not contain protocol, hostname nor query string.
      *
      * @var unknown
      */
     protected $requestUri;
 
     /**
-     * URL Parameters of the request
+     * URL Parameters of the request.
      *
      * @var array
      */
     protected $getParameters;
 
     /**
-     * POST parameters (form data)
+     * POST parameters (form data).
      *
      * @var array
      */
     protected $postParameters;
 
     /**
-     * Cookies from the request (at request start, ie changes during request processing are not reflected here)
+     * Cookies from the request (at request start, ie changes during request processing are not reflected here).
      *
      * @var array
      */
     protected $cookies;
 
     /**
-     * Server variables
+     * Server variables.
      *
      * @var array
      */
     protected $server;
 
     /**
-     * Session variables at request start (as for cookies, changes during request processing are not reflected here)
+     * Session variables at request start (as for cookies, changes during request processing are not reflected here).
      *
      * @var PhpSession
      */
     protected $session;
 
     /**
-     * Files sent in current request
+     * Files sent in current request.
      *
      * @var array
      */
@@ -102,14 +102,14 @@ class Request
             $uri = null;
             $requestMethod = null;
         }
-        
+
         // Build and return the request
         $request = new \Ngames\Framework\Request($requestMethod, $uri, $_GET, $_POST, $_COOKIE, PhpSession::getInstance(), $_SERVER, $_FILES);
+
         return $request;
     }
 
     /**
-     *
      * @return PhpSession
      */
     public function getSession()
@@ -150,21 +150,22 @@ class Request
     public function setRequestUri($uri)
     {
         $this->requestUri = $uri;
+
         return $this;
     }
 
     public function getRemoteAddress()
     {
-        if (! empty($this->server['HTTP_X_FORWARDED_FOR'])) {
+        if (!empty($this->server['HTTP_X_FORWARDED_FOR'])) {
             $ip = $this->server['HTTP_X_FORWARDED_FOR'];
-        } elseif (! empty($this->server['HTTP_CLIENT_IP'])) {
+        } elseif (!empty($this->server['HTTP_CLIENT_IP'])) {
             $ip = $this->server['HTTP_CLIENT_IP'];
-        } elseif (! empty($this->server['REMOTE_ADDR'])) {
+        } elseif (!empty($this->server['REMOTE_ADDR'])) {
             $ip = $this->server['REMOTE_ADDR'];
         } else {
             $ip = null;
         }
-        
+
         return str_replace('::ffff:', null, $ip);
     }
 }

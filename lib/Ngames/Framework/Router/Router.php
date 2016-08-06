@@ -1,35 +1,35 @@
 <?php
+
 namespace Ngames\Framework\Router;
 
 class Router
 {
-
     /**
-     *
      * @var Matcher[]
      */
-    private $matchers = array();
+    private $matchers = [];
 
     /**
-     * Adds a new matcher at the begining of the matcher list
+     * Adds a new matcher at the begining of the matcher list.
      *
-     * @param Matcher $matcher            
+     * @param Matcher $matcher
+     *
      * @return Router
      */
     public function addMatcher(Matcher $matcher)
     {
         $this->matchers[] = $matcher;
+
         return $this;
     }
 
     /**
-     *
-     * @param String $uri            
+     * @param string $uri
      */
     public function getRoute($uri)
     {
         $result = null;
-        
+
         foreach ($this->matchers as $matcher) {
             $matchedRoute = $matcher->match($uri);
             if ($matchedRoute !== null) {
@@ -37,7 +37,7 @@ class Router
                 break;
             }
         }
-        
+
         return $result;
     }
 }

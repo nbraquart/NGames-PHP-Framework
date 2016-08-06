@@ -1,9 +1,9 @@
 <?php
+
 namespace Ngames\Framework\Router;
 
 class Route
 {
-
     protected $moduleName;
 
     protected $controllerName;

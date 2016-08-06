@@ -1,59 +1,59 @@
 <?php
+
 namespace Ngames\Framework\Storage;
 
 use Ngames\Framework\Exception;
 
 class IniFile extends PhpArrayRecursive implements StorageInterface
 {
-
     public function __construct($fileName)
     {
-        if (! is_readable($fileName)) {
-            throw new Exception($fileName . ' is not readable');
+        if (!is_readable($fileName)) {
+            throw new Exception($fileName.' is not readable');
         }
-        
+
         $parsedFile = parse_ini_file($fileName, true);
-        $processedArray = array();
-        
+        $processedArray = [];
+
         if ($parsedFile !== false) {
             $processedArray = $this->processParsedFile($parsedFile);
         }
-        
+
         parent::__construct($processedArray);
     }
 
     public static function writeFile($fileName, $configuration)
     {
         $content = '';
-        
+
         foreach ($configuration as $key => $value) {
-            $content .= $key . '=' . $value . "\n";
+            $content .= $key.'='.$value."\n";
         }
-        
+
         file_put_contents($fileName, $content);
     }
 
     protected function processParsedFile(array $array)
     {
-        $result = array();
-        
+        $result = [];
+
         foreach ($array as $key => $value) {
             $currentResult = &$result;
-            
+
             if (is_int($key)) {
                 $currentResult = &$currentResult[$key];
             } else {
                 $keyPartArray = explode('.', $key);
-                
+
                 while ($keyPart = array_shift($keyPartArray)) {
                     $currentResult = &$currentResult[$keyPart];
                 }
             }
-            
+
             if (is_array($value)) {
                 $currentResult = $this->processParsedFile($value);
             } else {
-                if (strpos($value, '%') == - 1) {
+                if (strpos($value, '%') == -1) {
                     $currentResult = $value;
                 } else {
                     $currentResult = preg_replace_callback('/%(.*?)%/s', function ($match) {
@@ -68,7 +68,7 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
                 }
             }
         }
-        
+
         return $result;
     }
 }

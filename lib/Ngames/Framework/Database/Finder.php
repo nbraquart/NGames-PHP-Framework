@@ -1,4 +1,5 @@
 <?php
+
 namespace Ngames\Framework\Database;
 
 /**
@@ -13,13 +14,12 @@ namespace Ngames\Framework\Database;
  */
 class Finder
 {
-
     protected $className = null;
 
     /**
-     * Return a new finder for the provided class
+     * Return a new finder for the provided class.
      *
-     * @param string $className            
+     * @param string $className
      */
     public function __construct($className)
     {
@@ -27,49 +27,51 @@ class Finder
     }
 
     /**
-     * Return a instance of the targeted class
+     * Return a instance of the targeted class.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array  $params
+     *
      * @return \Ngames\Framework\Database\AbstractModel
      */
-    public function queryOne($query, array $params = array())
+    public function queryOne($query, array $params = [])
     {
         $result = \Ngames\Framework\Database\Connection::queryOne($query, $params);
-        
+
         if ($result !== false) {
             $result = $this->createInstance()->fromArray($result);
         }
-        
+
         return $result;
     }
 
     /**
-     * Return a list of targeted class instances
+     * Return a list of targeted class instances.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array  $params
+     *
      * @return array[\Ngames\Framework\Database\AbstractModel]
      */
-    public function query($query, array $params = array())
+    public function query($query, array $params = [])
     {
         $result = \Ngames\Framework\Database\Connection::query($query, $params);
-        
+
         if ($result !== false) {
-            $objectList = array();
-            
+            $objectList = [];
+
             foreach ($result as $array) {
                 $objectList[] = $this->createInstance()->fromArray($array);
             }
-            
+
             $result = $objectList;
         }
-        
+
         return $result;
     }
 
     /**
-     * Return a new instance of targeted class
+     * Return a new instance of targeted class.
      *
      * @return \Ngames\Framework\Database\AbstractModel
      */

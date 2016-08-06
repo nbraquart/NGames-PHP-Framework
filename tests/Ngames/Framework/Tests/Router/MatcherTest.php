@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework\Tests;
 
 use Ngames\Framework\Router\Matcher;
@@ -11,32 +12,37 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing module key or module value, or provided both');
         new Matcher('/:controller/:action');
     }
+
     public function testInvalidInitialization_moduleKeyAndValue()
     {
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing module key or module value, or provided both');
         new Matcher('/:module', 'module');
     }
+
     public function testInvalidInitialization_missingControllerKeyAndValue()
     {
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing controller key or controller value, or provided both');
         new Matcher('/:module/:action');
     }
+
     public function testInvalidInitialization_controllerKeyAndValue()
     {
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing controller key or controller value, or provided both');
         new Matcher('/:controller', 'module', 'controller');
     }
+
     public function testInvalidInitialization_missingActionKeyAndValue()
     {
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing action key or action value, or provided both');
         new Matcher('/:module/:controller');
     }
+
     public function testInvalidInitialization_actionKeyAndValue()
     {
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing action key or action value, or provided both');
         new Matcher('/:action', 'module', 'controller', 'action');
     }
-    
+
     // No match cases
     public function testNoMatch()
     {
@@ -49,7 +55,7 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
         $matcher2 = new Matcher('/:module/:controller/:action');
         $this->assertNull($matcher1->match('/module/controller/action/a'));
     }
-    
+
     // Match cases
     public function testMatch_onlyDefault()
     {
@@ -60,6 +66,7 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('controller1', $result1->getControllerName());
         $this->assertEquals('action1', $result1->getActionName());
     }
+
     public function testMatch_matchModule()
     {
         $matcher = new Matcher('/:module', null, 'controller', 'action');
@@ -69,6 +76,7 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('controller', $result->getControllerName());
         $this->assertEquals('action', $result->getActionName());
     }
+
     public function testMatch_matchController()
     {
         $matcher = new Matcher('/:controller', 'module', null, 'action');
@@ -78,6 +86,7 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('controller-match', $result->getControllerName());
         $this->assertEquals('action', $result->getActionName());
     }
+
     public function testMatch_matchAction()
     {
         $matcher = new Matcher('/:action', 'module', 'controller', null);
