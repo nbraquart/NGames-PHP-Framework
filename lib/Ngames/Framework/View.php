@@ -214,8 +214,8 @@ class View
      * Defines a parent view.
      * Content of the current view will be added as a variable of the parent view before rendering it ($content).
      *
-     * @param \Ngames\Framework\View $parentView
-     *            The path to the parent view
+     * @param \Ngames\Framework\View|null $parentView
+     *            The path to the parent view. If null, parent view is disabled
      * @return \Ngames\Framework\View
      */
     public function setParentView($parentView)
@@ -408,7 +408,7 @@ class View
     public function render($script = null)
     {
         // Override the script?
-        if ($script != null) {
+        if ($script !== null) {
             $this->setScript($script);
         }
         
