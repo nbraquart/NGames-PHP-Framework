@@ -105,6 +105,9 @@ class View
      */
     protected $currentPlaceHolder = null;
 
+    /**
+     * @param string $script The view script (under the view directory)
+     */
     public function __construct($script = null)
     {
         $this->script = $script;

@@ -172,7 +172,7 @@ class Connection
     public static function insert($tableName, array $data)
     {
         $keys = array_keys($data);
-        $placeholders = array_map(function ($v) {
+        $placeholders = array_map(function($v) {
             return ':'.$v;
         }, $keys);
         $query = 'INSERT INTO `'.$tableName.'` ('.implode(', ', $keys).') VALUES ('.implode(', ', $placeholders).')';

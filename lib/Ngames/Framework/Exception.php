@@ -65,7 +65,7 @@ class Exception extends \Exception
                 $args = [];
 
                 if (count($trace) && array_key_exists('args', $trace[0]) && is_array($trace[0]['args'])) {
-                    $args = array_map(function ($arg) {
+                    $args = array_map(function($arg) {
                         if (is_scalar($arg) || is_array($arg)) {
                             return preg_replace('/\s+/', ' ', str_replace([
                                 "\n",

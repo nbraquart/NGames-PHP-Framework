@@ -61,7 +61,7 @@ abstract class AbstractModel
     /**
      * Return the finder instance able to query the database and return instances of current class.
      *
-     * @return \Ngames\Framework\Database\Finder:
+     * @return Finder:
      */
     public static function getFinder()
     {

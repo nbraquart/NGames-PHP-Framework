@@ -48,6 +48,10 @@ class Autoloader
         }
     }
 
+    /**
+     * @param string $className
+     * @return boolean
+     */
     public function canLoadClass($className)
     {
         foreach ($this->classLoaders as $classLoader) {

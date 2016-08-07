@@ -112,6 +112,11 @@ class Matcher
         return $match ? new Route($moduleName, $controllerName, $actionName) : null;
     }
 
+    /**
+     * Checks that the configuration of the matcher is valid and throws an exception otherwise.
+     * 
+     * @throws InvalidMatcherException
+     */
     private function check()
     {
         if (! ($this->moduleName !== null xor strpos($this->pattern, self::MODULE_KEY) !== false)) {
@@ -128,7 +133,7 @@ class Matcher
     /**
      * Return an array containing the URI/pattern parts.
      *
-     * @param unknown $uri            
+     * @param string $uri            
      */
     private function prepareForMatching($uri)
     {

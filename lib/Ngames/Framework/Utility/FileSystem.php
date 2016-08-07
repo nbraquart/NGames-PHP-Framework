@@ -42,7 +42,7 @@ class FileSystem
         } elseif (is_dir($path)) {
             foreach (scandir($path) as $subPath) {
                 if ($subPath != '.' && $subPath != '..') {
-                    self::unlink($path . '/' . $subPath);
+                    self::unlink($path.'/'.$subPath);
                 }
             }
             

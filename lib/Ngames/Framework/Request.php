@@ -238,11 +238,11 @@ class Request
      */
     public function getRemoteAddress()
     {
-        if (! empty($this->server['HTTP_X_FORWARDED_FOR'])) {
+        if (!empty($this->server['HTTP_X_FORWARDED_FOR'])) {
             $ip = $this->server['HTTP_X_FORWARDED_FOR'];
-        } elseif (! empty($this->server['HTTP_CLIENT_IP'])) {
+        } elseif (!empty($this->server['HTTP_CLIENT_IP'])) {
             $ip = $this->server['HTTP_CLIENT_IP'];
-        } elseif (! empty($this->server['REMOTE_ADDR'])) {
+        } elseif (!empty($this->server['REMOTE_ADDR'])) {
             $ip = $this->server['REMOTE_ADDR'];
         } else {
             $ip = null;
