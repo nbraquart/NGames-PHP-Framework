@@ -1,12 +1,40 @@
 <?php
-
+/*
+ * Copyright (c) 2014-2016 Nicolas Braquart
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 namespace Ngames\Framework;
 
 use Ngames\Framework\Router\Route;
 use Ngames\Framework\Utility\Inflector;
 
+/**
+ * Controller.
+ * This class defines the logic executed when a controller is instanciated.
+ * It is the class the application controllers must inherit from.
+ *
+ * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
+ */
 class Controller
 {
+
     const CONTROLLER_NAMESPACE = 'Controller';
 
     const CONTROLLER_SUFFIX = 'Controller';
@@ -14,16 +42,19 @@ class Controller
     const ACTION_SUFFIX = 'Action';
 
     /**
+     *
      * @var View
      */
     protected $view;
 
     /**
+     *
      * @var Route
      */
     protected $route;
 
     /**
+     *
      * @var Request
      */
     protected $request;
@@ -43,21 +74,19 @@ class Controller
      * Does nothing by default, but can be overriden by application.
      */
     protected function preExecute()
-    {
-    }
+    {}
 
     /**
      * Post-execute.
      * Does nothing by default, but can be overriden by application.
      */
     protected function postExecute()
-    {
-    }
+    {}
 
     /**
      * Sets the controller request.
      *
-     * @param Request $request
+     * @param Request $request            
      */
     public function setRequest(Request $request)
     {
@@ -68,40 +97,79 @@ class Controller
      * Sets the route identified during this request.
      * Default view script is set at this stage.
      *
-     * @param Route $route
+     * @param Route $route            
      */
     public function setRoute(Route $route)
     {
         $this->route = $route;
         $this->view->setScriptFromRoute($this->route);
     }
-
+    
     // Status helper methods
+    
+    /**
+     * Return a successful response
+     *
+     * @param string $content            
+     * @return Response
+     */
     protected function ok($content = null)
     {
         return Response::createOkResponse($content);
     }
 
+    /**
+     * Return a redirect response
+     *
+     * @param string $url            
+     * @return Response
+     */
     protected function redirect($url)
     {
         return Response::createRedirectResponse($url);
     }
 
+    /**
+     * Return a not found response
+     *
+     * @param string $mesage            
+     * @return Response
+     */
     protected function notFound($message = null)
     {
         return Response::createNotFoundResponse($message);
     }
 
+    /**
+     * Return a bad request response
+     *
+     * @param string $mesage            
+     * @return Response
+     */
     protected function badRequest($message = null)
     {
         return Response::createBadRequestResponse($message);
     }
 
+    /**
+     * Return an internal error response
+     *
+     * @param string $mesage            
+     * @return Response
+     */
     protected function internalError($message = null)
     {
         return Response::createInternalErrorResponse($message);
     }
 
+    /**
+     * Forward the request to another action. Contrary to redirect, no HTTP response is sent to the user between the two actions.
+     * 
+     * @param string $actionName            
+     * @param string $controllerName            
+     * @param string $moduleName            
+     * @return mixed
+     */
     protected function forward($actionName, $controllerName = null, $moduleName = null)
     {
         // If module or controller not provided, use current route to determine current ones and use them
@@ -113,41 +181,40 @@ class Controller
                 $controllerName = $this->route->getControllerName();
             }
         }
-
+        
         // Build a new request
         $request = clone $this->request;
-        $request->setRequestUri('/'.$moduleName.'/'.$controllerName.'/'.$actionName);
+        $request->setRequestUri('/' . $moduleName . '/' . $controllerName . '/' . $actionName);
         
         // Build a new route
         $route = new Route($moduleName, $controllerName, $actionName);
-
+        
         // Execute again for the forward
         return self::execute($route, $request);
     }
-
-    // / Util methods
-
+    
     /**
-     * Output a JSON.
+     * Return response as JSON.
      *
-     * @param mixed  $json
-     * @param string $options
+     * @param mixed $json            
+     * @param int $options            
      *
      * @return \Ngames\Framework\Response
      */
     protected function json($json, $options = JSON_PRETTY_PRINT)
     {
         $response = new Response();
-        $response->setHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->setContentType('application/json', 'utf-8');
         $response->setContent(json_encode($json, $options));
-
+        
         return $response;
     }
 
     /**
      * Execute the provided request.
      *
-     * @param Request $request
+     * @param Request $request            
+     * @return mixed
      */
     public static function execute(Route $route, Request $request)
     {
@@ -155,45 +222,45 @@ class Controller
         $moduleName = $route->getModuleName();
         $controllerName = $route->getControllerName();
         $actionName = $route->getActionName();
-
+        
         // Build controller class name
-        $controllerClassName = self::CONTROLLER_NAMESPACE.'\\';
-        $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $moduleName))).'\\';
+        $controllerClassName = self::CONTROLLER_NAMESPACE . '\\';
+        $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $moduleName))) . '\\';
         $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $controllerName)));
         $controllerClassName .= self::CONTROLLER_SUFFIX;
-
+        
         // Build action method name
-        $actionMethodName = Inflector::camelize(str_replace('-', '_', $actionName)).self::ACTION_SUFFIX;
-
+        $actionMethodName = Inflector::camelize(str_replace('-', '_', $actionName)) . self::ACTION_SUFFIX;
+        
         // Handle not found (test if class is loadable, exists and method exists)
-        if (!\Ngames\Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName) || !class_exists($controllerClassName) || !method_exists($controllerClassName, $actionMethodName)) {
-            $message = 'Not found: '.$controllerClassName.'::'.$actionMethodName.'()';
+        if (! \Ngames\Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName) || ! class_exists($controllerClassName) || ! method_exists($controllerClassName, $actionMethodName)) {
+            $message = 'Not found: ' . $controllerClassName . '::' . $actionMethodName . '()';
             \Ngames\Framework\Logger::logWarning($message);
-
+            
             return Response::createNotFoundResponse(\Ngames\Framework\Application::getInstance()->isDebug() ? $message : null);
         }
-
+        
         // Create the controller
         $controllerInstance = new $controllerClassName();
         $controllerInstance->setRequest($request);
         $controllerInstance->setRoute($route);
-
+        
         // Execute preExecute, action and postExecute. First not null return value is returned
         $methods = [
             'preExecute',
             $actionMethodName,
-            'postExecute',
+            'postExecute'
         ];
         $actionResult = null;
-
+        
         foreach ($methods as $method) {
             $actionResult = $controllerInstance->$method();
-
+            
             if ($actionResult !== null) {
                 break;
             }
         }
-
+        
         return $actionResult;
     }
 }

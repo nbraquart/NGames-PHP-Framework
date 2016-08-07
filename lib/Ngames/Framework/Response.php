@@ -1,9 +1,35 @@
 <?php
-
+/*
+ * Copyright (c) 2014-2016 Nicolas Braquart
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 namespace Ngames\Framework;
 
+/**
+ * Represents the response from a controller.
+ * 
+ * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
+ */
 class Response
 {
+
     const HTTP_STATUS_OK = 200;
 
     const HTTP_STATUS_CREATED = 201;
@@ -26,12 +52,26 @@ class Response
 
     const HTTP_STATUS_NOT_IMPLEMENTED = 501;
 
+    const CONTENT_TYPE_HEADER = 'Content-Type';
+    
+    /**
+     * @var int
+     */
     protected $statusCode;
 
+    /**
+     * @var array
+     */
     protected $headers;
 
+    /**
+     * @var string|null
+     */
     protected $content;
 
+    /**
+     * Initializes an empty successful response.
+     */
     public function __construct()
     {
         $this->headers = [];
@@ -39,80 +79,146 @@ class Response
         $this->statusCode = self::HTTP_STATUS_OK;
     }
 
+    /**
+     * Outputs the response.
+     */
     public function send()
     {
         // Send headers
         foreach ($this->headers as $name => $value) {
-            header($name.': '.$value);
+            header($name . ': ' . $value);
         }
-
+        
         // Set response code
         http_response_code($this->statusCode);
-
+        
         // Send the content
-        echo $this->content;
+        if ($this->content !== null) {
+            echo $this->content;
+        }
     }
 
+    /**
+     * Changes the response status code
+     * @param int $statusCode
+     */
     public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
     }
 
+    /**
+     * Adds a new header value
+     * @param string $name
+     * @param string $value
+     */
     public function setHeader($name, $value)
     {
         $this->headers[$name] = $value;
     }
 
+    /**
+     * Sets the content type of the response (helper to set a header).
+     * 
+     * @param String $contentType
+     * @param String|null $charset Optional charset
+     */
+    public function setContentType($contentType, $charset = null)
+    {
+        $headerValue = $contentType;
+
+        if ($charset !== null) {
+            $headerValue .= '; charset=' . $charset;
+        }
+
+        $this->setHeader(self::CONTENT_TYPE_HEADER, $headerValue);
+    }
+    
+    
+    /**
+     * Sets the content of the response
+     * @param string|null $content
+     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /**
+     * Create a successful response
+     *
+     * @param string $content            
+     * @return Response
+     */
     public static function createOkResponse($content = null)
     {
         $response = new self();
         $response->setContent($content);
         $response->setStatusCode(self::HTTP_STATUS_OK);
-
+        
         return $response;
     }
 
+    /**
+     * Create an internal error response
+     *
+     * @param string $message            
+     * @return Response
+     */
     public static function createInternalErrorResponse($message = null)
     {
         $response = new self();
         $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->setContent($message != null ? $message : 'Internal server error.');
         $response->setStatusCode(self::HTTP_STATUS_INTERNAL_SERVER_ERROR);
-
+        
         return $response;
     }
 
+    /**
+     * Create a not found response
+     *
+     * @param string $message            
+     * @return Response
+     */
     public static function createNotFoundResponse($message = null)
     {
         $response = new self();
         $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->setContent($message != null ? $message : 'File not found.');
         $response->setStatusCode(self::HTTP_STATUS_NOT_FOUND);
-
+        
         return $response;
     }
 
+    /**
+     * Create a bad request response
+     *
+     * @param string $message            
+     * @return Response
+     */
     public static function createBadRequestResponse($message = null)
     {
         $response = new self();
         $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->setContent($message != null ? $message : 'Bad request.');
         $response->setStatusCode(self::HTTP_STATUS_BAD_REQUEST);
-
+        
         return $response;
     }
 
+    /**
+     * Create a redirect response
+     *
+     * @param string $url            
+     * @return Response
+     */
     public static function createRedirectResponse($url)
     {
         $response = new self();
         $response->setStatusCode(self::HTTP_STATUS_MOVED_PERMANENTLY);
         $response->setHeader('Location', $url);
-
+        
         return $response;
     }
 }
