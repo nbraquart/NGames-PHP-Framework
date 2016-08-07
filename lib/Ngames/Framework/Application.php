@@ -40,11 +40,6 @@ class Application
     protected static $instance = null;
 
     /**
-     * @var Autoloader
-     */
-    protected $autoloader = null;
-
-    /**
      * @var Router
      */
     protected $router = null;
@@ -69,12 +64,13 @@ class Application
     public static function initialize($configurationFile)
     {
         // First check an instance does not already exists
-        if (self::$instance != null) {
+        if (self::$instance instanceof self) {
             require_once __DIR__ . '/Exception.php';
             throw new Exception('The application has already been initialized');
         }
         
-        return self::$instance = new self($configurationFile);
+        // Uses late static binding, in case parent constructor was overriden in possible child class
+        return self::$instance = new static($configurationFile);
     }
 
     /**
@@ -85,7 +81,7 @@ class Application
     public static function getInstance()
     {
         // Ensure instance exists
-        if (self::$instance == null) {
+        if (!(self::$instance instanceof self)) {
             require_once __DIR__ . '/Exception.php';
             throw new Exception('The application has not been initialized');
         }
@@ -98,21 +94,16 @@ class Application
      *
      * @param string $configurationFile            
      */
-    private function __construct($configurationFile)
+    protected function __construct($configurationFile)
     {
-        // Register autoload
-        require_once __DIR__ . '/Autoloader.php';
-        $this->autoloader = new Autoloader();
-        $this->autoloader->register();
-        
+        // Parse the configuration
+        $this->configuration = new IniFile($configurationFile);
+
         // Initialize the router
         $this->router = new \Ngames\Framework\Router\Router();
         
         // Initialize the timer
         $this->timer = new \Ngames\Framework\Timer();
-        
-        // Parse the configuration
-        $this->configuration = new IniFile($configurationFile);
         
         // Intialize the logging facility if needed
         if ($this->configuration->has('log')) {
@@ -134,15 +125,6 @@ class Application
     public function getConfiguration()
     {
         return $this->configuration;
-    }
-
-    /**
-     *
-     * @return \Ngames\Framework\Autoloader
-     */
-    public function getAutoloader()
-    {
-        return $this->autoloader;
     }
 
     /**

@@ -74,7 +74,7 @@ class Finder
      * @param string $query            
      * @param array $params            
      *
-     * @return array
+     * @return array|boolean
      */
     public function query($query, array $params = [])
     {

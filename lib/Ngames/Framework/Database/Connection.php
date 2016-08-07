@@ -70,7 +70,7 @@ class Connection
      * @param string $query            
      * @param array $params            
      *
-     * @return array|bool The result of the query
+     * @return array|boolean The result of the query
      */
     public static function query($query, array $params = [])
     {
@@ -101,7 +101,7 @@ class Connection
      * @param string $query            
      * @param array $params            
      *
-     * @return int The number of rows impacted
+     * @return int|boolean The number of rows impacted
      */
     public static function exec($query, array $params = [])
     {
@@ -127,7 +127,7 @@ class Connection
      * @param string $query            
      * @param array $params            
      *
-     * @return int
+     * @return int|boolean
      */
     public static function count($query, array $params = [])
     {

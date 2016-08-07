@@ -109,7 +109,7 @@ class View
 
     /**
      *
-     * @param string $script
+     * @param string|null $script
      *            The view script (under the view directory)
      */
     public function __construct($script = null)
@@ -238,8 +238,9 @@ class View
      * In getter mode, non-existing values are returned as empty string.
      *
      * @param string $name            
-     * @param string $value
+     * @param string $value|null
      *            Default null, meaning get value
+     * @return string
      */
     public function placeholder($name, $value = null)
     {
