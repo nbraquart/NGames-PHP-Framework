@@ -9,7 +9,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/?branch=master)
 
 ## Installation
-Use composer to install the application: `composer require ngames/framework`. Or you can update the `composer.json` file by adding the following line in the require object:
+Use composer to install the application: `composer require ngames/framework`. Or you can update the `composer.json` file by adding the following line in the `require` object:
 
     "ngames/framework": "*"
 
@@ -33,13 +33,15 @@ You need to write a configuration file using INI format. Typically, this file is
 ### Application initialization
 In a `public` folder in the root of the project, create an `index.php` file with the following content:
 
-    <?php
-    defined("ROOT_DIR") || define ("ROOT_DIR", dirname(__DIR__));
-    chdir(ROOT_DIR);
-    
-    // Initialize and run the application
-    require_once ROOT_DIR . '/vendor/autoload.php';
-    \Ngames\Framework\Application::initialize(ROOT_DIR . '/config/application.ini')->run();
+```php
+<?php
+defined("ROOT_DIR") || define ("ROOT_DIR", dirname(__DIR__));
+chdir(ROOT_DIR);
+
+// Initialize and run the application
+require_once ROOT_DIR . '/vendor/autoload.php';
+\Ngames\Framework\Application::initialize(ROOT_DIR . '/config/application.ini')->run();
+```
 
 That's all you need to startup the application.
 

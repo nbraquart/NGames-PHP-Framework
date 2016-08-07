@@ -123,7 +123,7 @@ class Logger
      *
      * @param int $level            
      * @param string $message            
-     * @param array|null $trace            
+     * @param array $trace            
      *
      */
     private static function log($level, $message, $trace)
