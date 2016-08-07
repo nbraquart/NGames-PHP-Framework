@@ -49,7 +49,7 @@ class Logger
      */
     public static function initialize($destination, $minLevel)
     {
-        self::$minLevel = $minLevel;
+        self::setMinLevel($minLevel);
         self::setDestination($destination);
     }
 
@@ -63,11 +63,21 @@ class Logger
     {
         self::$destination = $destination;
         
-        if (!self::$file = fopen(self::$destination, 'a')) {
-            throw new \Exception('Cannot open log file for writing');
+        if ($destination !== null && !(self::$file = @fopen(self::$destination, 'a'))) {
+            throw new Exception('Cannot open log file for writing');
         }
     }
 
+    /**
+     * Sets the minimum level for which logs are printed.
+     * 
+     * @param int $minLevel Use the Logger::LEVEL_* constants
+     */
+    public static function setMinLevel($minLevel)
+    {
+        self::$minLevel = $minLevel;
+    }
+    
     /**
      * Logs a debug message
      *
@@ -113,15 +123,12 @@ class Logger
      *
      * @param int $level            
      * @param string $message            
-     * @param array|null $trace            
+     * @param array $trace            
      *
      */
-    private static function log($level, $message, $trace = null)
+    private static function log($level, $message, $trace)
     {
         if (self::$destination != null && self::$minLevel <= $level) {
-            if ($trace == null) {
-                $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0];
-            }
             $logLine = self::assembleLogLine($level, $message, $trace);
             \Ngames\Framework\Utility\FileSystem::fwriteStream(self::$file, $logLine);
         }

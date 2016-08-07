@@ -32,7 +32,7 @@ class Inflector
 
     /**
      * Transform a string to its camelized version.
-     * Hello there => HelloThere
+     * Hello there => helloThere
      *
      * @param string $string            
      */
@@ -43,7 +43,7 @@ class Inflector
 
     /**
      * Transform a string to its underscored version.
-     * Hello there => hello_there
+     * HelloThere => hello_there
      *
      * @param string $string            
      */
@@ -85,8 +85,8 @@ class Inflector
      */
     public static function ellipsis($string, $maxLength)
     {
-        if (strlen($string) > $maxLength) {
-            $string = substr($string, 0, $maxLength - 4) . ' ...';
+        if (mb_strlen($string) > $maxLength) {
+            $string = substr($string, 0, $maxLength) . ' ...';
         }
         
         return $string;

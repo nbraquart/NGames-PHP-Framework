@@ -27,7 +27,7 @@ use Ngames\Framework\Router\Route;
 /**
  * This class represents a view.
  *
- * @property string view In case it's a parent view, there will be a 'content' property containing the child view content
+ * @property string content In case it's a parent view, there will be a 'content' property containing the child view content
  *          
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */

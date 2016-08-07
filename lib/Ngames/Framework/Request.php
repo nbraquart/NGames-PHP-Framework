@@ -30,7 +30,7 @@ use Ngames\Framework\Storage\PhpSession;
  *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-final class Request
+class Request
 {
 
     const HTTP_METHOD_OPTIONS = 'OPTIONS';
@@ -110,47 +110,25 @@ final class Request
     /**
      * Create a new request object from the request context
      *
-     * @param String $method            
-     * @param String $requestUri            
      * @param array $getParameters            
      * @param array $postParameters            
      * @param array $cookies            
-     * @param PhpSession $session            
      * @param array $server            
      * @param array $files            
      */
-    private function __construct($method, $requestUri, $getParameters, $postParameters, $cookies, PhpSession $session, $server, $files)
+    public function __construct($getParameters = [], $postParameters = [], $cookies = [], $server = [], $files = [])
     {
-        $this->method = $method;
-        $this->requestUri = $requestUri;
-        $this->postParameters = $postParameters;
         $this->getParameters = $getParameters;
+        $this->postParameters = $postParameters;
         $this->cookies = $cookies;
-        $this->session = $session;
+        $this->session = PhpSession::getInstance();
         $this->server = $server;
         $this->files = $files;
-    }
 
-    /**
-     * Create a new request from the global variables.
-     *
-     * @return Request
-     */
-    public static function createRequestFromGlobals()
-    {
-        // Get the URI (only if not CLI)
-        if (PHP_SAPI != 'cli') {
-            $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
-            $requestMethod = $_SERVER['REQUEST_METHOD'];
-        } else {
-            $uri = null;
-            $requestMethod = null;
+        if (!$this->isCli()) {
+            $this->method = $this->server['REQUEST_METHOD'];
+            $this->requestUri = explode('?', $this->server['REQUEST_URI'])[0];
         }
-        
-        // Build and return the request
-        $request = new \Ngames\Framework\Request($requestMethod, $uri, $_GET, $_POST, $_COOKIE, PhpSession::getInstance(), $_SERVER, $_FILES);
-        
-        return $request;
     }
 
     /**
@@ -169,6 +147,80 @@ final class Request
     public function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * Return the value of the GET parameter.
+     * If not found, return $default instead
+     *
+     * @param string $name            
+     * @param string|null $default            
+     * @return string
+     */
+    public function getGetParameter($name, $default = null)
+    {
+        return array_key_exists($name, $this->getParameters) ? $this->getParameters[$name] : $default;
+    }
+
+    /**
+     * Return the value of the POST parameter.
+     * If not found, return $default instead
+     *
+     * @param string $name            
+     * @param string|null $default            
+     * @return string
+     */
+    public function getPostParameter($name, $default = null)
+    {
+        return array_key_exists($name, $this->postParameters) ? $this->postParameters[$name] : $default;
+    }
+
+    /**
+     * Return the value of the cookie.
+     * If not found, return $default instead
+     *
+     * @param string $name            
+     * @param string|null $default            
+     * @return string
+     */
+    public function getCookie($name, $default = null)
+    {
+        return array_key_exists($name, $this->cookies) ? $this->cookies[$name] : $default;
+    }
+
+    /**
+     * Return the value of the header.
+     * If not found, return $default instead
+     *
+     * @param string $name            
+     * @param string|null $default            
+     * @return string
+     */
+    public function getHeader($name, $default = null)
+    {
+        $serverKey = 'HTTP_' . str_replace('-', '_', mb_strtoupper($name));
+        return array_key_exists($serverKey, $this->server) ? $this->server[$serverKey] : $default;
+    }
+
+    /**
+     * Return the uploaded file by name
+     * 
+     * @param string $name
+     * @return array|null            
+     */
+    public function getFile($name)
+    {
+        return array_key_exists($name, $this->files) ? $this->files[$name] : null;
+    }
+
+    /**
+     * Whether the application is being run in command line or not
+     * 
+     * @return boolean
+     */
+    public function isCli()
+    {
+        return PHP_SAPI === 'cli';
     }
 
     /**

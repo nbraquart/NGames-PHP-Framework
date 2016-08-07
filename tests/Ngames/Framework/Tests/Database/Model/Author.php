@@ -20,46 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Ngames\Framework;
+namespace Ngames\Framework\Tests\Database\Model;
 
-/**
- *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
- */
-class Timer
+use Ngames\Framework\Database\Connection;
+use Ngames\Framework\Database\AbstractModel;
+use \Ngames\Framework\Database\Annotations\Id;
+
+class Author extends AbstractModel
 {
 
-    public $time;
-
     /**
-     * Creates a new timer.
-     * If no time provided, it is initialized with the current time.
-     *
-     * @param int|null $time
-     *            timestamp to initialize the timer with
+     * @Id
      */
-    public function __construct($time = null)
-    {
-        $this->time = $time === null ? self::now()->time : $time;
-    }
+    public $id;
 
-    /**
-     * Return the timestamp
-     *
-     * @return int
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
+    public $lastName;
 
-    /**
-     * Create a new timer for current timestamp
-     *
-     * @return Timer
-     */
-    public static function now()
-    {
-        return new self(microtime(true));
-    }
+    public $firstName;
 }
