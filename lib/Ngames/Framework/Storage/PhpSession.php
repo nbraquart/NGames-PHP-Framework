@@ -25,7 +25,7 @@ namespace Ngames\Framework\Storage;
 /**
  * PhpSession storage.
  * Uses PhpArray, and is initialized from the session. Values that are changed are written to session at the end of the process.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class PhpSession extends PhpArray implements StorageInterface
@@ -36,6 +36,7 @@ class PhpSession extends PhpArray implements StorageInterface
     protected static $instance = null;
 
     /**
+     *
      * @return PhpSession
      */
     public static function getInstance()
@@ -46,7 +47,7 @@ class PhpSession extends PhpArray implements StorageInterface
         
         return self::$instance;
     }
-
+    
     // Should not be public but PHP does not allow it.
     public function __construct()
     {

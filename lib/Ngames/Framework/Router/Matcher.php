@@ -90,7 +90,7 @@ class Matcher
         if ($countPattern !== count($uri)) {
             $match = false;
         } else {
-            for ($i = 0; $i < $countPattern; $i ++) {
+            for ($i = 0; $i < $countPattern; $i++) {
                 $currentPatternPart = $pattern[$i];
                 $currentUriPart = $uri[$i];
                 
@@ -114,18 +114,18 @@ class Matcher
 
     /**
      * Checks that the configuration of the matcher is valid and throws an exception otherwise.
-     * 
+     *
      * @throws InvalidMatcherException
      */
     private function check()
     {
-        if (! ($this->moduleName !== null xor strpos($this->pattern, self::MODULE_KEY) !== false)) {
+        if (!($this->moduleName !== null xor strpos($this->pattern, self::MODULE_KEY) !== false)) {
             throw new InvalidMatcherException('Missing module key or module value, or provided both');
         }
-        if (! ($this->controllerName !== null xor strpos($this->pattern, self::CONTROLLER_KEY) !== false)) {
+        if (!($this->controllerName !== null xor strpos($this->pattern, self::CONTROLLER_KEY) !== false)) {
             throw new InvalidMatcherException('Missing controller key or controller value, or provided both');
         }
-        if (! ($this->actionName !== null xor strpos($this->pattern, self::ACTION_KEY) !== false)) {
+        if (!($this->actionName !== null xor strpos($this->pattern, self::ACTION_KEY) !== false)) {
             throw new InvalidMatcherException('Missing action key or action value, or provided both');
         }
     }
@@ -138,7 +138,7 @@ class Matcher
     private function prepareForMatching($uri)
     {
         return array_values(array_filter(explode('/', $uri), function ($uriPart) {
-            return ! empty($uriPart);
+            return !empty($uriPart);
         }));
     }
 }

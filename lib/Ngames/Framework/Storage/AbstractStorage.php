@@ -24,7 +24,7 @@ namespace Ngames\Framework\Storage;
 
 /**
  * Make the bridge by implementing array access methods using StorageInterface methods.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 abstract class AbstractStorage implements StorageInterface, \ArrayAccess

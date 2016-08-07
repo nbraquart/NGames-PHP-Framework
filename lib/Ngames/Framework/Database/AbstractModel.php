@@ -20,17 +20,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 namespace Ngames\Framework\Database;
 
 /**
  * Abstract class for models classes.
  * Provide utility methods like from and to array and get finder instance.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 abstract class AbstractModel
 {
+
     /**
      * Stores metadata for model classes (cache).
      * Keys are class names (as returned by get_class()), values are arrays.
@@ -71,61 +71,61 @@ abstract class AbstractModel
     /**
      * Sets values of current class from an array.
      *
-     * @param array $array
+     * @param array $array            
      *
      * @return \Ngames\Framework\Database\AbstractModel
      */
     public function fromArray(array $array)
     {
         $metadata = $this->getClassMetadata(get_class($this));
-
+        
         // Store properties for reference. Keys are the property referencing another class, values are arrays of properties for this class
         $referencesProperties = [];
         // Store properties for current class
         $properties = [];
-
+        
         // Dispatch properties by destination class (current or one of its references)
         foreach ($array as $property => $value) {
             $isReference = false;
-
+            
             // For all properties that are reference to another class
             if (array_key_exists('reference_properties', $metadata)) {
                 foreach (array_keys($metadata['reference_properties']) as $referenceProperty) {
                     // If current property starts with the reference property name, then it's a value for referenced class
-                    if (strpos($property, $referenceProperty.'_') === 0) {
-                        $localPropertyName = str_replace($referenceProperty.'_', '', $property);
+                    if (strpos($property, $referenceProperty . '_') === 0) {
+                        $localPropertyName = str_replace($referenceProperty . '_', '', $property);
                         $referencesProperties[$referenceProperty][$localPropertyName] = $value;
                         $isReference = true;
                         break;
                     }
                 }
             }
-
+            
             // Property was not found as a reference, then it's a value for current class
             if (!$isReference && array_key_exists($property, $metadata['properties_mapping'])) {
                 $properties[$property] = $value;
             }
         }
-
+        
         // Set my properties
         foreach ($properties as $property => $value) {
             $this->{$metadata['properties_mapping'][$property]} = $value;
         }
-
+        
         // Set references properties
         foreach ($referencesProperties as $referenceProperty => $referenceProperties) {
             $referenceInstance = new $metadata['reference_properties'][$referenceProperty]();
             $referenceInstance->fromArray($referenceProperties);
             $this->{$metadata['properties_mapping'][$referenceProperty]} = $referenceInstance;
         }
-
+        
         return $this;
     }
 
     /**
      * Return the metadata for the provided class.
      *
-     * @param string $className
+     * @param string $className            
      *
      * @return array
      */
@@ -134,16 +134,16 @@ abstract class AbstractModel
         if (!array_key_exists($className, self::$metadata)) {
             // Get the reflection class and class name
             $reflectionClass = new \ReflectionClass($className);
-
+            
             // Initialize a reader (APC if available, or in memory array cache)
             $reader = $this->getAnnotationsReader();
-
+            
             // For each property
             $properties = $reflectionClass->getProperties();
-
+            
             // Initialize metadata
             $metadata = [];
-
+            
             foreach ($properties as $property) {
                 // We only want non static properties defined by the sub-class
                 if (!$property->isStatic() && $property->getDeclaringClass()->getName() == $className) {
@@ -151,7 +151,7 @@ abstract class AbstractModel
                     $propertyNameUnderscore = \Ngames\Framework\Utility\Inflector::underscore($propertyName);
                     $idAnnotation = $reader->getPropertyAnnotation($property, '\Ngames\Framework\Database\Annotations\Id');
                     $referenceAnnotation = $reader->getPropertyAnnotation($property, '\Ngames\Framework\Database\Annotations\Reference');
-
+                    
                     // Add to the list
                     $metadata['properties_mapping'][$propertyNameUnderscore] = $propertyName;
                     if ($idAnnotation !== null) {
@@ -162,10 +162,10 @@ abstract class AbstractModel
                     }
                 }
             }
-
+            
             self::$metadata[$className] = $metadata;
         }
-
+        
         return self::$metadata[$className];
     }
 
@@ -178,11 +178,11 @@ abstract class AbstractModel
     {
         // Register the annotations in the Doctrine annotations loader
         if (!self::$autoloadNamespaceRegistered) {
-            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__.'/Annotations/Id.php');
-            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__.'/Annotations/Reference.php');
+            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Id.php');
+            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Reference.php');
             self::$autoloadNamespaceRegistered = true;
         }
-
+        
         return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcCache() : new \Doctrine\Common\Cache\ArrayCache());
     }
 }

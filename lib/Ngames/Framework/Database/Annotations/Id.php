@@ -20,16 +20,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 namespace Ngames\Framework\Database\Annotations;
 
 /**
  * Annotation to identify the field(s) that are part of the primary key.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
- * 
- * @Annotation
- * @Target({"PROPERTY"})
+ *        
+ *         @Annotation
+ *         @Target({"PROPERTY"})
  */
 class Id
 {

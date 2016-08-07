@@ -55,7 +55,7 @@ class Timer
 
     /**
      * Create a new timer for current timestamp
-     * 
+     *
      * @return Timer
      */
     public static function now()

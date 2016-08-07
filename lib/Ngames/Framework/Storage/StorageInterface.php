@@ -24,7 +24,7 @@ namespace Ngames\Framework\Storage;
 
 /**
  * Basic interface for all storage types.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 interface StorageInterface

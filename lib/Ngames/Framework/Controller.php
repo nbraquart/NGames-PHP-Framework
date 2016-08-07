@@ -163,8 +163,9 @@ class Controller
     }
 
     /**
-     * Forward the request to another action. Contrary to redirect, no HTTP response is sent to the user between the two actions.
-     * 
+     * Forward the request to another action.
+     * Contrary to redirect, no HTTP response is sent to the user between the two actions.
+     *
      * @param string $actionName            
      * @param string $controllerName            
      * @param string $moduleName            
@@ -192,7 +193,7 @@ class Controller
         // Execute again for the forward
         return self::execute($route, $request);
     }
-    
+
     /**
      * Return response as JSON.
      *
@@ -233,7 +234,7 @@ class Controller
         $actionMethodName = Inflector::camelize(str_replace('-', '_', $actionName)) . self::ACTION_SUFFIX;
         
         // Handle not found (test if class is loadable, exists and method exists)
-        if (! \Ngames\Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName) || ! class_exists($controllerClassName) || ! method_exists($controllerClassName, $actionMethodName)) {
+        if (!\Ngames\Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName) || !class_exists($controllerClassName) || !method_exists($controllerClassName, $actionMethodName)) {
             $message = 'Not found: ' . $controllerClassName . '::' . $actionMethodName . '()';
             \Ngames\Framework\Logger::logWarning($message);
             

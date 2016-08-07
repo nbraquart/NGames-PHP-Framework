@@ -40,7 +40,7 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
      */
     public function __construct($fileName)
     {
-        if (! is_readable($fileName)) {
+        if (!is_readable($fileName)) {
             throw new Exception($fileName . ' is not readable');
         }
         
@@ -56,8 +56,9 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
 
     /**
      * Persist the configuration to a filename
-     * @param string $fileName
-     * @param array $configuration
+     * 
+     * @param string $fileName            
+     * @param array $configuration            
      */
     public static function writeFile($fileName, $configuration)
     {
@@ -90,7 +91,7 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
             if (is_array($value)) {
                 $currentResult = $this->processParsedFile($value);
             } else {
-                if (strpos($value, '%') == - 1) {
+                if (strpos($value, '%') == -1) {
                     $currentResult = $value;
                 } else {
                     $currentResult = preg_replace_callback('/%(.*?)%/s', function ($match) {

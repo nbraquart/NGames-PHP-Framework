@@ -106,7 +106,9 @@ class View
     protected $currentPlaceHolder = null;
 
     /**
-     * @param string $script The view script (under the view directory)
+     *
+     * @param string $script
+     *            The view script (under the view directory)
      */
     public function __construct($script = null)
     {
@@ -401,8 +403,8 @@ class View
 
     /**
      * Renders the view.
-     * 
-     * @param string|null $script
+     *
+     * @param string|null $script            
      * @throws Exception
      * @throws \Ngames\Framework\Exception
      * @throws \Exception
@@ -417,7 +419,7 @@ class View
         
         // Check the script path
         $scriptFullPath = $this->directory . $this->getScript() . self::VIEWS_EXTENSION;
-        if (! is_readable($scriptFullPath)) {
+        if (!is_readable($scriptFullPath)) {
             throw new Exception($scriptFullPath . ' not found');
         }
         

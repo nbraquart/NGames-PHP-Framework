@@ -20,27 +20,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 namespace Ngames\Framework;
 
 use Doctrine\Common\ClassLoader;
 
 /**
- * Default autoloader. It expects to find the Controller classes under the src folder of
+ * Default autoloader.
+ * It expects to find the Controller classes under the src folder of
  * the application.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Autoloader
 {
+
     protected $classLoaders = [];
 
     public function register()
     {
         $namespaces = [
-            'Controller' => ROOT_DIR.'/src',
+            'Controller' => ROOT_DIR . '/src'
         ];
-
+        
         foreach ($namespaces as $namespace => $includePath) {
             $classLoader = new ClassLoader($namespace, $includePath);
             $classLoader->register();
@@ -49,7 +50,8 @@ class Autoloader
     }
 
     /**
-     * @param string $className
+     *
+     * @param string $className            
      * @return boolean
      */
     public function canLoadClass($className)
@@ -59,7 +61,7 @@ class Autoloader
                 return true;
             }
         }
-
+        
         return false;
     }
 }

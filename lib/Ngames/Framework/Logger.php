@@ -63,7 +63,7 @@ class Logger
     {
         self::$destination = $destination;
         
-        if (! self::$file = fopen(self::$destination, 'a')) {
+        if (!self::$file = fopen(self::$destination, 'a')) {
             throw new \Exception('Cannot open log file for writing');
         }
     }
@@ -129,7 +129,7 @@ class Logger
 
     /**
      * Assemble the log line that will be written to the log file
-     * 
+     *
      * @param int $level            
      * @param string $message            
      * @param array $trace            

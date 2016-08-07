@@ -20,18 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 namespace Ngames\Framework\Database\Annotations;
 
 /**
  * Annotation to register a class as a reference
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
- * 
- * @Annotation
- * @Target({"PROPERTY"})
+ *        
+ *         @Annotation
+ *         @Target({"PROPERTY"})
  */
 class Reference
 {
+
     public $targetClass;
 }

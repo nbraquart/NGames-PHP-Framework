@@ -1,5 +1,4 @@
 <?php
-
 namespace Framework\Tests;
 
 use Ngames\Framework\Router\Matcher;
@@ -42,20 +41,20 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing action key or action value, or provided both');
         new Matcher('/:action', 'module', 'controller', 'action');
     }
-
+    
     // No match cases
     public function testNoMatch()
     {
         $matcher1 = new Matcher('/test', 'module1', 'controller1', 'action1');
         $this->assertNull($matcher1->match('/test1'));
-
+        
         $matcher2 = new Matcher('/test/test', 'module2', 'controller2', 'action2');
         $this->assertNull($matcher1->match('/test/test1'));
-
+        
         $matcher2 = new Matcher('/:module/:controller/:action');
         $this->assertNull($matcher1->match('/module/controller/action/a'));
     }
-
+    
     // Match cases
     public function testMatch_onlyDefault()
     {

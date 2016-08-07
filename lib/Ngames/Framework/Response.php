@@ -24,7 +24,7 @@ namespace Ngames\Framework;
 
 /**
  * Represents the response from a controller.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Response
@@ -53,18 +53,21 @@ class Response
     const HTTP_STATUS_NOT_IMPLEMENTED = 501;
 
     const CONTENT_TYPE_HEADER = 'Content-Type';
-    
+
     /**
+     *
      * @var int
      */
     protected $statusCode;
 
     /**
+     *
      * @var array
      */
     protected $headers;
 
     /**
+     *
      * @var string|null
      */
     protected $content;
@@ -100,7 +103,8 @@ class Response
 
     /**
      * Changes the response status code
-     * @param int $statusCode
+     * 
+     * @param int $statusCode            
      */
     public function setStatusCode($statusCode)
     {
@@ -109,8 +113,9 @@ class Response
 
     /**
      * Adds a new header value
-     * @param string $name
-     * @param string $value
+     * 
+     * @param string $name            
+     * @param string $value            
      */
     public function setHeader($name, $value)
     {
@@ -119,25 +124,26 @@ class Response
 
     /**
      * Sets the content type of the response (helper to set a header).
-     * 
-     * @param String $contentType
-     * @param String|null $charset Optional charset
+     *
+     * @param String $contentType            
+     * @param String|null $charset
+     *            Optional charset
      */
     public function setContentType($contentType, $charset = null)
     {
         $headerValue = $contentType;
-
+        
         if ($charset !== null) {
             $headerValue .= '; charset=' . $charset;
         }
-
+        
         $this->setHeader(self::CONTENT_TYPE_HEADER, $headerValue);
     }
-    
-    
+
     /**
      * Sets the content of the response
-     * @param string|null $content
+     * 
+     * @param string|null $content            
      */
     public function setContent($content)
     {

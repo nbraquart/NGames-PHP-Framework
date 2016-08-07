@@ -27,7 +27,7 @@ use Ngames\Framework\Storage\PhpSession;
 /**
  * Stores all informations relative to the current request being processed.
  * This is initialized by the application, and given to the controller.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Request

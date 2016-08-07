@@ -24,7 +24,7 @@ namespace Ngames\Framework\Storage;
 
 /**
  * Simple wrapper over a PHP array.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class PhpArray extends AbstractStorage implements StorageInterface

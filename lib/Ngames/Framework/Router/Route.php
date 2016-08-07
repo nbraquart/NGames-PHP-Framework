@@ -20,34 +20,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 namespace Ngames\Framework\Router;
 
 /**
- * A route returned by the router. It is a simple wrapper over the found module/controller/action.
+ * A route returned by the router.
+ * It is a simple wrapper over the found module/controller/action.
+ * 
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Route
 {
+
     /**
+     *
      * @var string
      */
     protected $moduleName;
 
     /**
+     *
      * @var string
      */
     protected $controllerName;
 
     /**
+     *
      * @var string
      */
     protected $actionName;
 
     /**
-     * @param string $moduleName
-     * @param string $controllerName
-     * @param string $actionName
+     *
+     * @param string $moduleName            
+     * @param string $controllerName            
+     * @param string $actionName            
      */
     public function __construct($moduleName, $controllerName, $actionName)
     {
@@ -57,6 +63,7 @@ class Route
     }
 
     /**
+     *
      * @return string
      */
     public function getModuleName()
@@ -65,6 +72,7 @@ class Route
     }
 
     /**
+     *
      * @return string
      */
     public function getControllerName()
@@ -73,6 +81,7 @@ class Route
     }
 
     /**
+     *
      * @return string
      */
     public function getActionName()

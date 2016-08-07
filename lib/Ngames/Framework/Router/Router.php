@@ -25,7 +25,7 @@ namespace Ngames\Framework\Router;
 /**
  * The router class is used to find the route for a given URI.
  * You can add matchers to it to register your own routes.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Router
