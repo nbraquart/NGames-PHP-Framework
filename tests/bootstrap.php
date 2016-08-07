@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014-2016 Nicolas Braquart
  *
@@ -20,6 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 $autoloader = require dirname(__DIR__) . '/vendor/autoload.php';
+$autoloader->add('Ngames\\', __DIR__);
 
 return $autoloader;
