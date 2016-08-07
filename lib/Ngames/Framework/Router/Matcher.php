@@ -55,9 +55,9 @@ class Matcher
      * Etc.
      *
      * @param string $pattern            
-     * @param string $moduleName            
-     * @param string $controllerName            
-     * @param string $actionName            
+     * @param string|null $moduleName            
+     * @param string|null $controllerName            
+     * @param string|null $actionName            
      */
     public function __construct($pattern, $moduleName = null, $controllerName = null, $actionName = null)
     {
@@ -75,7 +75,7 @@ class Matcher
      *
      * @param string $uri            
      *
-     * @return Route
+     * @return Route|null
      */
     public function match($uri)
     {

@@ -54,7 +54,7 @@ class Router
     /**
      *
      * @param string $uri            
-     * @return string|null the found route if any, null otherwise
+     * @return Route|null the found route if any, null otherwise
      */
     public function getRoute($uri)
     {

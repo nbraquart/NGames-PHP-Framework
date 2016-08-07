@@ -30,7 +30,7 @@ use Ngames\Framework\Storage\PhpSession;
  *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-class Request
+final class Request
 {
 
     const HTTP_METHOD_OPTIONS = 'OPTIONS';
