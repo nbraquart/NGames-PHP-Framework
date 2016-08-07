@@ -205,7 +205,8 @@ class Request
     /**
      * Return the uploaded file by name
      * 
-     * @param string $name            
+     * @param string $name
+     * @return array|null            
      */
     public function getFile($name)
     {
