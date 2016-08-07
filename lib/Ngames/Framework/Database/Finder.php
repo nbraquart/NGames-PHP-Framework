@@ -74,7 +74,7 @@ class Finder
      * @param string $query            
      * @param array $params            
      *
-     * @return array[\Ngames\Framework\Database\AbstractModel]
+     * @return array
      */
     public function query($query, array $params = [])
     {

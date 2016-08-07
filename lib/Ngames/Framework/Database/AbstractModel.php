@@ -183,6 +183,6 @@ abstract class AbstractModel
             self::$autoloadNamespaceRegistered = true;
         }
         
-        return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcCache() : new \Doctrine\Common\Cache\ArrayCache());
+        return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcuCache() : new \Doctrine\Common\Cache\ArrayCache());
     }
 }

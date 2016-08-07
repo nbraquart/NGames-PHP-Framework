@@ -20,27 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Ngames\Framework\Storage;
+namespace Ngames\Framework;
+
+use Ngames\Framework\Storage\IniFile;
+use Doctrine\Common\Util\Debug;
 
 /**
- * Wrapper over a PHP array with recursivity.
- * Values are either scalar or instances of PhpArrayRecursive.
- *
+ * The application configuration. Essentially created for documentation purposes.
+ * 
+ * @property string debug
+ * @property IniFile log
+ * @property IniFile database
+ * 
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-class PhpArrayRecursive extends PhpArray implements StorageInterface
+class ApplicationConfiguration extends IniFile
 {
-
-    public function __construct(array $array = [])
-    {
-        foreach ($array as $key => $value) {
-            if (is_scalar($value)) {
-                $this->set($key, $value);
-            } elseif (is_array($value)) {
-                $this->storage[$key] = new self($value);
-            } else {
-                throw new \Ngames\Framework\Exception('Invalid value for Array storage');
-            }
-        }
-    }
+    
 }
