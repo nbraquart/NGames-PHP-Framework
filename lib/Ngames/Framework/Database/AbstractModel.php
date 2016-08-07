@@ -44,14 +44,6 @@ abstract class AbstractModel
     protected static $metadata = [];
 
     /**
-     * The autoload namespace for annotations.
-     * Could be a const, but PHP consts are always public.
-     *
-     * @var string
-     */
-    protected static $autoloadNamespace = '\Ngames\Framework\Database\Annotations';
-
-    /**
      * Boolean storing whether annotations autoload namespace was already registered (for as long as the object is in memory).
      *
      * @var bool

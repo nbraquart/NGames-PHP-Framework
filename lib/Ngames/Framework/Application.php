@@ -23,6 +23,7 @@
 namespace Ngames\Framework;
 
 use Ngames\Framework\Router\Router;
+use Ngames\Framework\Storage\IniFile;
 
 /**
  * Main entrypoint of the framework.
@@ -49,7 +50,7 @@ class Application
     protected $router = null;
 
     /**
-     * @var ApplicationConfiguration
+     * @var IniFile
      */
     protected $configuration = null;
 
@@ -111,7 +112,7 @@ class Application
         $this->timer = new \Ngames\Framework\Timer();
         
         // Parse the configuration
-        $this->configuration = new ApplicationConfiguration($configurationFile);
+        $this->configuration = new IniFile($configurationFile);
         
         // Intialize the logging facility if needed
         if ($this->configuration->has('log')) {
@@ -128,7 +129,7 @@ class Application
 
     /**
      *
-     * @return \Ngames\Framework\ApplicationConfiguration
+     * @return IniFile
      */
     public function getConfiguration()
     {
