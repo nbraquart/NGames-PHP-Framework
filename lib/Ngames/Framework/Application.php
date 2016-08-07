@@ -165,7 +165,7 @@ class Application
     {
         try {
             // Execute the module/controller/action
-            $request = \Ngames\Framework\Request::createRequestFromGlobals();
+            $request = new \Ngames\Framework\Request($_GET, $_POST, $_COOKIE, $_SERVER, $_FILES);
             $route = $this->router->getRoute($request->getRequestUri());
             $response = null;
             
