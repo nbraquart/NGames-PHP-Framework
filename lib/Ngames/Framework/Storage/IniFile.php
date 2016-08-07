@@ -91,7 +91,7 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
             if (is_array($value)) {
                 $currentResult = $this->processParsedFile($value);
             } else {
-                if (strpos($value, '%') == -1) {
+                if (strpos($value, '%') === false) {
                     $currentResult = $value;
                 } else {
                     $currentResult = preg_replace_callback('/%(.*?)%/s', function ($match) {

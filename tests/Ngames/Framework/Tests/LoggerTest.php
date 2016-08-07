@@ -26,22 +26,16 @@ use Ngames\Framework\Logger;
 
 class LoggerTest extends \PHPUnit\Framework\TestCase
 {
+
     private $expectedMessages = array();
+
     private $notExpectedMessages = array();
-    
-    /**
-     * @beforeClass
-     */
-    public static function beforeClass()
-    {
-        define('ROOT_DIR', __DIR__);
-    }
-    
+
     public static function afterClass()
     {
         Logger::initialize(null, Logger::LEVEL_ERROR);
     }
-    
+
     /**
      * @before
      */
@@ -49,7 +43,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         ob_start();
     }
-    
+
     /**
      * @after
      */
@@ -73,8 +67,14 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::logInfo('info message');
         Logger::logWarning('warning message');
         Logger::logError('error message');
-        $this->expectedMessages = array('info message', 'warning message', 'error message');
-        $this->notExpectedMessages = array('debug message');
+        $this->expectedMessages = array(
+            'info message',
+            'warning message',
+            'error message'
+        );
+        $this->notExpectedMessages = array(
+            'debug message'
+        );
     }
 
     public function testSetDestination_error()
@@ -82,7 +82,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->setExpectedException('\Ngames\Framework\Exception', 'Cannot open log file for writing');
         Logger::setDestination('\\//');
     }
-    
+
     public function test_minLevelDebug()
     {
         Logger::setDestination('php://output');
@@ -91,7 +91,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::logInfo('info message');
         Logger::logWarning('warning message');
         Logger::logError('error message');
-        $this->expectedMessages = array('debug message', 'info message', 'warning message', 'error message');
+        $this->expectedMessages = array(
+            'debug message',
+            'info message',
+            'warning message',
+            'error message'
+        );
         $this->notExpectedMessages = array();
     }
 
@@ -103,8 +108,14 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::logInfo('info message');
         Logger::logWarning('warning message');
         Logger::logError('error message');
-        $this->expectedMessages = array('info message', 'warning message', 'error message');
-        $this->notExpectedMessages = array('debug message');
+        $this->expectedMessages = array(
+            'info message',
+            'warning message',
+            'error message'
+        );
+        $this->notExpectedMessages = array(
+            'debug message'
+        );
     }
 
     public function test_minLevelWarning()
@@ -115,8 +126,14 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::logInfo('info message');
         Logger::logWarning('warning message');
         Logger::logError('error message');
-        $this->expectedMessages = array('warning message', 'error message');
-        $this->notExpectedMessages = array('debug message', 'info message');
+        $this->expectedMessages = array(
+            'warning message',
+            'error message'
+        );
+        $this->notExpectedMessages = array(
+            'debug message',
+            'info message'
+        );
     }
 
     public function test_minLevelError()
@@ -127,8 +144,14 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::logInfo('info message');
         Logger::logWarning('warning message');
         Logger::logError('error message');
-        $this->expectedMessages = array('error message');
-        $this->notExpectedMessages = array('debug message', 'info message', 'warning message');
+        $this->expectedMessages = array(
+            'error message'
+        );
+        $this->notExpectedMessages = array(
+            'debug message',
+            'info message',
+            'warning message'
+        );
     }
 
     public function test_logFormat()
@@ -136,6 +159,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::setDestination('php://output');
         Logger::setMinLevel(Logger::LEVEL_DEBUG);
         Logger::logDebug('debug message');
-        $this->expectedMessages = array('[DEBUG] ' . DIRECTORY_SEPARATOR . 'LoggerTest.php:' . (__LINE__ - 1) . ' - debug message');
+        $lineNumber = __LINE__ - 1;
+        $this->expectedMessages = array(
+            '[DEBUG] ' . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'Ngames' . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'Tests' . DIRECTORY_SEPARATOR . 'LoggerTest.php:' . $lineNumber . ' - debug message'
+        );
     }
 }

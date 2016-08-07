@@ -32,7 +32,14 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetSession()
     {
-        $this->assertInstanceOf(PhpSession::class, $this->getRequest()->getSession());
+        // Init a session
+        session_start();
+        $_SESSION['session_key1'] = 'session_val1';
+
+        $request = $this->getRequest();
+        $this->assertInstanceOf(PhpSession::class, $request->getSession());
+        $this->assertEquals('session_val1', $request->getSession()->get('session_key1'));
+        $this->assertEquals(null, $request->getSession()->get('session_key2'));
     }
 
     /**
