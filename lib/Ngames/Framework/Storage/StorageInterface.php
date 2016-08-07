@@ -33,7 +33,7 @@ interface StorageInterface
     /**
      * Return true if the storage contains a value for the specified name.
      *
-     * @param string $name            
+     * @param string|int $name            
      * @return bool
      */
     public function has($name);
@@ -41,7 +41,7 @@ interface StorageInterface
     /**
      * Sets the value for the name.
      *
-     * @param string $name            
+     * @param string|int $name            
      * @param mixed $value            
      * @return StorageInterface
      */
@@ -50,7 +50,7 @@ interface StorageInterface
     /**
      * Return the value for the name.
      *
-     * @param string $name            
+     * @param string|int $name            
      * @param mixed $default            
      * @return mixed
      */
@@ -67,7 +67,7 @@ interface StorageInterface
     /**
      * Clear the value for the field by name.
      *
-     * @param string $name            
+     * @param string|int $name            
      * @return null
      */
     public function clear($name);
