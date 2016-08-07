@@ -110,7 +110,7 @@ class Controller
     /**
      * Return a successful response
      *
-     * @param string $content            
+     * @param string|null $content            
      * @return Response
      */
     protected function ok($content = null)
@@ -132,7 +132,7 @@ class Controller
     /**
      * Return a not found response
      *
-     * @param string $message            
+     * @param string|null $message            
      * @return Response
      */
     protected function notFound($message = null)
@@ -143,7 +143,7 @@ class Controller
     /**
      * Return a bad request response
      *
-     * @param string $message            
+     * @param string|null $message            
      * @return Response
      */
     protected function badRequest($message = null)
@@ -154,7 +154,7 @@ class Controller
     /**
      * Return an internal error response
      *
-     * @param string $message            
+     * @param string|null $message            
      * @return Response
      */
     protected function internalError($message = null)
@@ -167,8 +167,8 @@ class Controller
      * Contrary to redirect, no HTTP response is sent to the user between the two actions.
      *
      * @param string $actionName            
-     * @param string $controllerName            
-     * @param string $moduleName            
+     * @param string|null $controllerName            
+     * @param string|null $moduleName            
      * @return mixed
      */
     protected function forward($actionName, $controllerName = null, $moduleName = null)
@@ -234,7 +234,7 @@ class Controller
         $actionMethodName = Inflector::camelize(str_replace('-', '_', $actionName)) . self::ACTION_SUFFIX;
         
         // Handle not found (test if class is loadable, exists and method exists)
-        if (!\Ngames\Framework\Application::getInstance()->getAutoloader()->canLoadClass($controllerClassName) || !class_exists($controllerClassName) || !method_exists($controllerClassName, $actionMethodName)) {
+        if (!class_exists($controllerClassName) || !method_exists($controllerClassName, $actionMethodName)) {
             $message = 'Not found: ' . $controllerClassName . '::' . $actionMethodName . '()';
             \Ngames\Framework\Logger::logWarning($message);
             

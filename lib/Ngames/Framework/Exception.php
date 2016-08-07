@@ -52,7 +52,7 @@ class Exception extends \Exception
         $line = $e->getLine();
         
         while (true) {
-            $current = "$file:$line";
+            $current = sprintf('%s:%s', $file, $line);
             
             // Stop if already displayed
             if (in_array($current, $seen)) {

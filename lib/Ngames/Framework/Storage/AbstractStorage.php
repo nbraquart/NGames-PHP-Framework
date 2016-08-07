@@ -50,6 +50,10 @@ abstract class AbstractStorage implements StorageInterface, \ArrayAccess
         return $this->clear($offset);
     }
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function __get($name)
     {
         if ($this->has($name)) {
@@ -57,6 +61,9 @@ abstract class AbstractStorage implements StorageInterface, \ArrayAccess
         }
     }
 
+    /**
+     * @return StorageInterface
+     */
     public function __set($name, $value)
     {
         return $this->set($name, $value);

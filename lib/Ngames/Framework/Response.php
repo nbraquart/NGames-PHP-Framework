@@ -153,7 +153,7 @@ class Response
     /**
      * Create a successful response
      *
-     * @param string $content            
+     * @param string|null $content            
      * @return Response
      */
     public static function createOkResponse($content = null)
@@ -168,7 +168,7 @@ class Response
     /**
      * Create an internal error response
      *
-     * @param string $message            
+     * @param string|null $message            
      * @return Response
      */
     public static function createInternalErrorResponse($message = null)
@@ -184,7 +184,7 @@ class Response
     /**
      * Create a not found response
      *
-     * @param string $message            
+     * @param string|null $message            
      * @return Response
      */
     public static function createNotFoundResponse($message = null)
@@ -200,7 +200,7 @@ class Response
     /**
      * Create a bad request response
      *
-     * @param string $message            
+     * @param string|null $message            
      * @return Response
      */
     public static function createBadRequestResponse($message = null)
