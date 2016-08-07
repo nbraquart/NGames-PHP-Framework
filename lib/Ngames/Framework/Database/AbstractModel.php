@@ -44,19 +44,11 @@ abstract class AbstractModel
     protected static $metadata = [];
 
     /**
-     * The autoload namespace for annotations.
-     * Could be a const, but PHP consts are always public.
-     *
-     * @var string
-     */
-    protected static $autoloadNamespace = '\Ngames\Framework\Database\Annotations';
-
-    /**
-     * Boolean storing whether annotations autoload namespace was already registered (for as long as the object is in memory).
+     * Boolean storing whether annotations were loaded or not.
      *
      * @var bool
      */
-    protected static $autoloadNamespaceRegistered = false;
+    protected static $annotationsLoaded = false;
 
     /**
      * Return the finder instance able to query the database and return instances of current class.
@@ -177,12 +169,12 @@ abstract class AbstractModel
     protected function getAnnotationsReader()
     {
         // Register the annotations in the Doctrine annotations loader
-        if (!self::$autoloadNamespaceRegistered) {
+        if (!self::$annotationsLoaded) {
             \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Id.php');
             \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Reference.php');
-            self::$autoloadNamespaceRegistered = true;
+            self::$annotationsLoaded = true;
         }
         
-        return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcCache() : new \Doctrine\Common\Cache\ArrayCache());
+        return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcuCache() : new \Doctrine\Common\Cache\ArrayCache());
     }
 }

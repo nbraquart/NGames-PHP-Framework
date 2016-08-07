@@ -27,6 +27,8 @@ use Ngames\Framework\Router\Route;
 /**
  * This class represents a view.
  *
+ * @property string view In case it's a parent view, there will be a 'content' property containing the child view content
+ *          
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class View
@@ -107,7 +109,7 @@ class View
 
     /**
      *
-     * @param string $script
+     * @param string|null $script
      *            The view script (under the view directory)
      */
     public function __construct($script = null)
@@ -236,8 +238,9 @@ class View
      * In getter mode, non-existing values are returned as empty string.
      *
      * @param string $name            
-     * @param string $value
+     * @param string|null $value
      *            Default null, meaning get value
+     * @return string
      */
     public function placeholder($name, $value = null)
     {

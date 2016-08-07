@@ -28,7 +28,7 @@ namespace Ngames\Framework\Storage;
  *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-class PhpArrayRecursive extends \Ngames\Framework\Storage\PhpArray implements StorageInterface
+class PhpArrayRecursive extends PhpArray implements StorageInterface
 {
 
     public function __construct(array $array = [])
