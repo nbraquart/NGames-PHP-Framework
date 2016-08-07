@@ -4,7 +4,7 @@
     "license": "MIT",
     "authors": [{
         "name": "Nicolas Braquart",
-        "email": "nicolas.braquart@gmail.com"
+        "email": "nicolas.braquart+ngames@gmail.com"
     }],
     "autoload": {
         "psr-4": { "Ngames\\Framework\\": "lib/Ngames/Framework/" }

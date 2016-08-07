@@ -1,9 +1,35 @@
 <?php
-
+/*
+ * Copyright (c) 2014-2016 Nicolas Braquart
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 namespace Ngames\Framework\Router;
 
+/**
+ * Matcher class used to identify matching route for a given requested URI
+ *
+ * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
+ */
 class Matcher
 {
+
     const MODULE_KEY = ':module';
 
     const CONTROLLER_KEY = ':controller';
@@ -22,15 +48,16 @@ class Matcher
      * Create a new matcher that will be used to test the route eligility.
      *
      * The pattern may define the URI part where module, controller or action are read. If not, the corresponding element must have a value defined.
+     *
      * Samples pattern are:
      * /home + module=default, controller=index, action=index
      * /:controller/:action + module=default
      * Etc.
      *
-     * @param string $pattern
-     * @param string $moduleName
-     * @param string $controllerName
-     * @param string $actionName
+     * @param string $pattern            
+     * @param string $moduleName            
+     * @param string $controllerName            
+     * @param string $actionName            
      */
     public function __construct($pattern, $moduleName = null, $controllerName = null, $actionName = null)
     {
@@ -38,7 +65,7 @@ class Matcher
         $this->moduleName = $moduleName;
         $this->controllerName = $controllerName;
         $this->actionName = $actionName;
-
+        
         $this->check();
     }
 
@@ -46,7 +73,7 @@ class Matcher
      * Tries to match the input URI.
      * Output is null if no match, a route otherwise.
      *
-     * @param string $uri
+     * @param string $uri            
      *
      * @return Route
      */
@@ -59,14 +86,14 @@ class Matcher
         $actionName = $this->actionName;
         $countPattern = count($pattern);
         $match = true;
-
+        
         if ($countPattern !== count($uri)) {
             $match = false;
         } else {
             for ($i = 0; $i < $countPattern; $i++) {
                 $currentPatternPart = $pattern[$i];
                 $currentUriPart = $uri[$i];
-
+                
                 if ($currentPatternPart !== $currentUriPart) {
                     if ($currentPatternPart === self::MODULE_KEY) {
                         $moduleName = $currentUriPart;
@@ -81,10 +108,15 @@ class Matcher
                 }
             }
         }
-
+        
         return $match ? new Route($moduleName, $controllerName, $actionName) : null;
     }
 
+    /**
+     * Checks that the configuration of the matcher is valid and throws an exception otherwise.
+     *
+     * @throws InvalidMatcherException
+     */
     private function check()
     {
         if (!($this->moduleName !== null xor strpos($this->pattern, self::MODULE_KEY) !== false)) {
@@ -101,7 +133,7 @@ class Matcher
     /**
      * Return an array containing the URI/pattern parts.
      *
-     * @param unknown $uri
+     * @param string $uri            
      */
     private function prepareForMatching($uri)
     {
