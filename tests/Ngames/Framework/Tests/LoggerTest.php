@@ -136,6 +136,6 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         Logger::setDestination('php://output');
         Logger::setMinLevel(Logger::LEVEL_DEBUG);
         Logger::logDebug('debug message');
-        $this->expectedMessages = array('[DEBUG] \LoggerTest.php:'.(__LINE__ - 1).' - debug message');
+        $this->expectedMessages = array('[DEBUG] ' . DIRECTORY_SEPARATOR . 'LoggerTest.php:' . (__LINE__ - 1) . ' - debug message');
     }
 }
