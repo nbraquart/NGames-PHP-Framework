@@ -33,6 +33,12 @@ class Connection
     protected static $queries = [];
 
     /**
+     *
+     * @var \PDO
+     */
+    protected static $connection = null;
+    
+    /**
      * Returns the instance of the connection.
      * If no instance has already been retrieved,
      * then it starts by establishing the connection.
@@ -42,9 +48,8 @@ class Connection
      */
     public static function getConnection()
     {
-        $configuration = \Ngames\Framework\Application::getInstance()->getConfiguration();
-        
         if (!self::$connection) {
+            $configuration = \Ngames\Framework\Application::getInstance()->getConfiguration();
             $dsn = sprintf('mysql:host=%s;dbname=%s', $configuration->database->host, $configuration->database->name);
             
             self::$connection = new \PDO($dsn, $configuration->database->username, $configuration->database->password, [
@@ -55,12 +60,6 @@ class Connection
         
         return self::$connection;
     }
-
-    /**
-     *
-     * @var \PDO
-     */
-    protected static $connection = null;
 
     /**
      * Query the database and return the data.
@@ -74,11 +73,11 @@ class Connection
      */
     public static function query($query, array $params = [])
     {
-        $statement = self::getConnection()->prepare($query);
-        $result = false;
-        $start = microtime(true);
-        
         try {
+            $statement = self::getConnection()->prepare($query);
+            $result = false;
+            $start = microtime(true);
+        
             if ($statement && $statement->execute($params)) {
                 $result = [];
                 self::logQuery($query, microtime(true) - $start);
@@ -105,11 +104,11 @@ class Connection
      */
     public static function exec($query, array $params = [])
     {
-        $statement = self::getConnection()->prepare($query);
-        $result = false;
-        $start = microtime(true);
-        
         try {
+            $statement = self::getConnection()->prepare($query);
+            $result = false;
+            $start = microtime(true);
+        
             if ($statement && $statement->execute($params)) {
                 self::logQuery($query, microtime(true) - $start);
                 $result = $statement->rowCount();
@@ -131,11 +130,11 @@ class Connection
      */
     public static function count($query, array $params = [])
     {
-        $statement = self::getConnection()->prepare($query);
-        $result = false;
-        $start = microtime(true);
-        
         try {
+            $statement = self::getConnection()->prepare($query);
+            $result = false;
+            $start = microtime(true);
+        
             if ($statement && $statement->execute($params)) {
                 self::logQuery($query, microtime(true) - $start);
                 $result = $statement->rowCount();

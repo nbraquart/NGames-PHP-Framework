@@ -101,15 +101,15 @@ class Application
 
         // Initialize the router
         $this->router = new \Ngames\Framework\Router\Router();
-        
+
         // Initialize the timer
         $this->timer = new \Ngames\Framework\Timer();
-        
+
         // Intialize the logging facility if needed
         if ($this->configuration->has('log')) {
             $destination = $this->configuration->log->destination;
             $constantName = '\Ngames\Framework\Logger::LEVEL_' . strtoupper($this->configuration->log->level);
-            
+
             // Initialize the logger if possible
             if (defined($constantName)) {
                 $level = constant($constantName);
