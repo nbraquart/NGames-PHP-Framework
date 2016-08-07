@@ -238,7 +238,7 @@ class View
      * In getter mode, non-existing values are returned as empty string.
      *
      * @param string $name            
-     * @param string $value|null
+     * @param string|null $value
      *            Default null, meaning get value
      * @return string
      */
