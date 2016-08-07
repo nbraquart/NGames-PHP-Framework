@@ -32,10 +32,10 @@ database.name       = "db_name"
 
 # Log configuration (destination must be a file), the level is the minimum level for logging messages
 log.destination     = "./logs/application.log"
-log.level           = debug
+log.level           = "debug"
 
 # Whether the debug mode is enabled or not (default is false)
-debug               = true
+debug               = "true"
 ```
 
 ### Application initialization
