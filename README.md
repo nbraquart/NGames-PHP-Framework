@@ -48,7 +48,7 @@ chdir(ROOT_DIR);
 
 // Initialize and run the application
 require_once ROOT_DIR . '/vendor/autoload.php';
-\Ngames\Framework\Application::initialize(ROOT_DIR . '/config/application.ini')->run();
+\Ngames\Framework\Application::initialize(ROOT_DIR . '/config/config.ini')->run();
 ```
 
 That's all you need to startup the application.
