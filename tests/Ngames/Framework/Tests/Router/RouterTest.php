@@ -7,11 +7,6 @@ use Ngames\Framework\Router\Router;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstruct()
-    {
-        $router = new Router();
-    }
-
     public function testGetRoute_noRouteDefined()
     {
         $router = new Router();
