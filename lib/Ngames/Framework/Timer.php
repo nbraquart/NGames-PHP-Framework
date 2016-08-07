@@ -40,7 +40,7 @@ class Timer
      */
     public function __construct($time = null)
     {
-        $this->time = $time == null ? self::now()->time : $time;
+        $this->time = $time === null ? self::now()->time : $time;
     }
 
     /**

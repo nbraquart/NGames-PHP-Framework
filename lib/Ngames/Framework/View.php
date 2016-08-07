@@ -214,7 +214,7 @@ class View
      * Defines a parent view.
      * Content of the current view will be added as a variable of the parent view before rendering it ($content).
      *
-     * @param string $parentView
+     * @param \Ngames\Framework\View $parentView
      *            The path to the parent view
      * @return \Ngames\Framework\View
      */
@@ -370,16 +370,17 @@ class View
      * Helper function to set layout (actually parent view), from a string.
      * It also changes the script directory of the parent view.
      *
-     * @param string $layout            
+     * @param string|null $layout            
      *
      * @return \Ngames\Framework\View
      */
     public function setLayout($layout)
     {
-        if ($layout != null) {
-            $view = new self($layout);
-            $view->setDirectory($view->directory . 'layouts/');
-            $this->setParentView($view);
+        if ($layout !== null) {
+            $parentViewDirectory = $this->directory . 'layouts/';
+            $parentView = new self($layout);
+            $parentView->setDirectory($parentViewDirectory);
+            $this->setParentView($parentView);
         } else {
             $this->disableLayout();
         }
@@ -439,7 +440,7 @@ class View
         ob_end_clean();
         
         // Call parent if needed
-        if ($this->parentView != null) {
+        if ($this->parentView !== null) {
             // Save parent variables
             $parentVariables = $this->parentView->variables;
             

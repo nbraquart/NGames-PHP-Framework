@@ -132,7 +132,7 @@ class Controller
     /**
      * Return a not found response
      *
-     * @param string $mesage            
+     * @param string $message            
      * @return Response
      */
     protected function notFound($message = null)
@@ -143,7 +143,7 @@ class Controller
     /**
      * Return a bad request response
      *
-     * @param string $mesage            
+     * @param string $message            
      * @return Response
      */
     protected function badRequest($message = null)
@@ -154,7 +154,7 @@ class Controller
     /**
      * Return an internal error response
      *
-     * @param string $mesage            
+     * @param string $message            
      * @return Response
      */
     protected function internalError($message = null)
@@ -173,11 +173,11 @@ class Controller
     protected function forward($actionName, $controllerName = null, $moduleName = null)
     {
         // If module or controller not provided, use current route to determine current ones and use them
-        if ($moduleName == null || $controllerName == null) {
-            if ($moduleName == null) {
+        if ($moduleName === null || $controllerName === null) {
+            if ($moduleName === null) {
                 $moduleName = $this->route->getModuleName();
             }
-            if ($controllerName == null) {
+            if ($controllerName === null) {
                 $controllerName = $this->route->getControllerName();
             }
         }
