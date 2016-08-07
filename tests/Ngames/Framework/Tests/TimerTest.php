@@ -20,46 +20,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Ngames\Framework;
+namespace Ngames\Framework\Tests;
 
-/**
- *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
- */
-class Timer
+use Ngames\Framework\Timer;
+
+class TimerTest extends \PHPUnit\Framework\TestCase
 {
 
-    public $time;
-
-    /**
-     * Creates a new timer.
-     * If no time provided, it is initialized with the current time.
-     *
-     * @param int|null $time
-     *            timestamp to initialize the timer with
-     */
-    public function __construct($time = null)
+    public function testCreateTimer()
     {
-        $this->time = $time === null ? self::now()->time : $time;
+        $timestamp = time();
+        $timer = new Timer();
+        $this->assertLessThan(1, $timer->getTime() - $timestamp);
     }
 
-    /**
-     * Return the timestamp
-     *
-     * @return int
-     */
-    public function getTime()
+    public function testNow()
     {
-        return $this->time;
+        $timestamp = time();
+        $timer = Timer::now();
+        $this->assertLessThan(1, $timer->getTime() - $timestamp);
     }
-
-    /**
-     * Create a new timer for current timestamp
-     *
-     * @return Timer
-     */
-    public static function now()
+    
+    public function testCustom()
     {
-        return new self(microtime(true));
+        $timer = new Timer(1234);
+        $this->assertEquals(1234, $timer->getTime());
     }
 }
