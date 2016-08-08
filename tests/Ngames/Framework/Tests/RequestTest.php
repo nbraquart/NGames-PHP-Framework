@@ -24,6 +24,7 @@ namespace Ngames\Framework\Tests;
 
 use Ngames\Framework\Request;
 use Ngames\Framework\Storage\PhpSession;
+use Ngames\Framework\Exception;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -129,12 +130,24 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetRequestUri()
     {
-        $request = $this->getRequest();
-        $this->assertEquals('/test', $request->getRequestUri());
+        $request = $this->getRequest('GET', '/test/test2/TEST-3?key=val');
+        $this->assertEquals('/test/test2/test-3', $request->getRequestUri());
         $request->setRequestUri('/test2');
         $this->assertEquals('/test2', $request->getRequestUri());
+
+        $request = $this->getRequest('GET', '/');
+        $this->assertEquals('/', $request->getRequestUri());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
+    public function testGetRequestUri_errorInvalid()
+    {
+        $this->setExpectedException(Exception::class, 'Invalid requested URI');
+        $request = $this->getRequest('GET', 'é');
+    }
+    
     /**
      * @runInSeparateProcess
      */
@@ -164,13 +177,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     /**
      * @return Request
      */
-    private function getRequest($method = 'GET')
+    private function getRequest($method = 'GET', $uri = '/test')
     {
         $request = $this->getMockBuilder(Request::class)->setMethods(['isCli'])->setConstructorArgs(array(
             array('get_key1' => 'get_val1'),
             array('post_key1' => 'post_val1'),
             array('cookie_key1' => 'cookie_val1'),
-            array('REQUEST_METHOD' => $method, 'REQUEST_URI' => '/test?key=val', 'HTTP_X_REQUESTED_WITH' => 'requested-with-val'),
+            array('REQUEST_METHOD' => $method, 'REQUEST_URI' => $uri, 'HTTP_X_REQUESTED_WITH' => 'requested-with-val'),
             array('file' => array())
         ))->getMock();
         $request->method('isCli')->willReturn(false);
