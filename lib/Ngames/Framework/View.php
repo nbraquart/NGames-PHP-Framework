@@ -127,8 +127,8 @@ class View
      * Magic setter to allow passing variables to the view.
      * Some keywords are reserved for internal usage.
      *
-     * @param string $name            
-     * @param mixed $value            
+     * @param string $name
+     * @param mixed $value
      * @throws \Ngames\Framework\Exception
      */
     public function __set($name, $value)
@@ -136,11 +136,30 @@ class View
         if ($name == self::VARIABLE_PLACEHOLDERS || $name == self::VARIABLE_SCRIPTS || $name == self::VARIABLE_STYLESHEETS) {
             throw new \Ngames\Framework\Exception('Cannot used reserved variable ' . $name);
         }
-        
+    
         // Add to the list of user variables
         $this->variables[$name] = $value;
     }
 
+    /**
+     * Magic getter to allow retrieving variables from the view.
+     *
+     * @param string $name
+     * @return mixed $value
+     * @throws \Ngames\Framework\Exception
+     */
+    public function __get($name)
+    {
+        if (!array_key_exists($name, $this->variables)) {
+            throw new \Ngames\Framework\Exception('Tried to access non existing variable ' . $name);
+        }
+        if ($name == self::VARIABLE_PLACEHOLDERS || $name == self::VARIABLE_SCRIPTS || $name == self::VARIABLE_STYLESHEETS) {
+            throw new \Ngames\Framework\Exception('Tried to access reserved variable ' . $name);
+        }
+        
+        return $this->variables[$name];
+    }
+    
     public function __unset($name)
     {
         unset($this->variables[$name]);

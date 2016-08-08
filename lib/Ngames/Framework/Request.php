@@ -124,10 +124,10 @@ class Request
         $this->session = PhpSession::getInstance();
         $this->server = $server;
         $this->files = $files;
-
+        
         if (!$this->isCli()) {
             $this->method = $this->server['REQUEST_METHOD'];
-            $this->requestUri = explode('?', $this->server['REQUEST_URI'])[0];
+            $this->requestUri = $this->extractUri($this->server['REQUEST_URI']);
         }
     }
 
@@ -204,9 +204,9 @@ class Request
 
     /**
      * Return the uploaded file by name
-     * 
-     * @param string $name
-     * @return array|null            
+     *
+     * @param string $name            
+     * @return array|null
      */
     public function getFile($name)
     {
@@ -215,7 +215,7 @@ class Request
 
     /**
      * Whether the application is being run in command line or not
-     * 
+     *
      * @return boolean
      */
     public function isCli()
@@ -298,6 +298,26 @@ class Request
             $result = $this->server['HTTP_CLIENT_IP'];
         } elseif (!empty($this->server['REMOTE_ADDR'])) {
             $result = $this->server['REMOTE_ADDR'];
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Ensures the string matches a URI, otherwise return null
+     * 
+     * @return string
+     * @throws Exception
+     */
+    private function extractUri($requestUriHeader)
+    {
+        $matches = [];
+        $result = null;
+        
+        if (preg_match('/([a-z0-9\-\/]+)/', mb_strtolower($requestUriHeader), $matches) && mb_strlen($matches[0]) > 0) {
+            $result = $matches[0];
+        } else {
+            throw new Exception('Invalid requested URI');
         }
         
         return $result;
