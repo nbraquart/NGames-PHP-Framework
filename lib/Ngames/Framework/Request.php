@@ -312,7 +312,6 @@ class Request
     private function extractUri($requestUriHeader)
     {
         $matches = [];
-        $result = null;
         
         if (preg_match('/([a-z0-9\-\/]+)/', mb_strtolower($requestUriHeader), $matches) && mb_strlen($matches[0]) > 0) {
             $result = $matches[0];
