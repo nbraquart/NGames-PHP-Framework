@@ -23,9 +23,12 @@
 namespace Ngames\Framework\Tests;
 
 use Ngames\Framework\View;
+use Ngames\Framework\Router\Route;
+use Ngames\Framework\Exception;
 
 class ViewTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testGetSetVariable()
     {
         $view = new View();
@@ -46,7 +49,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view = new View();
         $view->__STYLESHEETS__;
     }
-    
+
     public function testSetVariable_errorProtected()
     {
         $this->setExpectedException('\Ngames\Framework\Exception', 'Cannot used reserved variable __STYLESHEETS__');
@@ -59,5 +62,143 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view = new View();
         $view->test = 'value';
         unset($view->test);
+    }
+
+    public function testGetScript()
+    {
+        $view = new View();
+        $this->assertNull($view->getScript());
+        $view = new View('script');
+        $this->assertEquals('script', $view->getScript());
+        $view = new View();
+        $view->setScript('script2');
+        $this->assertEquals('script2', $view->getScript());
+    }
+
+    public function testSetScriptFromRoute()
+    {
+        $route = new Route('module', 'controller', 'action');
+        $view = new View();
+        $view->setScriptFromRoute($route);
+        $this->assertEquals('module/controller/action', $view->getScript());
+    }
+
+    public function testGetDirectory()
+    {
+        $view = new View();
+        $this->assertEquals(ROOT_DIR . '/src/views/', $view->getDirectory());
+        $view->setDirectory('directory');
+        $this->assertEquals('directory', $view->getDirectory());
+    }
+
+    public function testGetParentView()
+    {
+        $view = new View();
+        $this->assertNull($view->getParentView());
+        $view->setParentView(new View('parent_script'));
+        $this->assertNotNull($view->getParentView());
+        $this->assertEquals('parent_script', $view->getParentView()
+            ->getScript());
+    }
+
+    public function testPlaceholder()
+    {
+        $view = new View();
+        $this->assertEmpty($view->placeholder('placeholder'));
+        $view->placeholder('placeholder', 'placeholder_value');
+        $this->assertEquals('placeholder_value', $view->placeholder('placeholder'));
+    }
+
+    public function testStartStopPlaceholder()
+    {
+        $view = new View();
+        $view->startPlaceHolder('placeholder');
+        echo 'placeholder_value';
+        $view->stopPlaceHolder();
+        $this->assertEquals('placeholder_value', $view->placeholder('placeholder'));
+    }
+
+    public function testStartPlaceholder_errorAlreadyStarted()
+    {
+        $this->setExpectedException(Exception::class, 'Cannot start a new placeholder: previous not stopped');
+        $view = new View();
+        $view->startPlaceHolder('placeholder');
+        ob_end_clean();
+        $view->startPlaceHolder('placeholder2');
+    }
+
+    public function testStopPlaceholder_errorNoneStarted()
+    {
+        $this->setExpectedException(Exception::class, 'Cannot stop a placeholder: none started');
+        $view = new View();
+        $view->stopPlaceHolder();
+    }
+
+    public function testStylesheets()
+    {
+        $view = new View();
+        $view->appendStylesheet('stylesheet2');
+        $view->prependStylesheet('stylesheet1');
+        $view->appendStylesheet('stylesheet3');
+        $this->assertEquals('<link rel="stylesheet" href="stylesheet1" /><link rel="stylesheet" href="stylesheet2" /><link rel="stylesheet" href="stylesheet3" />', $view->renderStylesheets());
+    }
+
+    public function testScripts()
+    {
+        $view = new View();
+        $view->appendScript('script2');
+        $view->prependScript('script1');
+        $view->appendScript('script3');
+        $this->assertEquals('<script src="script1"></script><script src="script2"></script><script src="script3"></script>', $view->renderScripts());
+    }
+    
+    public function testSetLayout()
+    {
+        $view = new View();
+        $view->setLayout('layout');
+        $this->assertNotNull($view->getParentView());
+        $this->assertEquals(ROOT_DIR . '/src/views/layouts/', $view->getParentView()->getDirectory());
+        $this->assertEquals('layout', $view->getParentView()->getScript());
+    }
+    
+    public function testDisableLayout()
+    {
+        $view = new View();
+        $view->setLayout('layout');
+        $this->assertNotNull($view->getParentView());
+        $view->disableLayout();
+        $this->assertNull($view->getParentView());
+    }
+    
+    public function testRender()
+    {
+        $view = new View();
+        $view->setDirectory(ROOT_DIR . '/tests/data/View/');
+        $view->setScript('view');
+        $view->setLayout('layout');
+        $view->getParentView()->setDirectory(ROOT_DIR . '/tests/data/View/');
+        $view->viewVariable = 'view_variable_value';
+        $view->getParentView()->layoutVariable = 'layout_variable_value';
+
+        $output = $view->render();
+        $expectedOutput = "Content in layout\nContent in view\nview_variable_value\nlayout_variable_value\nview_variable_value";
+        $this->assertEquals($expectedOutput, $output);
+    }
+    
+    public function testRender_errorScriptNotFound()
+    {
+        $this->setExpectedException(Exception::class, 'does_not_exist.phtml not found');
+        $view = new View();
+        $view->setDirectory('does_not_exist');
+        $view->render();
+    }
+    
+    public function testRender_errorPlaceholderNotStopped()
+    {
+        $this->setExpectedException(Exception::class, 'Exception caught during view rendering');
+        $view = new View();
+        $view->setDirectory(ROOT_DIR . '/tests/data/View/');
+        $view->setScript('errorPlaceholderNotStopped');
+        $view->render();
     }
 }

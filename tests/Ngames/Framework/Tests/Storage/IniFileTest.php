@@ -35,7 +35,7 @@ class IniFileTest extends \PHPUnit\Framework\TestCase
     public function testParseFile()
     {
         define('CONSTANT', 'constant_value');
-        $iniFile = new IniFile(ROOT_DIR . '/tests/data/input.ini');
+        $iniFile = new IniFile(ROOT_DIR . '/tests/data/Storage/IniFile/input.ini');
         
         $this->assertEquals('127.0.0.1', $iniFile['framework']['database']['host']);
         $this->assertEquals('127.0.0.1', $iniFile->framework->database->host);

@@ -283,7 +283,7 @@ class View
     public function startPlaceHolder($name)
     {
         if ($this->currentPlaceHolder != null) {
-            throw new \Ngames\Framework\Exception('Cannot start a new placeholder, previous not stopped');
+            throw new \Ngames\Framework\Exception('Cannot start a new placeholder: previous not stopped');
         }
         
         $this->currentPlaceHolder = $name;
@@ -297,7 +297,7 @@ class View
     public function stopPlaceHolder()
     {
         if ($this->currentPlaceHolder == null) {
-            throw new \Ngames\Framework\Exception('Cannot stop a new placeholder: none started');
+            throw new \Ngames\Framework\Exception('Cannot stop a placeholder: none started');
         }
         
         $placeHolderContent = ob_get_contents();
