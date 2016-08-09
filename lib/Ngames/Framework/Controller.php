@@ -77,13 +77,6 @@ class Controller
     {}
 
     /**
-     * Post-execute.
-     * Does nothing by default, but can be overriden by application.
-     */
-    protected function postExecute()
-    {}
-
-    /**
      * Sets the controller request.
      *
      * @param Request $request            
@@ -246,22 +239,14 @@ class Controller
         $controllerInstance->setRequest($request);
         $controllerInstance->setRoute($route);
         
-        // Execute preExecute, action and postExecute. First not null return value is returned
-        $methods = [
-            'preExecute',
-            $actionMethodName,
-            'postExecute'
-        ];
-        $actionResult = null;
+        // Execute pre-execute
+        $result = $controllerInstance->preExecute();
         
-        foreach ($methods as $method) {
-            $actionResult = $controllerInstance->$method();
-            
-            if ($actionResult !== null) {
-                break;
-            }
+        // If pre-execute did not return an output, execute the action
+        if ($result === null) {
+            $result = $controllerInstance->$actionMethodName();
         }
-        
-        return $actionResult;
+
+        return $result;
     }
 }
