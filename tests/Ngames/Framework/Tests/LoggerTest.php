@@ -31,11 +31,6 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
     private $notExpectedMessages = array();
 
-    public static function afterClass()
-    {
-        Logger::initialize(null, Logger::LEVEL_ERROR);
-    }
-
     /**
      * @before
      */
