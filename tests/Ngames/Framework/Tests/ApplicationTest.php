@@ -44,6 +44,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         $instance->setAccessible(true);
         $instance->setValue(null, null);
         $instance->setAccessible(false);
+        Logger::initialize(null, Logger::LEVEL_ERROR);
     }
     
     public function testInitializeGetInstance()
