@@ -78,7 +78,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $response->send();
         $this->assertEmpty(ob_get_contents());
         $this->assertEquals(301, http_response_code());
-        $this->assertContains('Location: url', xdebug_get_headers());
+        $this->assertContains('Location: url', \xdebug_get_headers());
         ob_end_clean();
     }
 
@@ -93,7 +93,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $response->send();
         $this->assertEquals('not_found', ob_get_contents());
         $this->assertEquals(404, http_response_code());
-        $this->assertContains('Content-Type: text/plain; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
         ob_end_clean();
     }
 
@@ -108,7 +108,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $response->send();
         $this->assertEquals('bad_request', ob_get_contents());
         $this->assertEquals(400, http_response_code());
-        $this->assertContains('Content-Type: text/plain; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
         ob_end_clean();
     }
 
@@ -123,7 +123,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $response->send();
         $this->assertEquals('internal_error', ob_get_contents());
         $this->assertEquals(500, http_response_code());
-        $this->assertContains('Content-Type: text/plain; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
         ob_end_clean();
     }
 
@@ -138,7 +138,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $response->send();
         $this->assertEquals("{\n    \"key\": \"value\"\n}", ob_get_contents());
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-Type: application/json; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: application/json; charset=utf-8', \xdebug_get_headers());
         ob_end_clean();
     }
 

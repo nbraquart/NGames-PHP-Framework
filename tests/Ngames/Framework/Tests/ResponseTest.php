@@ -32,7 +32,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = new Response();
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', xdebug_get_headers());
+        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
 
@@ -42,7 +42,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response->setContent('content');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', xdebug_get_headers());
+        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
@@ -52,7 +52,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response->setStatusCode(1234);
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(1234, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', xdebug_get_headers());
+        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
 
@@ -65,7 +65,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response->setContentType('contentType', 'charset');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-Type: contentType; charset=charset', xdebug_get_headers());
+        $this->assertContains('Content-Type: contentType; charset=charset', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
 
@@ -74,7 +74,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = Response::createOkResponse('content');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', xdebug_get_headers());
+        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
@@ -86,7 +86,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = Response::createInternalErrorResponse('content');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(500, http_response_code());
-        $this->assertContains('Content-Type: text/plain; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
@@ -98,7 +98,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = Response::createNotFoundResponse('content');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(404, http_response_code());
-        $this->assertContains('Content-Type: text/plain; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
@@ -110,7 +110,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = Response::createBadRequestResponse('content');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(400, http_response_code());
-        $this->assertContains('Content-Type: text/plain; charset=utf-8', xdebug_get_headers());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
@@ -122,7 +122,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = Response::createRedirectResponse('newUrl');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(301, http_response_code());
-        $this->assertContains('Location: newUrl', xdebug_get_headers());
+        $this->assertContains('Location: newUrl', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
     
