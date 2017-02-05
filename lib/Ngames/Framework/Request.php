@@ -313,7 +313,7 @@ class Request
     {
         $matches = [];
         
-        if (preg_match('/([a-z0-9\-\/]+)/', mb_strtolower($requestUriHeader), $matches) && mb_strlen($matches[0]) > 0) {
+        if (preg_match('/([a-z0-9_\-\/]+)/', mb_strtolower($requestUriHeader), $matches) && mb_strlen($matches[0]) > 0) {
             $result = $matches[0];
         } else {
             throw new Exception('Invalid requested URI');

@@ -134,6 +134,9 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('/test/test2/test-3', $request->getRequestUri());
         $request->setRequestUri('/test2');
         $this->assertEquals('/test2', $request->getRequestUri());
+        
+        $request = $this->getRequest('GET', '/test_test2');
+        $this->assertEquals('/test_test2', $request->getRequestUri());
 
         $request = $this->getRequest('GET', '/');
         $this->assertEquals('/', $request->getRequestUri());
