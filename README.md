@@ -20,7 +20,7 @@ Use composer to install the application: `composer require ngames/framework`. Or
 
 ## Usage
 ### Configuration file
-You need to write a configuration file using INI format. Typically, this file is called `config.ini` and is located in the `config` folder at the root of the project. Here is an example with all supported configuration keys:
+You need to write a configuration file using [INI](https://en.wikipedia.org/wiki/INI_file) format. Typically, this file is called `config.ini` and is located in the `config` folder at the root of the project. Here is an example with all supported configuration keys:
 
 ```ini
 # Database configuration
