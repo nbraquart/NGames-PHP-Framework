@@ -29,6 +29,7 @@ namespace Ngames\Framework;
  */
 class Response
 {
+
     const HTTP_STATUS_OK = 200;
 
     const HTTP_STATUS_CREATED = 201;
@@ -74,7 +75,8 @@ class Response
     /**
      * Initializes an empty successful response.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->headers = [];
         $this->content = null;
         $this->statusCode = self::HTTP_STATUS_OK;
