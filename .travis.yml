@@ -11,8 +11,8 @@ install:
     - composer install --no-interaction --prefer-source --dev
 
 script:
-    - php-cs-fixer fix --verbose --diff --dry-run
-    - phpunit --verbose --coverage-text --coverage-clover=coverage.clover
+    - vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
+    - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.clover
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
