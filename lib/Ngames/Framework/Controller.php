@@ -27,6 +27,7 @@ use Ngames\Framework\Utility\Inflector;
 
 /**
  * Controller.
+ *
  * This class defines the logic executed when a controller is instanciated.
  * It is the class the application controllers must inherit from.
  *
@@ -97,9 +98,9 @@ class Controller
         $this->route = $route;
         $this->view->setScriptFromRoute($this->route);
     }
-    
+
     // Status helper methods
-    
+
     /**
      * Return a successful response
      *
@@ -175,14 +176,14 @@ class Controller
                 $controllerName = $this->route->getControllerName();
             }
         }
-        
+
         // Build a new request
         $request = clone $this->request;
         $request->setRequestUri('/' . $moduleName . '/' . $controllerName . '/' . $actionName);
-        
+
         // Build a new route
         $route = new Route($moduleName, $controllerName, $actionName);
-        
+
         // Execute again for the forward
         return self::execute($route, $request);
     }
@@ -200,7 +201,7 @@ class Controller
         $response = new Response();
         $response->setContentType('application/json', 'utf-8');
         $response->setContent(json_encode($json, $options));
-        
+
         return $response;
     }
 
@@ -216,32 +217,32 @@ class Controller
         $moduleName = $route->getModuleName();
         $controllerName = $route->getControllerName();
         $actionName = $route->getActionName();
-        
+
         // Build controller class name
         $controllerClassName = self::CONTROLLER_NAMESPACE . '\\';
         $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $moduleName))) . '\\';
         $controllerClassName .= ucfirst(Inflector::camelize(str_replace('-', '_', $controllerName)));
         $controllerClassName .= self::CONTROLLER_SUFFIX;
-        
+
         // Build action method name
         $actionMethodName = Inflector::camelize(str_replace('-', '_', $actionName)) . self::ACTION_SUFFIX;
-        
+
         // Handle not found (test if class is loadable, exists and method exists)
         if (!class_exists($controllerClassName) || !method_exists($controllerClassName, $actionMethodName)) {
             $message = 'Not found: ' . $controllerClassName . '::' . $actionMethodName . '()';
             \Ngames\Framework\Logger::logWarning($message);
-            
+
             return Response::createNotFoundResponse(\Ngames\Framework\Application::getInstance()->isDebug() ? $message : null);
         }
-        
+
         // Create the controller
         $controllerInstance = new $controllerClassName();
         $controllerInstance->setRequest($request);
         $controllerInstance->setRoute($route);
-        
+
         // Execute pre-execute
         $result = $controllerInstance->preExecute();
-        
+
         // If pre-execute did not return an output, execute the action
         if ($result === null) {
             $result = $controllerInstance->$actionMethodName();

@@ -38,7 +38,7 @@ debug               = "true"
 ```
 
 ### Application initialization
-In a `public` folder in the root of the project, create an `index.php` file with the following content:
+In a `public` folder in the root of the project, create a file named `index.php` with the following content:
 
 ```php
 <?php

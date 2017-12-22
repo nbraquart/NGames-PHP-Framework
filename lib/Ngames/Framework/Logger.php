@@ -39,7 +39,7 @@ class Logger
     private static $file = null;
 
     /**
-     * Initializes the logger
+     * Initializes the logger.
      *
      * @param string $destination
      *            where to write the logs. Any path that can be written to is valid (including php://stdout).
@@ -61,7 +61,7 @@ class Logger
     public static function setDestination($destination)
     {
         self::$destination = $destination;
-        
+
         if ($destination !== null && !(self::$file = @fopen(self::$destination, 'a'))) {
             throw new Exception('Cannot open log file for writing');
         }
@@ -76,7 +76,7 @@ class Logger
     {
         self::$minLevel = $minLevel;
     }
-    
+
     /**
      * Logs a debug message
      *
@@ -143,7 +143,7 @@ class Logger
     protected static function assembleLogLine($level, $message, $trace)
     {
         $levelString = null;
-        
+
         switch ($level) {
             case self::LEVEL_DEBUG:
                 $levelString = 'DEBUG';
@@ -158,14 +158,14 @@ class Logger
                 $levelString = 'ERROR';
                 break;
         }
-        
+
         $time = microtime(true);
         $dateTimeString = date('Y-m-d H:i:s');
         $dateTimeString .= ',' . sprintf('%06d', ($time - floor($time)) * 1000000);
-        
+
         $lineNumber = $trace['line'];
         $fileName = str_replace(ROOT_DIR, '', $trace['file']);
-        
+
         return $dateTimeString . ' [' . $levelString . '] ' . $fileName . ':' . $lineNumber . ' - ' . $message . "\n";
     }
 }
