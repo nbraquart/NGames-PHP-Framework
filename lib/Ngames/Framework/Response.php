@@ -74,8 +74,7 @@ class Response
     /**
      * Initializes an empty successful response.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->headers = [];
         $this->content = null;
         $this->statusCode = self::HTTP_STATUS_OK;
@@ -90,10 +89,10 @@ class Response
         foreach ($this->headers as $name => $value) {
             header($name . ': ' . $value);
         }
-        
+
         // Set response code
         http_response_code($this->statusCode);
-        
+
         // Send the content
         if ($this->content !== null) {
             echo $this->content;
@@ -131,11 +130,11 @@ class Response
     public function setContentType($contentType, $charset = null)
     {
         $headerValue = $contentType;
-        
+
         if ($charset !== null) {
             $headerValue .= '; charset=' . $charset;
         }
-        
+
         $this->setHeader(self::CONTENT_TYPE_HEADER, $headerValue);
     }
 
@@ -160,7 +159,7 @@ class Response
         $response = new self();
         $response->setContent($content);
         $response->setStatusCode(self::HTTP_STATUS_OK);
-        
+
         return $response;
     }
 
@@ -176,7 +175,7 @@ class Response
         $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->setContent($message !== null ? $message : 'Internal server error.');
         $response->setStatusCode(self::HTTP_STATUS_INTERNAL_SERVER_ERROR);
-        
+
         return $response;
     }
 
@@ -192,7 +191,7 @@ class Response
         $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->setContent($message !== null ? $message : 'File not found.');
         $response->setStatusCode(self::HTTP_STATUS_NOT_FOUND);
-        
+
         return $response;
     }
 
@@ -208,7 +207,7 @@ class Response
         $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->setContent($message !== null ? $message : 'Bad request.');
         $response->setStatusCode(self::HTTP_STATUS_BAD_REQUEST);
-        
+
         return $response;
     }
 
@@ -223,7 +222,7 @@ class Response
         $response = new self();
         $response->setStatusCode(self::HTTP_STATUS_MOVED_PERMANENTLY);
         $response->setHeader('Location', $url);
-        
+
         return $response;
     }
 }
