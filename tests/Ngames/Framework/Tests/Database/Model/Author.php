@@ -22,7 +22,6 @@
  */
 namespace Ngames\Framework\Tests\Database\Model;
 
-use Ngames\Framework\Database\Connection;
 use Ngames\Framework\Database\AbstractModel;
 use \Ngames\Framework\Database\Annotations\Id;
 

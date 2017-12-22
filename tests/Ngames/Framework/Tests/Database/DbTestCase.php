@@ -28,7 +28,7 @@ use Ngames\Framework\Database\Connection;
  * Common test case class for all tests involving a database
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-class DbTestCase extends \PHPUnit_Extensions_Database_TestCase
+class DbTestCase extends \PHPUnit\DbUnit\TestCase
 {
     /**
      * @beforeClass
@@ -47,7 +47,7 @@ class DbTestCase extends \PHPUnit_Extensions_Database_TestCase
         DummyConnection::getConnection()->exec('DROP TABLE book');
         DummyConnection::getConnection()->exec('DROP TABLE author');
     }
-    
+
     /**
      *
      * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection
@@ -90,7 +90,7 @@ class DummyConnection extends Connection
         if (!parent::$connection) {
             parent::$connection = new \PDO('sqlite::memory:');
         }
-        
+
         return parent::$connection;
     }
 }

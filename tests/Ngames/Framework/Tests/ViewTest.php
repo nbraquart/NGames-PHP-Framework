@@ -38,21 +38,24 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testGetVariable_errorNotSet()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Tried to access non existing variable test');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Tried to access non existing variable test');
         $view = new View();
         $view->test;
     }
 
     public function testGetVariable_errorProtected()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Tried to access reserved variable __STYLESHEETS__');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Tried to access reserved variable __STYLESHEETS__');
         $view = new View();
         $view->__STYLESHEETS__;
     }
 
     public function testSetVariable_errorProtected()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Cannot used reserved variable __STYLESHEETS__');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Cannot used reserved variable __STYLESHEETS__');
         $view = new View();
         $view->__STYLESHEETS__ = 'value';
     }
@@ -62,6 +65,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view = new View();
         $view->test = 'value';
         unset($view->test);
+        $this->assertObjectNotHasAttribute('test', $view);
     }
 
     public function testGetScript()
@@ -120,7 +124,8 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testStartPlaceholder_errorAlreadyStarted()
     {
-        $this->setExpectedException(Exception::class, 'Cannot start a new placeholder: previous not stopped');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot start a new placeholder: previous not stopped');
         $view = new View();
         $view->startPlaceHolder('placeholder');
         ob_end_clean();
@@ -129,7 +134,8 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testStopPlaceholder_errorNoneStarted()
     {
-        $this->setExpectedException(Exception::class, 'Cannot stop a placeholder: none started');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot stop a placeholder: none started');
         $view = new View();
         $view->stopPlaceHolder();
     }
@@ -151,7 +157,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view->appendScript('script3');
         $this->assertEquals('<script src="script1"></script><script src="script2"></script><script src="script3"></script>', $view->renderScripts());
     }
-    
+
     public function testSetLayout()
     {
         $view = new View();
@@ -160,7 +166,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(ROOT_DIR . '/src/views/layouts/', $view->getParentView()->getDirectory());
         $this->assertEquals('layout', $view->getParentView()->getScript());
     }
-    
+
     public function testDisableLayout()
     {
         $view = new View();
@@ -169,7 +175,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view->disableLayout();
         $this->assertNull($view->getParentView());
     }
-    
+
     public function testRender()
     {
         $view = new View();
@@ -184,18 +190,20 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $expectedOutput = "Content in layout\nContent in view\nview_variable_value\nlayout_variable_value\nview_variable_value";
         $this->assertEquals($expectedOutput, $output);
     }
-    
+
     public function testRender_errorScriptNotFound()
     {
-        $this->setExpectedException(Exception::class, 'does_not_exist.phtml not found');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('does_not_exist.phtml not found');
         $view = new View();
         $view->setDirectory('does_not_exist');
         $view->render();
     }
-    
+
     public function testRender_errorPlaceholderNotStopped()
     {
-        $this->setExpectedException(Exception::class, 'Exception caught during view rendering');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Exception caught during view rendering');
         $view = new View();
         $view->setDirectory(ROOT_DIR . '/tests/data/View/');
         $view->setScript('errorPlaceholderNotStopped');

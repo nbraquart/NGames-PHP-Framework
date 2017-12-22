@@ -61,7 +61,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($request->getGetParameter('get_key2'));
         $this->assertEquals('default', $request->getGetParameter('get_key2', 'default'));
     }
-    
+
     /**
      * @runInSeparateProcess
      */
@@ -134,7 +134,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('/test/test2/test-3', $request->getRequestUri());
         $request->setRequestUri('/test2');
         $this->assertEquals('/test2', $request->getRequestUri());
-        
+
         $request = $this->getRequest('GET', '/test_test2');
         $this->assertEquals('/test_test2', $request->getRequestUri());
 
@@ -147,10 +147,11 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetRequestUri_errorInvalid()
     {
-        $this->setExpectedException(Exception::class, 'Invalid requested URI');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid requested URI');
         $request = $this->getRequest('GET', 'é');
     }
-    
+
     /**
      * @runInSeparateProcess
      */
@@ -160,23 +161,23 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             'REMOTE_ADDR' => '1'
         ));
         $this->assertEquals('1', $request->getRemoteAddress());
-        
+
         $request = new Request([], [], [], array(
             'REMOTE_ADDR' => '1',
             'HTTP_CLIENT_IP' => '2'
         ));
         $this->assertEquals('2', $request->getRemoteAddress());
-        
+
         $request = new Request([], [], [], array(
             'REMOTE_ADDR' => '1',
             'HTTP_CLIENT_IP' => '2',
             'HTTP_X_FORWARDED_FOR' => '3'
         ));
         $this->assertEquals('3', $request->getRemoteAddress());
-        
+
         $this->assertNull((new Request())->getRemoteAddress());
     }
-    
+
     /**
      * @return Request
      */
@@ -190,7 +191,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             array('file' => array())
         ))->getMock();
         $request->method('isCli')->willReturn(false);
-        
+
         return $request;
     }
 }

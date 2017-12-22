@@ -2,20 +2,24 @@
     "name": "ngames/framework",
     "description": "The NGames Framework is a simple PHP framework developped for the websites https://www.worldwar.fr and http://www.guide-tnt.fr",
     "license": "MIT",
-    "authors": [{
-        "name": "Nicolas Braquart",
-        "email": "nicolas.braquart+ngames@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "Nicolas Braquart",
+            "email": "nicolas.braquart+ngames@gmail.com"
+        }
+    ],
     "autoload": {
-        "psr-4": { "Ngames\\Framework\\": "lib/Ngames/Framework/" }
+        "psr-4": {
+            "Ngames\\Framework\\" : "lib/Ngames/Framework/"
+        }
     },
     "require": {
         "php": ">=5.6",
-        "doctrine/annotations": "~1.2.7",
-        "doctrine/cache": "~1.6.0"
+        "doctrine/annotations": "~1.4.0",
+        "doctrine/cache": "~1.6.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.6.0",
-        "phpunit/dbunit": "~2.0.2"
+        "phpunit/phpunit": "~6.5.5",
+        "phpunit/dbunit": "~3.0.2"
     }
 }

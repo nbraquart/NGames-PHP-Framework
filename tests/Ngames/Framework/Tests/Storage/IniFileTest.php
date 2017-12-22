@@ -28,7 +28,7 @@ class IniFileTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructor_failure()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception');
+        $this->expectException('\Ngames\Framework\Exception');
         $iniFile = new IniFile(ROOT_DIR . '/tests/data/input_does_not_exist.ini');
     }
 
@@ -36,7 +36,7 @@ class IniFileTest extends \PHPUnit\Framework\TestCase
     {
         define('CONSTANT', 'constant_value');
         $iniFile = new IniFile(ROOT_DIR . '/tests/data/Storage/IniFile/input.ini');
-        
+
         $this->assertEquals('127.0.0.1', $iniFile['framework']['database']['host']);
         $this->assertEquals('127.0.0.1', $iniFile->framework->database->host);
         $this->assertEquals('db_username', $iniFile->framework->database->username);
@@ -48,7 +48,7 @@ class IniFileTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('John Smith', $iniFile['users'][0]);
         $this->assertEquals('Jane Doe', $iniFile->users[1]);
     }
-    
+
     public function testWriteFile()
     {
         $data = array('key1' => 'val1', 'key2' => 'val2');
@@ -56,7 +56,7 @@ class IniFileTest extends \PHPUnit\Framework\TestCase
         IniFile::writeFile('php://output', $data);
         $output = ob_get_contents();
         ob_end_clean();
-        
+
         $this->assertEquals('key1=val1' . "\n" . 'key2=val2' . "\n", $output);
     }
 }

@@ -22,7 +22,6 @@
  */
 namespace Ngames\Framework\Tests\Database;
 
-use Ngames\Framework\Database\Connection;
 use Ngames\Framework\Tests\Database\Model\Book;
 use Ngames\Framework\Tests\Database\Model\Author;
 

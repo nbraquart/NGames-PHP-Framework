@@ -46,7 +46,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $output = ob_get_contents();
         ob_end_clean();
-        
+
         foreach ($this->expectedMessages as $expectedMessage) {
             $this->assertContains($expectedMessage, $output);
         }
@@ -74,7 +74,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
     public function testSetDestination_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Cannot open log file for writing');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Cannot open log file for writing');
         Logger::setDestination('\\//');
     }
 

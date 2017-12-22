@@ -46,39 +46,41 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         $instance->setAccessible(false);
         Logger::initialize(null, Logger::LEVEL_ERROR);
     }
-    
+
     public function testInitializeGetInstance()
     {
         $application = Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini');
-        $this->assertEquals($application, Application::getInstance());        
+        $this->assertEquals($application, Application::getInstance());
     }
-    
+
     public function testInitialize_alreadyInitialized()
     {
-        $this->setExpectedException(Exception::class, 'The application has already been initialized');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The application has already been initialized');
         Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini');
         Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini');
     }
-    
+
     public function testGetInstance_notInitialized()
     {
-        $this->setExpectedException(Exception::class, 'The application has not been initialized');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The application has not been initialized');
         Application::getInstance();
     }
-    
+
     public function testGetConfiguration()
     {
         $configuration = new IniFile(ROOT_DIR . '/tests/data/Application/config.ini');
         $application = Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini');
         $this->assertEquals($configuration, $application->getConfiguration());
     }
-    
+
     public function testGetTimer()
     {
         $application = Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini');
         $this->assertInstanceOf(Timer::class, $application->getTimer());
     }
-    
+
     public function testGetRouter()
     {
         $application = Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini');
@@ -100,7 +102,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains('ApplicationTest.php:' . (__LINE__ - 1) . ' - debug', ob_get_contents());
         ob_end_clean();
     }
-    
+
     /**
      * @runInSeparateProcess
      */

@@ -29,53 +29,59 @@ class MatcherTest extends \PHPUnit\Framework\TestCase
     // Initialization error cases
     public function testInvalidInitialization_missingModuleKeyAndValue()
     {
-        $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing module key or module value, or provided both');
+        $this->expectException('\Ngames\Framework\Router\InvalidMatcherException');
+        $this->expectExceptionMessage('Missing module key or module value, or provided both');
         new Matcher('/:controller/:action');
     }
 
     public function testInvalidInitialization_moduleKeyAndValue()
     {
-        $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing module key or module value, or provided both');
+        $this->expectException('\Ngames\Framework\Router\InvalidMatcherException');
+        $this->expectExceptionMessage('Missing module key or module value, or provided both');
         new Matcher('/:module', 'module');
     }
 
     public function testInvalidInitialization_missingControllerKeyAndValue()
     {
-        $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing controller key or controller value, or provided both');
+        $this->expectException('\Ngames\Framework\Router\InvalidMatcherException');
+        $this->expectExceptionMessage('Missing controller key or controller value, or provided both');
         new Matcher('/:module/:action');
     }
 
     public function testInvalidInitialization_controllerKeyAndValue()
     {
-        $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing controller key or controller value, or provided both');
+        $this->expectException('\Ngames\Framework\Router\InvalidMatcherException');
+        $this->expectExceptionMessage('Missing controller key or controller value, or provided both');
         new Matcher('/:controller', 'module', 'controller');
     }
 
     public function testInvalidInitialization_missingActionKeyAndValue()
     {
-        $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing action key or action value, or provided both');
+        $this->expectException('\Ngames\Framework\Router\InvalidMatcherException');
+        $this->expectExceptionMessage('Missing action key or action value, or provided both');
         new Matcher('/:module/:controller');
     }
 
     public function testInvalidInitialization_actionKeyAndValue()
     {
-        $this->setExpectedException('\Ngames\Framework\Router\InvalidMatcherException', 'Missing action key or action value, or provided both');
+        $this->expectException('\Ngames\Framework\Router\InvalidMatcherException');
+        $this->expectExceptionMessage('Missing action key or action value, or provided both');
         new Matcher('/:action', 'module', 'controller', 'action');
     }
-    
+
     // No match cases
     public function testNoMatch()
     {
         $matcher1 = new Matcher('/test', 'module1', 'controller1', 'action1');
         $this->assertNull($matcher1->match('/test1'));
-        
+
         $matcher2 = new Matcher('/test/test', 'module2', 'controller2', 'action2');
         $this->assertNull($matcher1->match('/test/test1'));
-        
+
         $matcher2 = new Matcher('/:module/:controller/:action');
         $this->assertNull($matcher1->match('/module/controller/action/a'));
     }
-    
+
     // Match cases
     public function testMatch_onlyDefault()
     {

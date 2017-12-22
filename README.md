@@ -4,7 +4,6 @@
 [![Latest Stable Version](https://poser.pugx.org/ngames/framework/v/stable)](https://packagist.org/packages/ngames/framework)
 [![Latest Unstable Version](https://poser.pugx.org/ngames/framework/v/unstable)](https://packagist.org/packages/ngames/framework)
 
-[![Dependency Status](https://www.versioneye.com/user/projects/57a6665e0f6400003353f33b/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a6665e0f6400003353f33b)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/?branch=master)
 

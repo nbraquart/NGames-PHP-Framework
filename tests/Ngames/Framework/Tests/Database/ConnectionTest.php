@@ -30,19 +30,19 @@ class ConnectionTest extends DbTestCase
     public function testQuery()
     {
         $result = Connection::query('SELECT * FROM book ORDER BY id');
-        
+
         $this->assertEquals(3, count($result));
-        
+
         $this->assertEquals(1, $result[0]['id']);
         $this->assertEquals('Book 1', $result[0]['title']);
         $this->assertEquals('Description 1', $result[0]['description']);
         $this->assertEquals(1, $result[0]['author_id']);
-        
+
         $this->assertEquals(2, $result[1]['id']);
         $this->assertEquals('Book 2', $result[1]['title']);
         $this->assertEquals('Description 2', $result[1]['description']);
         $this->assertEquals(1, $result[1]['author_id']);
-        
+
         $this->assertEquals(3, $result[2]['id']);
         $this->assertEquals('Book 3', $result[2]['title']);
         $this->assertEquals('Description 3', $result[2]['description']);
@@ -51,7 +51,8 @@ class ConnectionTest extends DbTestCase
 
     public function testQuery_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Caught PDO exception');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Caught PDO exception');
         Connection::query('SELECT * FROM does_not_exist');
     }
 
@@ -82,25 +83,27 @@ class ConnectionTest extends DbTestCase
             )
         ), Connection::query('SELECT * FROM book WHERE id=?', array(1)));
     }
-    
+
     public function testExec_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Caught PDO exception');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Caught PDO exception');
         Connection::exec('DELETE FROM does_not_exist');
     }
-    
+
     public function testCount()
     {
         // SQLite does not support rowCount properly
         $this->assertEquals(0, Connection::count('SELECT * FROM book'));
     }
-    
+
     public function testCount_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Caught PDO exception');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Caught PDO exception');
         Connection::count('SELECT * FROM does_not_exist');
     }
-    
+
     public function testQueryOne()
     {
         $this->assertEquals(array(
@@ -110,13 +113,14 @@ class ConnectionTest extends DbTestCase
             'author_id' => 2
         ), Connection::queryOne('SELECT * FROM book ORDER BY id DESC'));
     }
-    
+
     public function testQueryOne_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Caught PDO exception');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Caught PDO exception');
         Connection::queryOne('SELECT * FROM does_not_exist');
     }
-    
+
     public function testInsert()
     {
         $this->assertEquals(3, count(Connection::query('SELECT * FROM book')));
@@ -134,13 +138,14 @@ class ConnectionTest extends DbTestCase
             'author_id' => 1
         ), Connection::queryOne('SELECT * FROM book WHERE id=?', array(4)));
     }
-    
+
     public function testInsert_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Caught PDO exception');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Caught PDO exception');
         $this->assertEquals(4, Connection::insert('does_not_exist', array('id' => 1)));
     }
-    
+
     public function testFindOneById()
     {
         $this->assertEquals(array(
@@ -150,24 +155,25 @@ class ConnectionTest extends DbTestCase
             'author_id' => 1
         ), Connection::findOneById('book', 1));
     }
-    
+
     public function testFindOneById_error()
     {
-        $this->setExpectedException('\Ngames\Framework\Exception', 'Caught PDO exception');
+        $this->expectException('\Ngames\Framework\Exception');
+        $this->expectExceptionMessage('Caught PDO exception');
         Connection::findOneById('does_not_exist', 1);
     }
-    
+
     public function testGetLastError()
     {
         $this->assertInternalType('array', Connection::getLastError());
         $this->assertEquals(3, count(Connection::getLastError()));
     }
-    
+
     public function testGetQueryCounter()
     {
         $this->assertInternalType('integer', Connection::getQueryCounter());
     }
-    
+
     public function testGetQueries()
     {
         $this->assertInternalType('array', Connection::getQueries());

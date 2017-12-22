@@ -45,7 +45,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $instance->setValue(null, null);
         $instance->setAccessible(false);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
@@ -54,6 +54,7 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         // Simply expect that no exception or error happens
         $controller = new DummyController();
         $controller->setRequest(new Request());
+        $this->assertObjectHasAttribute('request', $controller);
     }
 
     public function testOk()
