@@ -26,7 +26,6 @@ use Ngames\Framework\Exception;
 
 class ExceptionTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testTrace()
     {
         try {

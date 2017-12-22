@@ -28,7 +28,7 @@ use Ngames\Framework\Router\Route;
  * This class represents a view.
  *
  * @property string content In case it's a parent view, there will be a 'content' property containing the child view content
- *          
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class View
@@ -178,7 +178,7 @@ class View
     /**
      * Sets the script to render
      *
-     * @param string $script            
+     * @param string $script
      * @return \Ngames\Framework\View
      */
     public function setScript($script)
@@ -191,7 +191,7 @@ class View
     /**
      * Sets the script from a Route instance.
      *
-     * @param Route $route            
+     * @param Route $route
      * @return \Ngames\Framework\View
      */
     public function setScriptFromRoute(Route $route)
@@ -216,7 +216,7 @@ class View
     /**
      * Sets the directory where view scripts are stored.
      *
-     * @param string $directory            
+     * @param string $directory
      * @return \Ngames\Framework\View
      */
     public function setDirectory($directory)
@@ -256,7 +256,7 @@ class View
      * Switch relies on $value being null or not.
      * In getter mode, non-existing values are returned as empty string.
      *
-     * @param string $name            
+     * @param string $name
      * @param string|null $value
      *            Default null, meaning get value
      * @return string
@@ -278,7 +278,7 @@ class View
      * Starts a placeholder.
      * Always use stopPlaceHolder() after or an exception will be thrown at view rendering time.
      *
-     * @param string $name            
+     * @param string $name
      */
     public function startPlaceHolder($name)
     {
@@ -312,7 +312,7 @@ class View
     /**
      * Prepend a stylesheet: add it to the list, at the begining.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function prependStylesheet($path)
     {
@@ -326,7 +326,7 @@ class View
     /**
      * Append a stylesheet: add it to the list, at the end.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function appendStylesheet($path)
     {
@@ -354,7 +354,7 @@ class View
     /**
      * Prepend a script: add it to the list, at the begining.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function prependScript($path)
     {
@@ -368,7 +368,7 @@ class View
     /**
      * Append a script: add it to the list, at the end.
      *
-     * @param string $path            
+     * @param string $path
      */
     public function appendScript($path)
     {
@@ -397,7 +397,7 @@ class View
      * Helper function to set layout (actually parent view), from a string.
      * It also changes the script directory of the parent view.
      *
-     * @param string|null $layout            
+     * @param string|null $layout
      *
      * @return \Ngames\Framework\View
      */
@@ -426,7 +426,7 @@ class View
     /**
      * Renders the view.
      *
-     * @param string|null $script            
+     * @param string|null $script
      * @throws Exception
      * @throws \Ngames\Framework\Exception
      * @throws \Exception

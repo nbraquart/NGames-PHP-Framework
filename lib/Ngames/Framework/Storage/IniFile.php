@@ -56,9 +56,9 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
 
     /**
      * Persist the configuration to a filename
-     * 
-     * @param string $fileName            
-     * @param array $configuration            
+     *
+     * @param string $fileName
+     * @param array $configuration
      */
     public static function writeFile($fileName, $configuration)
     {

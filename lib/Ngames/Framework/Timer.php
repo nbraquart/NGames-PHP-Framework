@@ -28,7 +28,6 @@ namespace Ngames\Framework;
  */
 class Timer
 {
-
     public $time;
 
     /**

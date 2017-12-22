@@ -30,7 +30,6 @@ namespace Ngames\Framework\Storage;
  */
 class PhpArrayRecursive extends PhpArray implements StorageInterface
 {
-
     public function __construct(array $array = [])
     {
         foreach ($array as $key => $value) {

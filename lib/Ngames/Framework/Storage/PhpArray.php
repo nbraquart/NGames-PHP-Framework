@@ -29,7 +29,6 @@ namespace Ngames\Framework\Storage;
  */
 class PhpArray extends AbstractStorage implements StorageInterface
 {
-
     protected $storage;
 
     public function __construct(array $array = [])

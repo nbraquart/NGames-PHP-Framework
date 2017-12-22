@@ -26,7 +26,6 @@ use Ngames\Framework\Response;
 
 class ResponseTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testSend_default()
     {
         $response = new Response();
@@ -128,8 +127,8 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
     
     /**
      * Sends the response and return the output in a string
-     * 
-     * @param Response $response            
+     *
+     * @param Response $response
      */
     private function sendResponseAndReturnOutput(Response $response)
     {

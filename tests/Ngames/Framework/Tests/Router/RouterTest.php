@@ -27,7 +27,6 @@ use Ngames\Framework\Router\Router;
 
 class RouterTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testGetRoute_noRouteDefined()
     {
         $router = new Router();

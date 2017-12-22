@@ -25,7 +25,7 @@ namespace Ngames\Framework\Router;
 /**
  * A route returned by the router.
  * It is a simple wrapper over the found module/controller/action.
- * 
+ *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Route
@@ -51,9 +51,9 @@ class Route
 
     /**
      *
-     * @param string $moduleName            
-     * @param string $controllerName            
-     * @param string $actionName            
+     * @param string $moduleName
+     * @param string $controllerName
+     * @param string $actionName
      */
     public function __construct($moduleName, $controllerName, $actionName)
     {

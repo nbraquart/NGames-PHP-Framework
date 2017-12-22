@@ -30,7 +30,6 @@ namespace Ngames\Framework\Storage;
  */
 class PhpSession extends PhpArray implements StorageInterface
 {
-
     protected $storage;
 
     protected static $instance = null;

@@ -29,7 +29,6 @@ namespace Ngames\Framework\Router;
  */
 class Matcher
 {
-
     const MODULE_KEY = ':module';
 
     const CONTROLLER_KEY = ':controller';
@@ -54,10 +53,10 @@ class Matcher
      * /:controller/:action + module=default
      * Etc.
      *
-     * @param string $pattern            
-     * @param string|null $moduleName            
-     * @param string|null $controllerName            
-     * @param string|null $actionName            
+     * @param string $pattern
+     * @param string|null $moduleName
+     * @param string|null $controllerName
+     * @param string|null $actionName
      */
     public function __construct($pattern, $moduleName = null, $controllerName = null, $actionName = null)
     {
@@ -73,7 +72,7 @@ class Matcher
      * Tries to match the input URI.
      * Output is null if no match, a route otherwise.
      *
-     * @param string $uri            
+     * @param string $uri
      *
      * @return Route|null
      */
@@ -133,7 +132,7 @@ class Matcher
     /**
      * Return an array containing the URI/pattern parts.
      *
-     * @param string $uri            
+     * @param string $uri
      */
     private function prepareForMatching($uri)
     {

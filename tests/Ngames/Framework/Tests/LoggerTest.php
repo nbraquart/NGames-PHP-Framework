@@ -26,7 +26,6 @@ use Ngames\Framework\Logger;
 
 class LoggerTest extends \PHPUnit\Framework\TestCase
 {
-
     private $expectedMessages = array();
 
     private $notExpectedMessages = array();

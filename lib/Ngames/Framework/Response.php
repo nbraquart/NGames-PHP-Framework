@@ -29,7 +29,6 @@ namespace Ngames\Framework;
  */
 class Response
 {
-
     const HTTP_STATUS_OK = 200;
 
     const HTTP_STATUS_CREATED = 201;
@@ -103,8 +102,8 @@ class Response
 
     /**
      * Changes the response status code
-     * 
-     * @param int $statusCode            
+     *
+     * @param int $statusCode
      */
     public function setStatusCode($statusCode)
     {
@@ -113,9 +112,9 @@ class Response
 
     /**
      * Adds a new header value
-     * 
-     * @param string $name            
-     * @param string $value            
+     *
+     * @param string $name
+     * @param string $value
      */
     public function setHeader($name, $value)
     {
@@ -125,7 +124,7 @@ class Response
     /**
      * Sets the content type of the response (helper to set a header).
      *
-     * @param String $contentType            
+     * @param String $contentType
      * @param String|null $charset
      *            Optional charset
      */
@@ -142,8 +141,8 @@ class Response
 
     /**
      * Sets the content of the response
-     * 
-     * @param string|null $content            
+     *
+     * @param string|null $content
      */
     public function setContent($content)
     {
@@ -153,7 +152,7 @@ class Response
     /**
      * Create a successful response
      *
-     * @param string|null $content            
+     * @param string|null $content
      * @return Response
      */
     public static function createOkResponse($content = null)
@@ -168,7 +167,7 @@ class Response
     /**
      * Create an internal error response
      *
-     * @param string|null $message            
+     * @param string|null $message
      * @return Response
      */
     public static function createInternalErrorResponse($message = null)
@@ -184,7 +183,7 @@ class Response
     /**
      * Create a not found response
      *
-     * @param string|null $message            
+     * @param string|null $message
      * @return Response
      */
     public static function createNotFoundResponse($message = null)
@@ -200,7 +199,7 @@ class Response
     /**
      * Create a bad request response
      *
-     * @param string|null $message            
+     * @param string|null $message
      * @return Response
      */
     public static function createBadRequestResponse($message = null)
@@ -216,7 +215,7 @@ class Response
     /**
      * Create a redirect response
      *
-     * @param string $url            
+     * @param string $url
      * @return Response
      */
     public static function createRedirectResponse($url)

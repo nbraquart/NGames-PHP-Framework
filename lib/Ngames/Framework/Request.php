@@ -32,7 +32,6 @@ use Ngames\Framework\Storage\PhpSession;
  */
 class Request
 {
-
     const HTTP_METHOD_OPTIONS = 'OPTIONS';
 
     const HTTP_METHOD_GET = 'GET';
@@ -110,11 +109,11 @@ class Request
     /**
      * Create a new request object from the request context
      *
-     * @param array $getParameters            
-     * @param array $postParameters            
-     * @param array $cookies            
-     * @param array $server            
-     * @param array $files            
+     * @param array $getParameters
+     * @param array $postParameters
+     * @param array $cookies
+     * @param array $server
+     * @param array $files
      */
     public function __construct($getParameters = [], $postParameters = [], $cookies = [], $server = [], $files = [])
     {
@@ -124,7 +123,7 @@ class Request
         $this->session = PhpSession::getInstance();
         $this->server = $server;
         $this->files = $files;
-        
+
         if (!$this->isCli()) {
             $this->method = $this->server['REQUEST_METHOD'];
             $this->requestUri = $this->extractUri($this->server['REQUEST_URI']);
@@ -153,8 +152,8 @@ class Request
      * Return the value of the GET parameter.
      * If not found, return $default instead
      *
-     * @param string $name            
-     * @param string|null $default            
+     * @param string $name
+     * @param string|null $default
      * @return string
      */
     public function getGetParameter($name, $default = null)
@@ -166,8 +165,8 @@ class Request
      * Return the value of the POST parameter.
      * If not found, return $default instead
      *
-     * @param string $name            
-     * @param string|null $default            
+     * @param string $name
+     * @param string|null $default
      * @return string
      */
     public function getPostParameter($name, $default = null)
@@ -179,8 +178,8 @@ class Request
      * Return the value of the cookie.
      * If not found, return $default instead
      *
-     * @param string $name            
-     * @param string|null $default            
+     * @param string $name
+     * @param string|null $default
      * @return string
      */
     public function getCookie($name, $default = null)
@@ -192,8 +191,8 @@ class Request
      * Return the value of the header.
      * If not found, return $default instead
      *
-     * @param string $name            
-     * @param string|null $default            
+     * @param string $name
+     * @param string|null $default
      * @return string
      */
     public function getHeader($name, $default = null)
@@ -205,7 +204,7 @@ class Request
     /**
      * Return the uploaded file by name
      *
-     * @param string $name            
+     * @param string $name
      * @return array|null
      */
     public function getFile($name)
@@ -272,13 +271,13 @@ class Request
      * Set the request URI.
      * Useful to change it in forward use-case.
      *
-     * @param String $uri            
+     * @param String $uri
      * @return Request
      */
     public function setRequestUri($uri)
     {
         $this->requestUri = $uri;
-        
+
         return $this;
     }
 
@@ -291,7 +290,7 @@ class Request
     public function getRemoteAddress()
     {
         $result = null;
-        
+
         if (!empty($this->server['HTTP_X_FORWARDED_FOR'])) {
             $result = $this->server['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($this->server['HTTP_CLIENT_IP'])) {
@@ -299,26 +298,26 @@ class Request
         } elseif (!empty($this->server['REMOTE_ADDR'])) {
             $result = $this->server['REMOTE_ADDR'];
         }
-        
+
         return $result;
     }
 
     /**
      * Ensures the string matches a URI, otherwise return null
-     * 
+     *
      * @return string
      * @throws Exception
      */
     private function extractUri($requestUriHeader)
     {
         $matches = [];
-        
+
         if (preg_match('/([a-z0-9_\-\/]+)/', mb_strtolower($requestUriHeader), $matches) && mb_strlen($matches[0]) > 0) {
             $result = $matches[0];
         } else {
             throw new Exception('Invalid requested URI');
         }
-        
+
         return $result;
     }
 }

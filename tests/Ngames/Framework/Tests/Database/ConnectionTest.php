@@ -26,7 +26,6 @@ use Ngames\Framework\Database\Connection;
 
 class ConnectionTest extends DbTestCase
 {
-
     public function testQuery()
     {
         $result = Connection::query('SELECT * FROM book ORDER BY id');

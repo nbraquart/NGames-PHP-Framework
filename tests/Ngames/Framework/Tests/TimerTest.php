@@ -26,7 +26,6 @@ use Ngames\Framework\Timer;
 
 class TimerTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testCreateTimer()
     {
         $timestamp = time();

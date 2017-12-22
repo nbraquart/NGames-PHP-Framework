@@ -33,7 +33,7 @@ class FileSystem
     /**
      * Deletes a file/folder recursively
      *
-     * @param string $path            
+     * @param string $path
      */
     public static function unlink($path)
     {
@@ -52,8 +52,8 @@ class FileSystem
 
     /**
      *
-     * @param Resource $fileResource            
-     * @param string $string            
+     * @param Resource $fileResource
+     * @param string $string
      * @return int
      */
     public static function fwriteStream($fileResource, $string)

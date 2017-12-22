@@ -24,7 +24,6 @@ namespace Ngames\Framework;
 
 class Logger
 {
-
     const LEVEL_DEBUG = 0;
 
     const LEVEL_INFO = 1;
@@ -56,7 +55,7 @@ class Logger
     /**
      * Sets the destination and tries to open it in append mode
      *
-     * @param string $destination            
+     * @param string $destination
      * @throws \Exception
      */
     public static function setDestination($destination)
@@ -70,7 +69,7 @@ class Logger
 
     /**
      * Sets the minimum level for which logs are printed.
-     * 
+     *
      * @param int $minLevel Use the Logger::LEVEL_* constants
      */
     public static function setMinLevel($minLevel)
@@ -81,7 +80,7 @@ class Logger
     /**
      * Logs a debug message
      *
-     * @param string $message            
+     * @param string $message
      */
     public static function logDebug($message)
     {
@@ -91,7 +90,7 @@ class Logger
     /**
      * Logs an error message
      *
-     * @param string $message            
+     * @param string $message
      */
     public static function logError($message)
     {
@@ -101,7 +100,7 @@ class Logger
     /**
      * Logs a warning message
      *
-     * @param string $message            
+     * @param string $message
      */
     public static function logWarning($message)
     {
@@ -111,7 +110,7 @@ class Logger
     /**
      * Logs an info message
      *
-     * @param string $message            
+     * @param string $message
      */
     public static function logInfo($message)
     {
@@ -121,9 +120,9 @@ class Logger
     /**
      * Logs a message
      *
-     * @param int $level            
-     * @param string $message            
-     * @param array $trace            
+     * @param int $level
+     * @param string $message
+     * @param array $trace
      *
      */
     private static function log($level, $message, $trace)
@@ -137,9 +136,9 @@ class Logger
     /**
      * Assemble the log line that will be written to the log file
      *
-     * @param int $level            
-     * @param string $message            
-     * @param array $trace            
+     * @param int $level
+     * @param string $message
+     * @param array $trace
      */
     protected static function assembleLogLine($level, $message, $trace)
     {

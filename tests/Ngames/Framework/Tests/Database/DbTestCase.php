@@ -84,7 +84,6 @@ class DbTestCase extends \PHPUnit\DbUnit\TestCase
  */
 class DummyConnection extends Connection
 {
-
     public static function getConnection()
     {
         if (!parent::$connection) {

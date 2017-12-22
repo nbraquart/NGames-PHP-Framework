@@ -63,7 +63,7 @@ abstract class AbstractModel
     /**
      * Sets values of current class from an array.
      *
-     * @param array $array            
+     * @param array $array
      *
      * @return \Ngames\Framework\Database\AbstractModel
      */
@@ -117,7 +117,7 @@ abstract class AbstractModel
     /**
      * Return the metadata for the provided class.
      *
-     * @param string $className            
+     * @param string $className
      *
      * @return array
      */

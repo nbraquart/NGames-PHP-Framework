@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-defined("ROOT_DIR") || define ("ROOT_DIR", dirname(__DIR__));
+defined("ROOT_DIR") || define("ROOT_DIR", dirname(__DIR__));
 $autoloader = require ROOT_DIR . '/vendor/autoload.php';
 $autoloader->add('Ngames\\', __DIR__);
 

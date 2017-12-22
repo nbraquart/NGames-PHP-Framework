@@ -34,7 +34,7 @@ class Inflector
      * Transform a string to its camelized version.
      * Hello there => helloThere
      *
-     * @param string $string            
+     * @param string $string
      */
     public static function camelize($string)
     {
@@ -45,7 +45,7 @@ class Inflector
      * Transform a string to its underscored version.
      * HelloThere => hello_there
      *
-     * @param string $string            
+     * @param string $string
      */
     public static function underscore($string)
     {
@@ -56,7 +56,7 @@ class Inflector
      * Transform a string from underscore to human readable.
      * hello_there => Hello There
      *
-     * @param string $string            
+     * @param string $string
      */
     public static function humanize($string)
     {
@@ -66,8 +66,8 @@ class Inflector
     /**
      * Return an 's' or 'x' if the provided variable is greater than 1.
      *
-     * @param int $variable            
-     * @param boolean $x            
+     * @param int $variable
+     * @param boolean $x
      * @return string
      */
     public static function pluralize($variable, $x = false)
@@ -78,7 +78,7 @@ class Inflector
     /**
      * Truncate the input and adds '...' to the end if needed.
      *
-     * @param string $string            
+     * @param string $string
      * @param int $maxLength
      *            the maximum length over which ellipsis is done
      * @return string

@@ -40,7 +40,7 @@ class Router
     /**
      * Adds a new matcher at the begining of the matcher list.
      *
-     * @param Matcher $matcher            
+     * @param Matcher $matcher
      *
      * @return Router
      */
@@ -53,7 +53,7 @@ class Router
 
     /**
      *
-     * @param string $uri            
+     * @param string $uri
      * @return Route|null the found route if any, null otherwise
      */
     public function getRoute($uri)

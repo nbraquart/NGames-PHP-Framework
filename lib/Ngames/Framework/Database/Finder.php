@@ -36,13 +36,12 @@ namespace Ngames\Framework\Database;
  */
 class Finder
 {
-
     protected $className = null;
 
     /**
      * Return a new finder for the provided class.
      *
-     * @param string $className            
+     * @param string $className
      */
     public function __construct($className)
     {
@@ -52,8 +51,8 @@ class Finder
     /**
      * Return a instance of the targeted class.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array $params
      *
      * @return \Ngames\Framework\Database\AbstractModel|boolean
      */
@@ -71,8 +70,8 @@ class Finder
     /**
      * Return a list of targeted class instances.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array $params
      *
      * @return array|boolean
      */

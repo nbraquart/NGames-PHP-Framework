@@ -26,7 +26,7 @@ namespace Ngames\Framework\Database\Annotations;
  * Annotation to identify the field(s) that are part of the primary key.
  *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
- *        
+ *
  *         @Annotation
  *         @Target({"PROPERTY"})
  */

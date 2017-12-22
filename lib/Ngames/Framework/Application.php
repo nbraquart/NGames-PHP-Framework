@@ -58,7 +58,7 @@ class Application
      *
      * @param string $configurationFile
      *            path to the configuration file (cf README for configuration file infos)
-     *            
+     *
      * @throws Exception
      */
     public static function initialize($configurationFile)
@@ -92,7 +92,7 @@ class Application
     /**
      * Initializes a new application
      *
-     * @param string $configurationFile            
+     * @param string $configurationFile
      */
     protected function __construct($configurationFile)
     {

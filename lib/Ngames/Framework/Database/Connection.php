@@ -29,7 +29,6 @@ namespace Ngames\Framework\Database;
  */
 class Connection
 {
-
     protected static $queries = [];
 
     /**
@@ -66,8 +65,8 @@ class Connection
      * NB: all data are string, if native type is needed:
      * http://stackoverflow.com/questions/2430640/g.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array $params
      *
      * @return array|boolean The result of the query
      */
@@ -97,8 +96,8 @@ class Connection
      * Execute a modifying query on the database (INSERT, UPDATE or DELETE).
      * If needed, after rowCount(): while ($statement->fetch(\PDO::FETCH_ASSOC)) {}.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array $params
      *
      * @return int|boolean The number of rows impacted
      */
@@ -123,8 +122,8 @@ class Connection
     /**
      * Count the number of rows matching the query.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array $params
      *
      * @return int|boolean
      */
@@ -149,8 +148,8 @@ class Connection
     /**
      * Helper method querying the database for a single row.
      *
-     * @param string $query            
-     * @param array $params            
+     * @param string $query
+     * @param array $params
      *
      * @return array|bool
      */
@@ -164,8 +163,8 @@ class Connection
     /**
      * Inserts data in the database.
      *
-     * @param string $tableName            
-     * @param array $data            
+     * @param string $tableName
+     * @param array $data
      *
      * @return bool|number
      */
@@ -187,8 +186,8 @@ class Connection
     /**
      * Returns an element by its primary key.
      *
-     * @param string $tableName            
-     * @param int $id            
+     * @param string $tableName
+     * @param int $id
      *
      * @return array|bool
      */
@@ -232,8 +231,8 @@ class Connection
     /**
      * Logs the query and its execution time.
      *
-     * @param string $queryString            
-     * @param float $duration            
+     * @param string $queryString
+     * @param float $duration
      */
     protected static function logQuery($queryString, $duration)
     {

@@ -27,7 +27,6 @@ use Ngames\Framework\Tests\Database\Model\Author;
 
 class FinderTest extends DbTestCase
 {
-
     public function testQuery()
     {
         $result = Book::getFinder()->query(

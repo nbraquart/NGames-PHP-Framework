@@ -34,7 +34,6 @@ use Ngames\Framework\Utility\Inflector;
  */
 class Controller
 {
-
     const CONTROLLER_NAMESPACE = 'Controller';
 
     const CONTROLLER_SUFFIX = 'Controller';
@@ -74,12 +73,13 @@ class Controller
      * Does nothing by default, but can be overriden by application.
      */
     protected function preExecute()
-    {}
+    {
+    }
 
     /**
      * Sets the controller request.
      *
-     * @param Request $request            
+     * @param Request $request
      */
     public function setRequest(Request $request)
     {
@@ -90,7 +90,7 @@ class Controller
      * Sets the route identified during this request.
      * Default view script is set at this stage.
      *
-     * @param Route $route            
+     * @param Route $route
      */
     public function setRoute(Route $route)
     {
@@ -103,7 +103,7 @@ class Controller
     /**
      * Return a successful response
      *
-     * @param string|null $content            
+     * @param string|null $content
      * @return Response
      */
     protected function ok($content = null)
@@ -114,7 +114,7 @@ class Controller
     /**
      * Return a redirect response
      *
-     * @param string $url            
+     * @param string $url
      * @return Response
      */
     protected function redirect($url)
@@ -125,7 +125,7 @@ class Controller
     /**
      * Return a not found response
      *
-     * @param string|null $message            
+     * @param string|null $message
      * @return Response
      */
     protected function notFound($message = null)
@@ -136,7 +136,7 @@ class Controller
     /**
      * Return a bad request response
      *
-     * @param string|null $message            
+     * @param string|null $message
      * @return Response
      */
     protected function badRequest($message = null)
@@ -147,7 +147,7 @@ class Controller
     /**
      * Return an internal error response
      *
-     * @param string|null $message            
+     * @param string|null $message
      * @return Response
      */
     protected function internalError($message = null)
@@ -159,9 +159,9 @@ class Controller
      * Forward the request to another action.
      * Contrary to redirect, no HTTP response is sent to the user between the two actions.
      *
-     * @param string $actionName            
-     * @param string|null $controllerName            
-     * @param string|null $moduleName            
+     * @param string $actionName
+     * @param string|null $controllerName
+     * @param string|null $moduleName
      * @return mixed
      */
     protected function forward($actionName, $controllerName = null, $moduleName = null)
@@ -190,8 +190,8 @@ class Controller
     /**
      * Return response as JSON.
      *
-     * @param mixed $json            
-     * @param int $options            
+     * @param mixed $json
+     * @param int $options
      *
      * @return \Ngames\Framework\Response
      */
@@ -207,7 +207,7 @@ class Controller
     /**
      * Execute the provided request.
      *
-     * @param Request $request            
+     * @param Request $request
      * @return mixed
      */
     public static function execute(Route $route, Request $request)

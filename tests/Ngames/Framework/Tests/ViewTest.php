@@ -28,7 +28,6 @@ use Ngames\Framework\Exception;
 
 class ViewTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testGetSetVariable()
     {
         $view = new View();
