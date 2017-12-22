@@ -29,7 +29,6 @@ namespace Ngames\Framework;
  */
 class Response
 {
-
     const HTTP_STATUS_OK = 200;
 
     const HTTP_STATUS_CREATED = 201;
