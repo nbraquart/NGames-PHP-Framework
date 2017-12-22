@@ -1,9 +1,8 @@
 language: php
 
 php:
-    - '5.6'
     - '7.0'
-#    - 'nightly' # Disabled because xdebug_get_headers function missing
+    - 'nightly' # Disabled because xdebug_get_headers function missing
 
 install:
     - composer self-update
