@@ -70,16 +70,16 @@ abstract class AbstractModel
     public function fromArray(array $array)
     {
         $metadata = $this->getClassMetadata(get_class($this));
-        
+
         // Store properties for reference. Keys are the property referencing another class, values are arrays of properties for this class
         $referencesProperties = [];
         // Store properties for current class
         $properties = [];
-        
+
         // Dispatch properties by destination class (current or one of its references)
         foreach ($array as $property => $value) {
             $isReference = false;
-            
+
             // For all properties that are reference to another class
             if (array_key_exists('reference_properties', $metadata)) {
                 foreach (array_keys($metadata['reference_properties']) as $referenceProperty) {
@@ -92,26 +92,46 @@ abstract class AbstractModel
                     }
                 }
             }
-            
+
             // Property was not found as a reference, then it's a value for current class
             if (!$isReference && array_key_exists($property, $metadata['properties_mapping'])) {
                 $properties[$property] = $value;
             }
         }
-        
+
         // Set my properties
         foreach ($properties as $property => $value) {
-            $this->{$metadata['properties_mapping'][$property]} = $value;
+            $this->setProperty($metadata['properties_mapping'][$property], $value);
         }
-        
+
         // Set references properties
         foreach ($referencesProperties as $referenceProperty => $referenceProperties) {
             $referenceInstance = new $metadata['reference_properties'][$referenceProperty]();
             $referenceInstance->fromArray($referenceProperties);
-            $this->{$metadata['properties_mapping'][$referenceProperty]} = $referenceInstance;
+            $this->setProperty($metadata['properties_mapping'][$referenceProperty], $referenceInstance);
         }
-        
+
         return $this;
+    }
+
+    /**
+     * Sets an attribute using a setter if it exists, and directly otherwise.
+     * @param string $name
+     * @param mixed $value
+     */
+    protected function setProperty($name, $value)
+    {
+        $setterName = 'set' . ucfirst($name);
+
+        if (method_exists($this, $setterName)) {
+            $setterReflection = new \ReflectionMethod($this, $setterName);
+
+            if ($setterReflection->getNumberOfParameters() === 1) {
+                return $setterReflection->invoke($this, $value);
+            }
+        }
+
+        $this->{$name} = $value;
     }
 
     /**
@@ -126,16 +146,16 @@ abstract class AbstractModel
         if (!array_key_exists($className, self::$metadata)) {
             // Get the reflection class and class name
             $reflectionClass = new \ReflectionClass($className);
-            
+
             // Initialize a reader (APC if available, or in memory array cache)
             $reader = $this->getAnnotationsReader();
-            
+
             // For each property
             $properties = $reflectionClass->getProperties();
-            
+
             // Initialize metadata
             $metadata = [];
-            
+
             foreach ($properties as $property) {
                 // We only want non static properties defined by the sub-class
                 if (!$property->isStatic() && $property->getDeclaringClass()->getName() == $className) {
@@ -143,7 +163,7 @@ abstract class AbstractModel
                     $propertyNameUnderscore = \Ngames\Framework\Utility\Inflector::underscore($propertyName);
                     $idAnnotation = $reader->getPropertyAnnotation($property, '\Ngames\Framework\Database\Annotations\Id');
                     $referenceAnnotation = $reader->getPropertyAnnotation($property, '\Ngames\Framework\Database\Annotations\Reference');
-                    
+
                     // Add to the list
                     $metadata['properties_mapping'][$propertyNameUnderscore] = $propertyName;
                     if ($idAnnotation !== null) {
@@ -154,10 +174,10 @@ abstract class AbstractModel
                     }
                 }
             }
-            
+
             self::$metadata[$className] = $metadata;
         }
-        
+
         return self::$metadata[$className];
     }
 
@@ -174,7 +194,7 @@ abstract class AbstractModel
             \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Reference.php');
             self::$annotationsLoaded = true;
         }
-        
+
         return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcuCache() : new \Doctrine\Common\Cache\ArrayCache());
     }
 }

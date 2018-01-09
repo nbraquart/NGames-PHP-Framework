@@ -36,4 +36,9 @@ class Author extends AbstractModel
     public $lastName;
 
     public $firstName;
+
+    public function setFirstName($firstName)
+    {
+        $this->firstName = 'Setter: ' . $firstName;
+    }
 }

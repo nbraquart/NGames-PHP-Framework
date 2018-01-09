@@ -44,7 +44,7 @@ class FinderTest extends DbTestCase
         $this->assertInstanceOf(Author::class, $result[0]->author);
         $this->assertEquals(1, $result[0]->author->id);
         $this->assertEquals('Last Name 1', $result[0]->author->lastName);
-        $this->assertEquals('First Name 1', $result[0]->author->firstName);
+        $this->assertEquals('Setter: First Name 1', $result[0]->author->firstName);
     }
 
     public function testQueryOne()
@@ -63,6 +63,6 @@ class FinderTest extends DbTestCase
         $this->assertInstanceOf(Author::class, $result->author);
         $this->assertEquals(2, $result->author->id);
         $this->assertEquals('Last Name 2', $result->author->lastName);
-        $this->assertEquals('First Name 2', $result->author->firstName);
+        $this->assertEquals('Setter: First Name 2', $result->author->firstName);
     }
 }
