@@ -442,6 +442,10 @@ class View
         // Check the script path
         $scriptFullPath = $this->directory . $this->getScript() . self::VIEWS_EXTENSION;
         if (!is_readable($scriptFullPath)) {
+            $scriptFullPath = $this->directory . $this->getScript() . '/index' . self::VIEWS_EXTENSION;
+        }
+
+        if (!is_readable($scriptFullPath)) {
             throw new Exception($scriptFullPath . ' not found');
         }
         

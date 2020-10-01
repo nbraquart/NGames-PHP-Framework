@@ -190,6 +190,21 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedOutput, $output);
     }
 
+    public function testRenderForModule()
+    {
+        $view = new View();
+        $view->setDirectory(ROOT_DIR . '/tests/data/View/');
+        $view->setScript('module');
+        $view->setLayout('layout');
+        $view->getParentView()->setDirectory(ROOT_DIR . '/tests/data/View/');
+        $view->viewVariable = 'view_variable_value';
+        $view->getParentView()->layoutVariable = 'layout_variable_value';
+
+        $output = $view->render();
+        $expectedOutput = "Content in layout\nContent in module\nview_variable_value\nlayout_variable_value\nview_variable_value";
+        $this->assertEquals($expectedOutput, $output);
+    }
+
     public function testRender_errorScriptNotFound()
     {
         $this->expectException(Exception::class);
