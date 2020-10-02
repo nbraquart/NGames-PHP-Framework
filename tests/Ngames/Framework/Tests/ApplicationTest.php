@@ -99,7 +99,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         Application::initialize(ROOT_DIR . '/tests/data/Application/config_log.ini');
         ob_start();
         Logger::logDebug('debug');
-        $this->assertContains('ApplicationTest.php:' . (__LINE__ - 1) . ' - debug', ob_get_contents());
+        $this->assertStringContainsString('ApplicationTest.php:' . (__LINE__ - 1) . ' - debug', ob_get_contents());
         ob_end_clean();
     }
 

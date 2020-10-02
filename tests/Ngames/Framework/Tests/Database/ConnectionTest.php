@@ -164,17 +164,17 @@ class ConnectionTest extends DbTestCase
 
     public function testGetLastError()
     {
-        $this->assertInternalType('array', Connection::getLastError());
+        $this->assertIsArray(Connection::getLastError());
         $this->assertEquals(3, count(Connection::getLastError()));
     }
 
     public function testGetQueryCounter()
     {
-        $this->assertInternalType('integer', Connection::getQueryCounter());
+        $this->assertIsNumeric(Connection::getQueryCounter());
     }
 
     public function testGetQueries()
     {
-        $this->assertInternalType('array', Connection::getQueries());
+        $this->assertIsArray(Connection::getQueries());
     }
 }

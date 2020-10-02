@@ -5,3 +5,4 @@
 /.project
 /coverage
 /coverage.clover
+.phpunit.result.cache

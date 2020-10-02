@@ -50,7 +50,7 @@ class Connection
         if (!self::$connection) {
             $configuration = \Ngames\Framework\Application::getInstance()->getConfiguration();
             $dsn = sprintf('mysql:host=%s;dbname=%s', $configuration->database->host, $configuration->database->name);
-            
+
             self::$connection = new \PDO($dsn, $configuration->database->username, $configuration->database->password, [
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'',
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
@@ -76,7 +76,7 @@ class Connection
             $statement = self::getConnection()->prepare($query);
             $result = false;
             $start = microtime(true);
-        
+
             if ($statement && $statement->execute($params)) {
                 $result = [];
                 self::logQuery($query, microtime(true) - $start);
@@ -88,7 +88,7 @@ class Connection
         } catch (\PDOException $e) {
             throw new \Ngames\Framework\Exception('Caught PDO exception', 0, $e);
         }
-        
+
         return $result;
     }
 

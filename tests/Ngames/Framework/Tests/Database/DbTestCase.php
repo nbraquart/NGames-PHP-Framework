@@ -28,52 +28,33 @@ use Ngames\Framework\Database\Connection;
  * Common test case class for all tests involving a database
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-class DbTestCase extends \PHPUnit\DbUnit\TestCase
+class DbTestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @beforeClass
-     */
-    public static function beforeClass()
+    public static function setUpBeforeClass(): void
     {
         DummyConnection::getConnection()->exec('CREATE TABLE book(id INT, title VARCHAR(100), description VARCHAR(100), author_id INT)');
         DummyConnection::getConnection()->exec('CREATE TABLE author(id INT, last_name VARCHAR(100), first_name VARCHAR(100))');
     }
 
-    /**
-     * @afterClass
-     */
-    public static function afterClass()
+    public function setUp(): void
+    {
+        DummyConnection::getConnection()->exec("INSERT INTO author VALUES(1, 'Last Name 1', 'First Name 1')");
+        DummyConnection::getConnection()->exec("INSERT INTO author VALUES(2, 'Last Name 2', 'First Name 2')");
+        DummyConnection::getConnection()->exec("INSERT INTO book VALUES(1, 'Book 1', 'Description 1', 1)");
+        DummyConnection::getConnection()->exec("INSERT INTO book VALUES(2, 'Book 2', 'Description 2', 1)");
+        DummyConnection::getConnection()->exec("INSERT INTO book VALUES(3, 'Book 3', 'Description 3', 2)");
+    }
+
+    public function tearDown(): void
+    {
+        DummyConnection::getConnection()->exec('DELETE FROM book');
+        DummyConnection::getConnection()->exec('DELETE FROM author');
+    }
+
+    public static function tearDownAfterClass(): void
     {
         DummyConnection::getConnection()->exec('DROP TABLE book');
         DummyConnection::getConnection()->exec('DROP TABLE author');
-    }
-
-    /**
-     *
-     * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection
-     */
-    public function getConnection()
-    {
-        $pdo = DummyConnection::getConnection();
-        return $this->createDefaultDBConnection($pdo, ':memory:');
-    }
-
-    /**
-     * @return \PHPUnit_Extensions_Database_DataSet_ArrayDataSet
-     */
-    public function getDataSet()
-    {
-        return $this->createArrayDataSet(array(
-            'book' => array(
-                array('id' => 1, 'title' => 'Book 1', 'description' => 'Description 1', 'author_id' => 1),
-                array('id' => 2, 'title' => 'Book 2', 'description' => 'Description 2', 'author_id' => 1),
-                array('id' => 3, 'title' => 'Book 3', 'description' => 'Description 3', 'author_id' => 2)
-            ),
-            'author' => array(
-                array('id' => 1, 'last_name' => 'Last Name 1', 'first_name' => 'First Name 1'),
-                array('id' => 2, 'last_name' => 'Last Name 2', 'first_name' => 'First Name 2')
-            )
-        ));
     }
 }
 
@@ -87,7 +68,9 @@ class DummyConnection extends Connection
     public static function getConnection()
     {
         if (!parent::$connection) {
-            parent::$connection = new \PDO('sqlite::memory:');
+            parent::$connection = new \PDO('sqlite::memory:', null, null, [
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+            ]);
         }
 
         return parent::$connection;

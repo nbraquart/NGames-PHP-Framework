@@ -47,10 +47,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
 
         foreach ($this->expectedMessages as $expectedMessage) {
-            $this->assertContains($expectedMessage, $output);
+            $this->assertStringContainsString($expectedMessage, $output);
         }
         foreach ($this->notExpectedMessages as $notExpectedMessage) {
-            $this->assertNotContains($notExpectedMessage, $output);
+            $this->assertStringNotContainsString($notExpectedMessage, $output);
         }
     }
 
