@@ -186,7 +186,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view->getParentView()->layoutVariable = 'layout_variable_value';
 
         $output = $view->render();
-        $expectedOutput = "Content in layout\nContent in view\nview_variable_value\nlayout_variable_value\nview_variable_value";
+        $expectedOutput = "Content in layout\r\nContent in view\r\nview_variable_value\r\nlayout_variable_value\r\nview_variable_value";
         $this->assertEquals($expectedOutput, $output);
     }
 
@@ -201,14 +201,14 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view->getParentView()->layoutVariable = 'layout_variable_value';
 
         $output = $view->render();
-        $expectedOutput = "Content in layout\nContent in module\nview_variable_value\nlayout_variable_value\nview_variable_value";
+        $expectedOutput = "Content in layout\r\nContent in module\r\nview_variable_value\r\nlayout_variable_value\r\nview_variable_value";
         $this->assertEquals($expectedOutput, $output);
     }
 
     public function testRender_errorScriptNotFound()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('does_not_exist.phtml not found');
+        $this->expectExceptionMessage('does_not_exist not found');
         $view = new View();
         $view->setDirectory('does_not_exist');
         $view->render();

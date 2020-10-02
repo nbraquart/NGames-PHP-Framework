@@ -439,14 +439,15 @@ class View
             $this->setScript($script);
         }
         
-        // Check the script path
-        $scriptFullPath = $this->directory . $this->getScript() . self::VIEWS_EXTENSION;
+        // Check the path to rendered file
+        $moduleFullPath = $this->directory . $this->getScript();
+        $scriptFullPath = $modulePath . self::VIEWS_EXTENSION;
         if (!is_readable($scriptFullPath)) {
-            $scriptFullPath = $this->directory . $this->getScript() . '/index' . self::VIEWS_EXTENSION;
-        }
+            $scriptFullPath = $moduleFullPath . '/index' . self::VIEWS_EXTENSION;
 
-        if (!is_readable($scriptFullPath)) {
-            throw new Exception($scriptFullPath . ' not found');
+            if (!is_readable($scriptFullPath)) {
+                throw new Exception($moduleFullPath . ' not found');
+            }
         }
         
         // Put the variables in scope
