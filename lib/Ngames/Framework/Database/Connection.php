@@ -31,6 +31,8 @@ class Connection
 {
     protected static $queries = [];
 
+    const PDO_EXCEPTION_MESSAGE = 'Caught PDO exception';
+
     /**
      *
      * @var \PDO
@@ -86,7 +88,7 @@ class Connection
                 }
             }
         } catch (\PDOException $e) {
-            throw new \Ngames\Framework\Exception('Caught PDO exception', 0, $e);
+            throw new \Ngames\Framework\Exception(self::PDO_EXCEPTION_MESSAGE, 0, $e);
         }
 
         return $result;
@@ -113,7 +115,7 @@ class Connection
                 $result = $statement->rowCount();
             }
         } catch (\PDOException $e) {
-            throw new \Ngames\Framework\Exception('Caught PDO exception', 0, $e);
+            throw new \Ngames\Framework\Exception(self::PDO_EXCEPTION_MESSAGE, 0, $e);
         }
         
         return $result;
@@ -129,20 +131,7 @@ class Connection
      */
     public static function count($query, array $params = [])
     {
-        try {
-            $statement = self::getConnection()->prepare($query);
-            $result = false;
-            $start = microtime(true);
-        
-            if ($statement && $statement->execute($params)) {
-                self::logQuery($query, microtime(true) - $start);
-                $result = $statement->rowCount();
-            }
-        } catch (\PDOException $e) {
-            throw new \Ngames\Framework\Exception('Caught PDO exception', 0, $e);
-        }
-        
-        return $result;
+        return self::exec($query, $params);
     }
 
     /**
@@ -157,7 +146,7 @@ class Connection
     {
         $result = self::query($query, $params);
         
-        return is_array($result) && count($result) > 0 ? $result[0] : false;
+        return is_array($result) && !empty($result) ? $result[0] : false;
     }
 
     /**

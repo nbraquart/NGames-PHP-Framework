@@ -53,6 +53,8 @@ class Response
 
     const CONTENT_TYPE_HEADER = 'Content-Type';
 
+    const ERROR_CONTENT_TYPE = 'text/plain; charset=utf-8';
+
     /**
      *
      * @var int
@@ -173,7 +175,7 @@ class Response
     public static function createInternalErrorResponse($message = null)
     {
         $response = new self();
-        $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
+        $response->setHeader(self::CONTENT_TYPE_HEADER, self::ERROR_CONTENT_TYPE);
         $response->setContent($message !== null ? $message : 'Internal server error.');
         $response->setStatusCode(self::HTTP_STATUS_INTERNAL_SERVER_ERROR);
 
@@ -189,7 +191,7 @@ class Response
     public static function createNotFoundResponse($message = null)
     {
         $response = new self();
-        $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
+        $response->setHeader(self::CONTENT_TYPE_HEADER, self::ERROR_CONTENT_TYPE);
         $response->setContent($message !== null ? $message : 'File not found.');
         $response->setStatusCode(self::HTTP_STATUS_NOT_FOUND);
 
@@ -205,7 +207,7 @@ class Response
     public static function createBadRequestResponse($message = null)
     {
         $response = new self();
-        $response->setHeader('Content-Type', 'text/plain; charset=utf-8');
+        $response->setHeader(self::CONTENT_TYPE_HEADER, self::ERROR_CONTENT_TYPE);
         $response->setContent($message !== null ? $message : 'Bad request.');
         $response->setStatusCode(self::HTTP_STATUS_BAD_REQUEST);
 

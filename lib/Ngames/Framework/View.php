@@ -30,6 +30,7 @@ use Ngames\Framework\Router\Route;
  * @property string content In case it's a parent view, there will be a 'content' property containing the child view content
  *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
+ * @SuppressWarnings("php:S1448")
  */
 class View
 {
@@ -447,7 +448,7 @@ class View
         
         // Put the variables in scope
         foreach ($this->variables as $variableName => $variableValue) {
-            $$variableName = $variableValue;
+            $$variableName = $variableValue; //NOSONAR
         }
         
         // Render

@@ -78,28 +78,28 @@ class Matcher
      */
     public function match($uri)
     {
-        $pattern = $this->prepareForMatching($this->pattern);
+        $preparedPattern = $this->prepareForMatching($this->pattern);
         $uri = $this->prepareForMatching($uri);
-        $moduleName = $this->moduleName;
-        $controllerName = $this->controllerName;
-        $actionName = $this->actionName;
-        $countPattern = count($pattern);
+        $currentModuleName = $this->moduleName;
+        $currentControllerName = $this->controllerName;
+        $currentActionName = $this->actionName;
+        $countPattern = count($preparedPattern);
         $match = true;
         
         if ($countPattern !== count($uri)) {
             $match = false;
         } else {
             for ($i = 0; $i < $countPattern; $i++) {
-                $currentPatternPart = $pattern[$i];
+                $currentPatternPart = $preparedPattern[$i];
                 $currentUriPart = $uri[$i];
                 
                 if ($currentPatternPart !== $currentUriPart) {
                     if ($currentPatternPart === self::MODULE_KEY) {
-                        $moduleName = $currentUriPart;
+                        $currentModuleName = $currentUriPart;
                     } elseif ($currentPatternPart === self::CONTROLLER_KEY) {
-                        $controllerName = $currentUriPart;
+                        $currentControllerName = $currentUriPart;
                     } elseif ($currentPatternPart === self::ACTION_KEY) {
-                        $actionName = $currentUriPart;
+                        $currentActionName = $currentUriPart;
                     } else {
                         $match = false;
                         break;
@@ -108,7 +108,7 @@ class Matcher
             }
         }
         
-        return $match ? new Route($moduleName, $controllerName, $actionName) : null;
+        return $match ? new Route($currentModuleName, $currentControllerName, $currentActionName) : null;
     }
 
     /**
