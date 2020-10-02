@@ -30,7 +30,6 @@ use Ngames\Framework\Router\Route;
  * @property string content In case it's a parent view, there will be a 'content' property containing the child view content
  *
  * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
- * @SuppressWarnings("php:S1448")
  */
 class View
 {
