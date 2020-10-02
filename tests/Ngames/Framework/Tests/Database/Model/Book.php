@@ -25,7 +25,6 @@ namespace Ngames\Framework\Tests\Database\Model;
 use Ngames\Framework\Database\AbstractModel;
 use Ngames\Framework\Database\Annotations\Id;
 use Ngames\Framework\Database\Annotations\Reference;
-use Ngames\Framework\Database\Connection;
 
 class Book extends AbstractModel
 {

@@ -112,7 +112,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testGetFile()
     {
         $request = $this->getRequest();
-        $this->assertInternalType('array', $request->getFile('file'));
+        $this->assertIsArray($request->getFile('file'));
         $this->assertNull($request->getFile('not-set'));
     }
 

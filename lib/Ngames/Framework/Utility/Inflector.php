@@ -72,7 +72,10 @@ class Inflector
      */
     public static function pluralize($variable, $x = false)
     {
-        return $variable > 1 ? ($x ? 'x' : 's') : '';
+        if ($variable <= 1) {
+            return '';
+        }
+        return $x ? 'x' : 's';
     }
 
     /**

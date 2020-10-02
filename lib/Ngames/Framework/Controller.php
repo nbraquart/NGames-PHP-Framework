@@ -178,14 +178,14 @@ class Controller
         }
 
         // Build a new request
-        $request = clone $this->request;
-        $request->setRequestUri('/' . $moduleName . '/' . $controllerName . '/' . $actionName);
+        $requestClone = clone $this->request;
+        $requestClone->setRequestUri('/' . $moduleName . '/' . $controllerName . '/' . $actionName);
 
         // Build a new route
-        $route = new Route($moduleName, $controllerName, $actionName);
+        $forwardRoute = new Route($moduleName, $controllerName, $actionName);
 
         // Execute again for the forward
-        return self::execute($route, $request);
+        return self::execute($forwardRoute, $requestClone);
     }
 
     /**

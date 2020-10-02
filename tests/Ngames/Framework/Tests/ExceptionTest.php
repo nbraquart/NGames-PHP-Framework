@@ -38,8 +38,8 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
             $trace = Exception::trace($exception2);
         }
 
-        $this->assertContains('Ngames\Framework\Exception: Exception 2 message', $trace);
-        $this->assertContains('Caused by: Ngames\Framework\Exception: Exception 1 message', $trace);
+        $this->assertStringContainsString('Ngames\Framework\Exception: Exception 2 message', $trace);
+        $this->assertStringContainsString('Caused by: Ngames\Framework\Exception: Exception 1 message', $trace);
     }
     
     public function throwNgamesException($message, $code, $previous = null)

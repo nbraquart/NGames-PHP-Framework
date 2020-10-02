@@ -1,10 +1,7 @@
 language: php
 
 php:
-    - '7.0'
-    - '7.1'
-    - '7.2'
-    - 'nightly' # Disabled because xdebug_get_headers function missing
+    - '7.4'
 
 install:
     - composer self-update
@@ -17,7 +14,3 @@ script:
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
-matrix:
-    allow_failures:
-        - php: nightly
