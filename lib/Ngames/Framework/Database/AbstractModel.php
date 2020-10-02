@@ -69,7 +69,7 @@ abstract class AbstractModel
      */
     public function fromArray(array $array)
     {
-        $metadata = $this->getClassMetadata(get_class($this));
+        $classMetadata = $this->getClassMetadata(get_class($this));
 
         // Store properties for reference. Keys are the property referencing another class, values are arrays of properties for this class
         $referencesProperties = [];
@@ -81,8 +81,8 @@ abstract class AbstractModel
             $isReference = false;
 
             // For all properties that are reference to another class
-            if (array_key_exists('reference_properties', $metadata)) {
-                foreach (array_keys($metadata['reference_properties']) as $referenceProperty) {
+            if (array_key_exists('reference_properties', $classMetadata)) {
+                foreach (array_keys($classMetadata['reference_properties']) as $referenceProperty) {
                     // If current property starts with the reference property name, then it's a value for referenced class
                     if (strpos($property, $referenceProperty . '_') === 0) {
                         $localPropertyName = str_replace($referenceProperty . '_', '', $property);
@@ -94,21 +94,21 @@ abstract class AbstractModel
             }
 
             // Property was not found as a reference, then it's a value for current class
-            if (!$isReference && array_key_exists($property, $metadata['properties_mapping'])) {
+            if (!$isReference && array_key_exists($property, $classMetadata['properties_mapping'])) {
                 $properties[$property] = $value;
             }
         }
 
         // Set my properties
         foreach ($properties as $property => $value) {
-            $this->setProperty($metadata['properties_mapping'][$property], $value);
+            $this->setProperty($classMetadata['properties_mapping'][$property], $value);
         }
 
         // Set references properties
         foreach ($referencesProperties as $referenceProperty => $referenceProperties) {
-            $referenceInstance = new $metadata['reference_properties'][$referenceProperty]();
+            $referenceInstance = new $classMetadata['reference_properties'][$referenceProperty]();
             $referenceInstance->fromArray($referenceProperties);
-            $this->setProperty($metadata['properties_mapping'][$referenceProperty], $referenceInstance);
+            $this->setProperty($classMetadata['properties_mapping'][$referenceProperty], $referenceInstance);
         }
 
         return $this;
@@ -154,7 +154,7 @@ abstract class AbstractModel
             $properties = $reflectionClass->getProperties();
 
             // Initialize metadata
-            $metadata = [];
+            $classMetadata = [];
 
             foreach ($properties as $property) {
                 // We only want non static properties defined by the sub-class
@@ -165,17 +165,17 @@ abstract class AbstractModel
                     $referenceAnnotation = $reader->getPropertyAnnotation($property, '\Ngames\Framework\Database\Annotations\Reference');
 
                     // Add to the list
-                    $metadata['properties_mapping'][$propertyNameUnderscore] = $propertyName;
+                    $classMetadata['properties_mapping'][$propertyNameUnderscore] = $propertyName;
                     if ($idAnnotation !== null) {
-                        $metadata['primary_key_properties'][] = $propertyNameUnderscore;
+                        $classMetadata['primary_key_properties'][] = $propertyNameUnderscore;
                     }
                     if ($referenceAnnotation != null) {
-                        $metadata['reference_properties'][$propertyNameUnderscore] = $referenceAnnotation->targetClass;
+                        $classMetadata['reference_properties'][$propertyNameUnderscore] = $referenceAnnotation->targetClass;
                     }
                 }
             }
 
-            self::$metadata[$className] = $metadata;
+            self::$metadata[$className] = $classMetadata;
         }
 
         return self::$metadata[$className];

@@ -71,6 +71,7 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
         file_put_contents($fileName, $content);
     }
 
+    // @SuppressWarnings("php:S3776")
     protected function processParsedFile(array $array)
     {
         $result = [];
