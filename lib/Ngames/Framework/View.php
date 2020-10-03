@@ -442,7 +442,7 @@ class View
         
         // Check the path to rendered file
         $moduleFullPath = $this->directory . $this->getScript();
-        $scriptFullPath = $modulePath . self::VIEWS_EXTENSION;
+        $scriptFullPath = $moduleFullPath . self::VIEWS_EXTENSION;
         if (!is_readable($scriptFullPath)) {
             $scriptFullPath = $moduleFullPath . '/index' . self::VIEWS_EXTENSION;
 
