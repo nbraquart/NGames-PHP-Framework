@@ -40,7 +40,6 @@ class Exception extends \Exception
      * @param array $seen
      *
      * @return string
-     * @SuppressWarnings("php:S3776")
      */
     public static function trace($e, array $seen = [])
     {
