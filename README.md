@@ -1,11 +1,9 @@
 # NGames Framework - A simple PHP framework
-[![Build Status](https://travis-ci.org/nbraquart/ngames-framework.svg?branch=master)](https://travis-ci.org/nbraquart/ngames-framework)
-[![License](https://poser.pugx.org/ngames/framework/license.png)](https://packagist.org/packages/ngames/framework)
-[![Latest Stable Version](https://poser.pugx.org/ngames/framework/v/stable)](https://packagist.org/packages/ngames/framework)
-[![Latest Unstable Version](https://poser.pugx.org/ngames/framework/v/unstable)](https://packagist.org/packages/ngames/framework)
+[![Build Status](https://img.shields.io/github/workflow/status/ngamesfr/ngames-framework/Build%20and%20test)](https://github.com/ngamesfr/ngames-framework/actions?query=workflow%3A%22Build+and+test%22)
+[![License](https://img.shields.io/github/license/ngamesfr/ngames-framework)](https://packagist.org/packages/ngames/framework)
+[![Last release](https://img.shields.io/github/v/release/ngamesfr/ngames-framework)](https://packagist.org/packages/ngames/framework)
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nbraquart/ngames-framework/?branch=master)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ngamesfr_ngames-framework&metric=coverage)](https://sonarcloud.io/dashboard?id=ngamesfr_ngames-framework)
 
 ## Installation
 Use composer to install the application: `composer require ngames/framework`. Or you can update the `composer.json` file by adding the following line in the `require` object:

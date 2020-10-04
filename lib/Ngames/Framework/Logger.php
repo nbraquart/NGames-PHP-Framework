@@ -154,11 +154,9 @@ class Logger
             case self::LEVEL_WARNING:
                 $levelString = 'WARN ';
                 break;
-            case self::LEVEL_ERROR:
+            default:
                 $levelString = 'ERROR';
                 break;
-            default:
-                throw new Exception('Invalid logging level');
         }
 
         $time = microtime(true);
