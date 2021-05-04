@@ -20,6 +20,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~9.3.11",
-        "friendsofphp/php-cs-fixer": "~2.16.4"
+        "friendsofphp/php-cs-fixer": "~2.18.5"
     }
 }
