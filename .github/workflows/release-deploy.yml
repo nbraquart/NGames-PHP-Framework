@@ -22,9 +22,6 @@ jobs:
       run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
     - name: Build and push Docker image
       run: |
-        imageName=ngamesfr1/ngames-framework:${GITHUB_REF##*/}
-        latestImageName=ngamesfr1/ngames-framework:${GITHUB_REF##*/}
-        docker build . -t $imageName
-        docker push $imageName
-        docker image tag $imageName $latestImageName
-        docker push $latestImageName
+        imageName=ngamesfr1/ngames-framework
+        docker build . -t $imageName:${GITHUB_REF##*/} -t $imageName:latest
+        docker push $imageName --all-tags
