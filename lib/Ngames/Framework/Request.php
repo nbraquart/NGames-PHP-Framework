@@ -107,6 +107,13 @@ class Request
     protected $files;
 
     /**
+     * The raw body as string
+     *
+     * @var string
+     */
+    protected $rawBody;
+
+    /**
      * Create a new request object from the request context
      *
      * @param array $getParameters
@@ -115,7 +122,7 @@ class Request
      * @param array $server
      * @param array $files
      */
-    public function __construct($getParameters = [], $postParameters = [], $cookies = [], $server = [], $files = [])
+    public function __construct($getParameters = [], $postParameters = [], $cookies = [], $server = [], $files = [], $rawBody = null)
     {
         $this->getParameters = $getParameters;
         $this->postParameters = $postParameters;
@@ -123,6 +130,7 @@ class Request
         $this->session = PhpSession::getInstance();
         $this->server = $server;
         $this->files = $files;
+        $this->rawBody = $rawBody;
 
         if (!$this->isCli()) {
             $this->method = $this->server['REQUEST_METHOD'];
@@ -176,12 +184,12 @@ class Request
 
     /**
      * Return the raw body as string.
-     * 
+     *
      * @return string
      */
     public function getRawBody()
     {
-        return file_get_contents('php://input');
+        return $this->rawBody;
     }
 
     /**
