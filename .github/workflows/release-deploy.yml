@@ -1,0 +1,30 @@
+# To deploy, simply create and push a tag: git tag x.y.z && git push origin x.y.z
+name: Release and deploy Docker image
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+env:
+  DOCKER_BUILDKIT: '1' # enabling buildkit improves Docker perfs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+    - name: Release
+      uses: softprops/action-gh-release@v1
+    - name: Login to Docker registry
+      run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+    - name: Build and push Docker image
+      run: |
+        imageName=ngamesfr1/ngames-framework:${GITHUB_REF##*/}
+        latestImageName=ngamesfr1/ngames-framework:${GITHUB_REF##*/}
+        docker build . -t $imageName
+        docker push $imageName
+        docker image tag $imageName $latestImageName
+        docker push $latestImageName

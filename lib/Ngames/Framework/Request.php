@@ -175,6 +175,16 @@ class Request
     }
 
     /**
+     * Return the raw body as string.
+     * 
+     * @return string
+     */
+    public function getRawBody()
+    {
+        return file_get_contents('php://input');
+    }
+
+    /**
      * Return the value of the cookie.
      * If not found, return $default instead
      *
