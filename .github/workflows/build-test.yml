@@ -37,7 +37,7 @@ jobs:
       run: vendor/bin/php-cs-fixer fix --config=.php_cs -v --dry-run --using-cache=no --diff --diff-format=udiff
 
     - name: Run test suite
-      run: vendor/bin/phpunit --verbose --log-junit ./reports/phpunit.xml --coverage-text --coverage-clover ./reports/phpunit.coverage.xml
+      run: XDEBUG_MODE=coverage vendor/bin/phpunit --verbose --log-junit ./reports/phpunit.xml --coverage-text --coverage-clover ./reports/phpunit.coverage.xml
 
     - name: Fix code coverage paths for Sonar
       run: sed -i 's/\/home\/runner\/work\/ngames-framework\/ngames-framework\//\/github\/workspace\//g' ./reports/phpunit.coverage.xml || true

@@ -22,6 +22,11 @@
  */
 namespace Ngames\Framework\Database;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\PsrCachedReader;
+use Symfony\Component\Cache\Adapter\ApcuAdapter;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
 /**
  * Abstract class for models classes.
  * Provide utility methods like from and to array and get finder instance.
@@ -188,13 +193,7 @@ abstract class AbstractModel
      */
     protected function getAnnotationsReader()
     {
-        // Register the annotations in the Doctrine annotations loader
-        if (!self::$annotationsLoaded) {
-            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Id.php');
-            \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Reference.php');
-            self::$annotationsLoaded = true;
-        }
-
-        return new \Doctrine\Common\Annotations\CachedReader(new \Doctrine\Common\Annotations\AnnotationReader(), function_exists('apc_fetch') ? new \Doctrine\Common\Cache\ApcuCache() : new \Doctrine\Common\Cache\ArrayCache());
+        $cacheAdapter = ApcuAdapter::isSupported() ? new ApcuAdapter() : new ArrayAdapter();
+        return new PsrCachedReader(new AnnotationReader(), $cacheAdapter);
     }
 }
