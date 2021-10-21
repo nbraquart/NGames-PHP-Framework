@@ -34,20 +34,20 @@ class InflectorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('helloThere', Inflector::camelize('HelloThere'));
         $this->assertEquals('helloThere', Inflector::camelize('hello_there'));
     }
-    
+
     public function testUnderscore()
     {
         $this->assertEquals('hello_there', Inflector::underscore('helloThere'));
         $this->assertEquals('hello_there', Inflector::underscore('HelloThere'));
         $this->assertEquals('hello_there', Inflector::underscore('hello_there'));
     }
-    
+
     public function testHumanize()
     {
         $this->assertEquals('Hello There', Inflector::humanize('hello there'));
         $this->assertEquals('Hello There', Inflector::humanize('hello_there'));
     }
-    
+
     public function testPluralize()
     {
         $this->assertEquals('', Inflector::pluralize(0));
@@ -55,7 +55,7 @@ class InflectorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('s', Inflector::pluralize(2));
         $this->assertEquals('x', Inflector::pluralize(2, true));
     }
-    
+
     public function testEllipsis()
     {
         $this->assertEquals('test', Inflector::ellipsis('test', 10));

@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Database;
 
 /**
@@ -31,14 +32,14 @@ class Connection
 {
     protected static $queries = [];
 
-    const PDO_EXCEPTION_MESSAGE = 'Caught PDO exception';
+    public const PDO_EXCEPTION_MESSAGE = 'Caught PDO exception';
 
     /**
      *
      * @var \PDO
      */
     protected static $connection = null;
-    
+
     /**
      * Returns the instance of the connection.
      * If no instance has already been retrieved,
@@ -58,7 +59,7 @@ class Connection
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
             ]);
         }
-        
+
         return self::$connection;
     }
 
@@ -82,7 +83,7 @@ class Connection
             if ($statement && $statement->execute($params)) {
                 $result = [];
                 self::logQuery($query, microtime(true) - $start);
-                
+
                 while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
                     $result[] = $row;
                 }
@@ -109,7 +110,7 @@ class Connection
             $statement = self::getConnection()->prepare($query);
             $result = false;
             $start = microtime(true);
-        
+
             if ($statement && $statement->execute($params)) {
                 self::logQuery($query, microtime(true) - $start);
                 $result = $statement->rowCount();
@@ -117,7 +118,7 @@ class Connection
         } catch (\PDOException $e) {
             throw new \Ngames\Framework\Exception(self::PDO_EXCEPTION_MESSAGE, 0, $e);
         }
-        
+
         return $result;
     }
 
@@ -145,7 +146,7 @@ class Connection
     public static function queryOne($query, array $params = [])
     {
         $result = self::query($query, $params);
-        
+
         return is_array($result) && !empty($result) ? $result[0] : false;
     }
 
@@ -164,11 +165,11 @@ class Connection
             return ':' . $v;
         }, $keys);
         $query = 'INSERT INTO `' . $tableName . '` (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $placeholders) . ')';
-        
+
         if (self::exec($query, $data) === false) {
             return false;
         }
-        
+
         return (int) self::getConnection()->lastInsertId();
     }
 
@@ -183,7 +184,7 @@ class Connection
     public static function findOneById($tableName, $id)
     {
         $query = 'SELECT * FROM `' . $tableName . '` WHERE id=?';
-        
+
         return self::queryOne($query, [
             (int) $id
         ]);
@@ -227,7 +228,7 @@ class Connection
     {
         // Keep only microsecodns (no nano)
         $duration = round($duration, 6) * 1000;
-        
+
         // Log and record the SQL query
         \Ngames\Framework\Logger::logDebug('SQL query: [' . $duration . ' ms] ' . $queryString);
         self::$queries[] = [

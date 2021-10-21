@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Utility;
 
 /**
@@ -29,7 +30,6 @@ namespace Ngames\Framework\Utility;
  */
 class FileSystem
 {
-
     /**
      * Deletes a file/folder recursively
      *
@@ -45,7 +45,7 @@ class FileSystem
                     self::unlink($path . '/' . $subPath);
                 }
             }
-            
+
             rmdir($path);
         }
     }
@@ -64,7 +64,7 @@ class FileSystem
                 return $fwrite;
             }
         }
-        
+
         return $written;
     }
 }

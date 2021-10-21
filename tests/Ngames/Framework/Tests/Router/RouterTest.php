@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Tests\Router;
 
 use Ngames\Framework\Router\Matcher;
@@ -30,7 +31,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
     public function testGetRoute_noRouteDefined()
     {
         $router = new Router();
-        
+
         // No route defined
         $route = $router->getRoute('/');
         $this->assertNull($route);

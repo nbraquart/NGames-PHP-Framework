@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Tests;
 
 use Ngames\Framework\Exception;
@@ -41,7 +42,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
         $this->assertStringContainsString('Ngames\Framework\Exception: Exception 2 message', $trace);
         $this->assertStringContainsString('Caused by: Ngames\Framework\Exception: Exception 1 message', $trace);
     }
-    
+
     public function throwNgamesException($message, $code, $previous = null)
     {
         throw new Exception($message, $code, $previous);

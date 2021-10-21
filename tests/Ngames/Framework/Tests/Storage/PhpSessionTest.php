@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Tests\Storage;
 
 use Ngames\Framework\Storage\PhpSession;
@@ -56,7 +57,7 @@ class PhpSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($session->has('test'));
         $this->assertEquals('value', $session->get('test'));
     }
-    
+
     /**
      * @runInSeparateProcess
      */
@@ -68,7 +69,7 @@ class PhpSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($session->has('test2'));
         $this->assertEquals('value2', $session->get('test2'));
     }
-    
+
     /**
      * @runInSeparateProcess
      */

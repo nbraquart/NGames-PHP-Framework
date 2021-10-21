@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework;
 
 use Ngames\Framework\Router\Router;
@@ -33,7 +34,6 @@ use Ngames\Framework\Storage\IniFile;
  */
 class Application
 {
-
     /**
      * @var Application
      */
@@ -68,7 +68,7 @@ class Application
             require_once __DIR__ . '/Exception.php';
             throw new Exception('The application has already been initialized');
         }
-        
+
         // Uses late static binding, in case parent constructor was overriden in possible child class
         return self::$instance = new static($configurationFile);
     }
@@ -85,7 +85,7 @@ class Application
             require_once __DIR__ . '/Exception.php';
             throw new Exception('The application has not been initialized');
         }
-        
+
         return self::$instance;
     }
 
@@ -166,12 +166,12 @@ class Application
             $request = new \Ngames\Framework\Request($_GET, $_POST, $_COOKIE, $_SERVER, $_FILES, file_get_contents('php://input'));
             $route = $this->router->getRoute($request->getRequestUri());
             $response = null;
-            
+
             if ($route == null) {
                 $response = Response::createNotFoundResponse($this->isDebug() ? 'No route matched the requested URI' : null);
             } else {
                 $actionResult = Controller::execute($route, $request);
-                
+
                 // If not a response object (string typically), constructs it (but it's a default instance)
                 if ($actionResult instanceof Response) {
                     $response = $actionResult;
@@ -181,17 +181,17 @@ class Application
                     $response->setContent($actionResult);
                 }
             }
-            
+
             if ($response == null) {
                 throw new Exception('Invalid response');
             }
-            
+
             // Send the response
             $response->send();
         } catch (\Throwable $e) {
             $content = "Internal server error.\n\n" . \Ngames\Framework\Exception::trace($e);
             \Ngames\Framework\Logger::logError($content);
-            
+
             Response::createInternalErrorResponse($this->isDebug() ? $content : null)->send();
         }
     }

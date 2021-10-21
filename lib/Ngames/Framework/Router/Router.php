@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Router;
 
 /**
@@ -30,7 +31,6 @@ namespace Ngames\Framework\Router;
  */
 class Router
 {
-
     /**
      *
      * @var Matcher[]
@@ -47,7 +47,7 @@ class Router
     public function addMatcher(Matcher $matcher)
     {
         $this->matchers[] = $matcher;
-        
+
         return $this;
     }
 
@@ -59,7 +59,7 @@ class Router
     public function getRoute($uri)
     {
         $result = null;
-        
+
         foreach ($this->matchers as $matcher) {
             $matchedRoute = $matcher->match($uri);
             if ($matchedRoute !== null) {
@@ -67,7 +67,7 @@ class Router
                 break;
             }
         }
-        
+
         return $result;
     }
 }

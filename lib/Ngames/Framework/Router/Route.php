@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Router;
 
 /**
@@ -30,7 +31,6 @@ namespace Ngames\Framework\Router;
  */
 class Route
 {
-
     /**
      *
      * @var string

@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Tests;
 
 use Ngames\Framework\Response;
@@ -124,7 +125,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertContains('Location: newUrl', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
-    
+
     /**
      * Sends the response and return the output in a string
      *
@@ -133,12 +134,12 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
     private function sendResponseAndReturnOutput(Response $response)
     {
         $result = null;
-        
+
         ob_start();
         $response->send();
         $result = ob_get_contents();
         ob_end_clean();
-        
+
         return $result;
     }
 }

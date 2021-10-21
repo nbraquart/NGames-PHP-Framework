@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework;
 
 use Ngames\Framework\Router\Route;
@@ -35,11 +36,11 @@ use Ngames\Framework\Utility\Inflector;
  */
 class Controller
 {
-    const CONTROLLER_NAMESPACE = 'Controller';
+    public const CONTROLLER_NAMESPACE = 'Controller';
 
-    const CONTROLLER_SUFFIX = 'Controller';
+    public const CONTROLLER_SUFFIX = 'Controller';
 
-    const ACTION_SUFFIX = 'Action';
+    public const ACTION_SUFFIX = 'Action';
 
     /**
      *

@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Database;
 
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -35,7 +36,6 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
  */
 abstract class AbstractModel
 {
-
     /**
      * Stores metadata for model classes (cache).
      * Keys are class names (as returned by get_class()), values are arrays.

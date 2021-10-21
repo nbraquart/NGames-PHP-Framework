@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Controller\Application;
 
 use Ngames\Framework\Controller;
@@ -30,52 +31,52 @@ class DummyController extends Controller
     {
         return $this->ok('index');
     }
-    
+
     public function outputStringAction()
     {
         return 'output_string';
     }
-    
+
     public function outputNullAction()
     {
         return null;
     }
-    
+
     public function okAction()
     {
         return $this->ok('ok');
     }
-    
+
     public function redirectAction()
     {
         return $this->redirect('url');
     }
-    
+
     public function notFoundAction()
     {
         return $this->notFound('not_found');
     }
-    
+
     public function badRequestAction()
     {
         return $this->badRequest('bad_request');
     }
-    
+
     public function internalErrorAction()
     {
         return $this->internalError('internal_error');
     }
-    
+
     public function jsonAction()
     {
         return $this->json(array('key' => 'value'));
     }
-    
+
     public function forwardAction()
     {
         return $this->forward('forwardAfter');
     }
-    
+
     public function forwardAfterAction()
     {
         return $this->ok('forward_after');

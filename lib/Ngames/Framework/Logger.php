@@ -20,17 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework;
 
 class Logger
 {
-    const LEVEL_DEBUG = 0;
+    public const LEVEL_DEBUG = 0;
 
-    const LEVEL_INFO = 1;
+    public const LEVEL_INFO = 1;
 
-    const LEVEL_WARNING = 3;
+    public const LEVEL_WARNING = 3;
 
-    const LEVEL_ERROR = 4;
+    public const LEVEL_ERROR = 4;
 
     private static $destination = null;
 

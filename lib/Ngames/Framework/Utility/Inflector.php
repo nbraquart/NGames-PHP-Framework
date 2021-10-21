@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Utility;
 
 /**
@@ -29,7 +30,6 @@ namespace Ngames\Framework\Utility;
  */
 class Inflector
 {
-
     /**
      * Transform a string to its camelized version.
      * Hello there => helloThere
@@ -91,7 +91,7 @@ class Inflector
         if (mb_strlen($string) > $maxLength) {
             $string = substr($string, 0, $maxLength) . ' ...';
         }
-        
+
         return $string;
     }
 }

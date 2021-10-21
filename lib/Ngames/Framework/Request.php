@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework;
 
 use Ngames\Framework\Storage\PhpSession;
@@ -32,21 +33,21 @@ use Ngames\Framework\Storage\PhpSession;
  */
 class Request
 {
-    const HTTP_METHOD_OPTIONS = 'OPTIONS';
+    public const HTTP_METHOD_OPTIONS = 'OPTIONS';
 
-    const HTTP_METHOD_GET = 'GET';
+    public const HTTP_METHOD_GET = 'GET';
 
-    const HTTP_METHOD_HEAD = 'HEAD';
+    public const HTTP_METHOD_HEAD = 'HEAD';
 
-    const HTTP_METHOD_POST = 'POST';
+    public const HTTP_METHOD_POST = 'POST';
 
-    const HTTP_METHOD_PUT = 'PUT';
+    public const HTTP_METHOD_PUT = 'PUT';
 
-    const HTTP_METHOD_DELETE = 'DELETE';
+    public const HTTP_METHOD_DELETE = 'DELETE';
 
-    const HTTP_METHOD_TRACE = 'TRACE';
+    public const HTTP_METHOD_TRACE = 'TRACE';
 
-    const HTTP_METHOD_CONNECT = 'CONNECT';
+    public const HTTP_METHOD_CONNECT = 'CONNECT';
 
     /**
      * The request method.

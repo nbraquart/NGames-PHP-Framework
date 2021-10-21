@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Database;
 
 /**
@@ -59,11 +60,11 @@ class Finder
     public function queryOne($query, array $params = [])
     {
         $result = \Ngames\Framework\Database\Connection::queryOne($query, $params);
-        
+
         if (is_array($result)) {
             $result = $this->createInstance()->fromArray($result);
         }
-        
+
         return $result;
     }
 
@@ -78,17 +79,17 @@ class Finder
     public function query($query, array $params = [])
     {
         $result = \Ngames\Framework\Database\Connection::query($query, $params);
-        
+
         if ($result !== false) {
             $objectList = [];
-            
+
             foreach ($result as $array) {
                 $objectList[] = $this->createInstance()->fromArray($array);
             }
-            
+
             $result = $objectList;
         }
-        
+
         return $result;
     }
 

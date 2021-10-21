@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Storage;
 
 /**
@@ -43,10 +44,10 @@ class PhpSession extends PhpArray implements StorageInterface
         if (self::$instance == null) {
             self::$instance = new self();
         }
-        
+
         return self::$instance;
     }
-    
+
     // Should not be public but PHP does not allow it.
     public function __construct()
     {

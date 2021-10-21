@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Router;
 
 /**
@@ -29,11 +30,11 @@ namespace Ngames\Framework\Router;
  */
 class Matcher
 {
-    const MODULE_KEY = ':module';
+    public const MODULE_KEY = ':module';
 
-    const CONTROLLER_KEY = ':controller';
+    public const CONTROLLER_KEY = ':controller';
 
-    const ACTION_KEY = ':action';
+    public const ACTION_KEY = ':action';
 
     private $pattern;
 
@@ -64,7 +65,7 @@ class Matcher
         $this->moduleName = $moduleName;
         $this->controllerName = $controllerName;
         $this->actionName = $actionName;
-        
+
         $this->check();
     }
 
@@ -85,14 +86,14 @@ class Matcher
         $currentActionName = $this->actionName;
         $countPattern = count($preparedPattern);
         $match = true;
-        
+
         if ($countPattern !== count($uri)) {
             $match = false;
         } else {
             for ($i = 0; $i < $countPattern; $i++) {
                 $currentPatternPart = $preparedPattern[$i];
                 $currentUriPart = $uri[$i];
-                
+
                 if ($currentPatternPart !== $currentUriPart) {
                     if ($currentPatternPart === self::MODULE_KEY) {
                         $currentModuleName = $currentUriPart;
@@ -107,7 +108,7 @@ class Matcher
                 }
             }
         }
-        
+
         return $match ? new Route($currentModuleName, $currentControllerName, $currentActionName) : null;
     }
 

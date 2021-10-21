@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Tests;
 
 use Ngames\Framework\Timer;
@@ -39,7 +40,7 @@ class TimerTest extends \PHPUnit\Framework\TestCase
         $timer = Timer::now();
         $this->assertLessThan(1, $timer->getTime() - $timestamp);
     }
-    
+
     public function testCustom()
     {
         $timer = new Timer(1234);

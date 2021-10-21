@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Storage;
 
 /**
@@ -29,7 +30,6 @@ namespace Ngames\Framework\Storage;
  */
 interface StorageInterface
 {
-
     /**
      * Return true if the storage contains a value for the specified name.
      *

@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework;
 
 /**
@@ -29,31 +30,31 @@ namespace Ngames\Framework;
  */
 class Response
 {
-    const HTTP_STATUS_OK = 200;
+    public const HTTP_STATUS_OK = 200;
 
-    const HTTP_STATUS_CREATED = 201;
+    public const HTTP_STATUS_CREATED = 201;
 
-    const HTTP_STATUS_MOVED_PERMANENTLY = 301;
+    public const HTTP_STATUS_MOVED_PERMANENTLY = 301;
 
-    const HTTP_STATUS_FOUND = 302;
+    public const HTTP_STATUS_FOUND = 302;
 
-    const HTTP_STATUS_NOT_MODIFIED = 304;
+    public const HTTP_STATUS_NOT_MODIFIED = 304;
 
-    const HTTP_STATUS_BAD_REQUEST = 400;
+    public const HTTP_STATUS_BAD_REQUEST = 400;
 
-    const HTTP_STATUS_UNAUTHORIZED = 401;
+    public const HTTP_STATUS_UNAUTHORIZED = 401;
 
-    const HTTP_STATUS_FORBIDDEN = 403;
+    public const HTTP_STATUS_FORBIDDEN = 403;
 
-    const HTTP_STATUS_NOT_FOUND = 404;
+    public const HTTP_STATUS_NOT_FOUND = 404;
 
-    const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
+    public const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
 
-    const HTTP_STATUS_NOT_IMPLEMENTED = 501;
+    public const HTTP_STATUS_NOT_IMPLEMENTED = 501;
 
-    const CONTENT_TYPE_HEADER = 'Content-Type';
+    public const CONTENT_TYPE_HEADER = 'Content-Type';
 
-    const ERROR_CONTENT_TYPE = 'text/plain; charset=utf-8';
+    public const ERROR_CONTENT_TYPE = 'text/plain; charset=utf-8';
 
     /**
      *

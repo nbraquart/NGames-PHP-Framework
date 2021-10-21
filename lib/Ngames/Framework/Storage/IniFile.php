@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Storage;
 
 use Ngames\Framework\Exception;
@@ -31,7 +32,6 @@ use Ngames\Framework\Exception;
  */
 class IniFile extends PhpArrayRecursive implements StorageInterface
 {
-
     /**
      *
      * @param string $fileName
@@ -43,14 +43,14 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
         if (!is_readable($fileName)) {
             throw new Exception($fileName . ' is not readable');
         }
-        
+
         $parsedFile = parse_ini_file($fileName, true);
         $processedArray = [];
-        
+
         if ($parsedFile !== false) {
             $processedArray = $this->processParsedFile($parsedFile);
         }
-        
+
         parent::__construct($processedArray);
     }
 
@@ -63,31 +63,31 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
     public static function writeFile($fileName, $configuration)
     {
         $content = '';
-        
+
         foreach ($configuration as $key => $value) {
             $content .= $key . '=' . $value . "\n";
         }
-        
+
         file_put_contents($fileName, $content);
     }
 
     protected function processParsedFile(array $array)
     {
         $result = [];
-        
+
         foreach ($array as $key => $value) {
             $currentResult = &$result;
-            
+
             if (is_int($key)) {
                 $currentResult = &$currentResult[$key];
             } else {
                 $keyPartArray = explode('.', $key);
-                
+
                 while ($keyPart = array_shift($keyPartArray)) {
                     $currentResult = &$currentResult[$keyPart];
                 }
             }
-            
+
             if (is_array($value)) {
                 $currentResult = $this->processParsedFile($value);
             } else {
@@ -106,7 +106,7 @@ class IniFile extends PhpArrayRecursive implements StorageInterface
                 }
             }
         }
-        
+
         return $result;
     }
 }

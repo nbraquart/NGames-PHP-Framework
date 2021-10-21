@@ -20,14 +20,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Ngames\Framework\Tests\Database\Model;
 
 use Ngames\Framework\Database\AbstractModel;
-use \Ngames\Framework\Database\Annotations\Id;
+use Ngames\Framework\Database\Annotations\Id;
 
 class Author extends AbstractModel
 {
-
     /**
      * @Id
      */
