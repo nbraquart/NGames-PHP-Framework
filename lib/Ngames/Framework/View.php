@@ -464,7 +464,7 @@ class View
             if ($this->currentPlaceHolder != null) {
                 throw new \Ngames\Framework\Exception('Placeholder not stopped at the end of view rendering');
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             ob_end_clean();
             throw new \Ngames\Framework\Exception('Exception caught during view rendering', 0, $e);
         }

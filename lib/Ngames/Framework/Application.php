@@ -158,8 +158,6 @@ class Application
 
     /**
      * Execute the request
-     *
-     * @throws Exception
      */
     public function run()
     {
@@ -190,7 +188,7 @@ class Application
             
             // Send the response
             $response->send();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $content = "Internal server error.\n\n" . \Ngames\Framework\Exception::trace($e);
             \Ngames\Framework\Logger::logError($content);
             
