@@ -40,7 +40,7 @@ jobs:
       run: composer run test -- --log-junit ./reports/phpunit.xml --coverage-clover ./reports/phpunit.coverage.xml
 
     - name: Fix code coverage paths for Sonar
-      run: sed -i 's/\/home\/runner\/work\/ngames-framework\/ngames-framework\//\/github\/workspace\//g' ./reports/phpunit.coverage.xml || true
+      run: sed -i 's/\/home\/runner\/work\/ngames-framework\/ngames-framework\//\/github\/workspace\//g' ./reports/*.xml || true
 
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v1.4
