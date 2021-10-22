@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@ use Ngames\Framework\Exception;
 /**
  * Exception thrown when a matcher was initialized incorrectly (pattern not compatible with provided default values for instance).
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class InvalidMatcherException extends Exception
 {

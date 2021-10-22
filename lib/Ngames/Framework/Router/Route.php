@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@ namespace Ngames\Framework\Router;
  * A route returned by the router.
  * It is a simple wrapper over the found module/controller/action.
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Route
 {

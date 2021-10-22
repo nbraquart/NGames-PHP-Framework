@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,8 @@ use Ngames\Framework\Database\Connection;
 
 /**
  * Common test case class for all tests involving a database
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
-class DbTestCase extends \PHPUnit\Framework\TestCase
+abstract class AbstractDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -62,7 +61,6 @@ class DbTestCase extends \PHPUnit\Framework\TestCase
 /**
  * This class allows to override the PDO object within the Connection database.
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class DummyConnection extends Connection
 {

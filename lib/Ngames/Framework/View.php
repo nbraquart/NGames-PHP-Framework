@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ use Ngames\Framework\Router\Route;
  *
  * @property string content In case it's a parent view, there will be a 'content' property containing the child view content
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class View
 {

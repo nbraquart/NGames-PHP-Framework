@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ use Ngames\Framework\Storage\IniFile;
  * Main entrypoint of the framework.
  * The application has to be initialized then run for the request to be executed.
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Application
 {

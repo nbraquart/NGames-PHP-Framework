@@ -1,4 +1,3 @@
-.php_cs.cache
 .settings
 vendor
 .buildpath
@@ -7,3 +6,4 @@ coverage
 coverage.clover
 .phpunit.result.cache
 reports
+.php-cs-fixer.cache

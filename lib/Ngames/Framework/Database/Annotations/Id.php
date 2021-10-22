@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ namespace Ngames\Framework\Database\Annotations;
 /**
  * Annotation to identify the field(s) that are part of the primary key.
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  *
  *         @Annotation
  *         @Target({"PROPERTY"})

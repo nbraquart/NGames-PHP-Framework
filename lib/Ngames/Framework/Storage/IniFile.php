@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@ use Ngames\Framework\Exception;
 /**
  * Create a new storage instance based on a path to an INI file.
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class IniFile extends PhpArrayRecursive implements StorageInterface
 {

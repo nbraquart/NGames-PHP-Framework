@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@ namespace Ngames\Framework\Router;
  * The router class is used to find the route for a given URI.
  * You can add matchers to it to register your own routes.
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Router
 {

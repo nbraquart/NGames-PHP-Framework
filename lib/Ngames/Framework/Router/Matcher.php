@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2014-2016 Nicolas Braquart
+ * Copyright (c) 2014-2021 NGames
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ namespace Ngames\Framework\Router;
 /**
  * Matcher class used to identify matching route for a given requested URI
  *
- * @author Nicolas Braquart <nicolas.braquart+ngames@gmail.com>
  */
 class Matcher
 {
