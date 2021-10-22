@@ -117,6 +117,18 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
     /**
      * @runInSeparateProcess
      */
+    public function testCreateUnauthorizedResponse()
+    {
+        $response = Response::createUnauthorizedResponse('content');
+        $output = $this->sendResponseAndReturnOutput($response);
+        $this->assertEquals(401, http_response_code());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
+        $this->assertEquals('content', $output);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testCreateRedirectResponse()
     {
         $response = Response::createRedirectResponse('newUrl');

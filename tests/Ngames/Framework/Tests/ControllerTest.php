@@ -132,6 +132,21 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
     /**
      * @runInSeparateProcess
      */
+    public function testUnauthorized()
+    {
+        $controller = new DummyController();
+        $response = $controller->unauthorizedAction();
+        ob_start();
+        $response->send();
+        $this->assertEquals('unauthorized', ob_get_contents());
+        $this->assertEquals(401, http_response_code());
+        $this->assertContains('Content-Type: text/plain; charset=utf-8', \xdebug_get_headers());
+        ob_end_clean();
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testJson()
     {
         $controller = new DummyController();

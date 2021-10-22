@@ -67,6 +67,11 @@ class DummyController extends Controller
         return $this->internalError('internal_error');
     }
 
+    public function unauthorizedAction()
+    {
+        return $this->unauthorized('unauthorized');
+    }
+
     public function jsonAction()
     {
         return $this->json(array('key' => 'value'));
