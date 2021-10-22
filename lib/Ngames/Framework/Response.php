@@ -183,6 +183,22 @@ class Response
     }
 
     /**
+     * Create an unauthorized response
+     *
+     * @param string|null $message
+     * @return Response
+     */
+    public static function createUnauthorizedResponse($message = null)
+    {
+        $response = new self();
+        $response->setHeader(self::CONTENT_TYPE_HEADER, self::ERROR_CONTENT_TYPE);
+        $response->setContent($message !== null ? $message : 'Unauthorized.');
+        $response->setStatusCode(self::HTTP_STATUS_UNAUTHORIZED);
+
+        return $response;
+    }
+
+    /**
      * Create a not found response
      *
      * @param string|null $message

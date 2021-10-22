@@ -157,6 +157,17 @@ class Controller
     }
 
     /**
+     * Return an unauthorized response
+     *
+     * @param string|null $message
+     * @return Response
+     */
+    protected function unauthorized($message = null)
+    {
+        return Response::createUnauthorizedResponse($message);
+    }
+
+    /**
      * Forward the request to another action.
      * Contrary to redirect, no HTTP response is sent to the user between the two actions.
      *
