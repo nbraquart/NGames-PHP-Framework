@@ -1,8 +1,9 @@
 .php_cs.cache
-/.settings/
-/vendor/
-/.buildpath
-/.project
-/coverage
-/coverage.clover
+.settings
+vendor
+.buildpath
+.project
+coverage
+coverage.clover
 .phpunit.result.cache
+reports

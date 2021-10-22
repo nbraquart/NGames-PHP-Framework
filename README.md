@@ -11,7 +11,7 @@ Use composer to install the application: `composer require ngames/framework`. Or
 ```json
 {
     "require": {
-        "ngames/framework": "*"
+        "ngames/framework": "~0.3"
     }
 }
 ```
@@ -52,8 +52,3 @@ That's all you need to startup the application.
 
 ### Controllers
 Controllers are located in a `src` folder in the root of the project. They are grouped by folders representing the modules. The default module is `Application`.
-
-TODO document
-
-### Router
-TODO document

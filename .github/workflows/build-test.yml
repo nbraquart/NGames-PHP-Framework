@@ -34,10 +34,10 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: PHP Code style check
-      run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php -v --dry-run --using-cache=no --diff
+      run: composer run check-style
 
     - name: Run test suite
-      run: XDEBUG_MODE=coverage vendor/bin/phpunit --verbose --log-junit ./reports/phpunit.xml --coverage-text --coverage-clover ./reports/phpunit.coverage.xml
+      run: composer run test -- --log-junit ./reports/phpunit.xml --coverage-clover ./reports/phpunit.coverage.xml
 
     - name: Fix code coverage paths for Sonar
       run: sed -i 's/\/home\/runner\/work\/ngames-framework\/ngames-framework\//\/github\/workspace\//g' ./reports/phpunit.coverage.xml || true
