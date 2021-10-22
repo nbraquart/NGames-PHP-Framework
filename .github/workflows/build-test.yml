@@ -14,8 +14,6 @@ jobs:
     steps:
     - name: Git checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -43,7 +41,7 @@ jobs:
       run: sed -i 's/\/home\/runner\/work\/ngames-framework\/ngames-framework\//\/github\/workspace\//g' ./reports/*.xml || true
 
     - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@v1.4
+      uses: sonarsource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
