@@ -15,6 +15,11 @@ jobs:
     - name: Git checkout
       uses: actions/checkout@v2
 
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.3
+
     - name: Validate composer.json and composer.lock
       run: composer validate
 
@@ -29,7 +34,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist --no-progress
 
     - name: PHP Code style check
       run: composer run check-style
