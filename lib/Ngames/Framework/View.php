@@ -457,7 +457,7 @@ class View
         // Render
         ob_start();
         try {
-            include_once $scriptFullPath;
+            include $scriptFullPath;
 
             // Check that after script rendering, a placeholder was not being defined
             if ($this->currentPlaceHolder != null) {
