@@ -28,7 +28,7 @@ namespace Ngames\Framework;
  */
 class Exception extends \Exception
 {
-    public function __construct($message = null, $code = null, $previous = null)
+    public function __construct($message = null, $code = 1, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
@@ -86,7 +86,7 @@ class Exception extends \Exception
                 $function = '(main)';
             }
 
-            $location = str_replace(ROOT_DIR, null, $file) . ($line === null ? '' : ':' . $line);
+            $location = str_replace(ROOT_DIR, "", $file) . ($line === null ? '' : ':' . $line);
             $result[] = sprintf('    at %s (%s)', $function, $location);
             $seen[] = $current;
 

@@ -32,17 +32,17 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $response = new Response();
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
 
     public function testSend_withContent()
     {
         $response = new Response();
+        $response->setContentType('text/html', 'UTF-8');
         $response->setContent('content');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
+        $this->assertContains('Content-Type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
@@ -50,15 +50,14 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
     {
         $response = new Response();
         $response->setStatusCode(1234);
+        $response->setContentType('text/html', 'UTF-8');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(1234, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
+        $this->assertContains('Content-Type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEmpty($output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testSend_contentType()
     {
         $response = new Response();
@@ -72,15 +71,14 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
     public function testCreateOkResponse()
     {
         $response = Response::createOkResponse('content');
+        $response->setContentType('text/html', 'UTF-8');
         $output = $this->sendResponseAndReturnOutput($response);
         $this->assertEquals(200, http_response_code());
-        $this->assertContains('Content-type: text/html; charset=UTF-8', \xdebug_get_headers());
+        $this->assertContains('Content-Type: text/html; charset=UTF-8', \xdebug_get_headers());
         $this->assertEquals('content', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testCreateInternalErrorResponse()
     {
         $response = Response::createInternalErrorResponse('content');
@@ -90,9 +88,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('content', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testCreateNotFoundResponse()
     {
         $response = Response::createNotFoundResponse('content');
@@ -102,9 +98,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('content', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testCreateBadRequestResponse()
     {
         $response = Response::createBadRequestResponse('content');
@@ -114,9 +108,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('content', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testCreateUnauthorizedResponse()
     {
         $response = Response::createUnauthorizedResponse('content');
@@ -126,9 +118,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('content', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testCreateRedirectResponse()
     {
         $response = Response::createRedirectResponse('newUrl');

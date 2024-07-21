@@ -31,18 +31,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
     private $notExpectedMessages = array();
 
-    /**
-     * @before
-     */
-    public function before()
+    public function setUp(): void
     {
         ob_start();
     }
 
-    /**
-     * @after
-     */
-    public function after()
+    public function tearDown(): void
     {
         $output = ob_get_contents();
         ob_end_clean();

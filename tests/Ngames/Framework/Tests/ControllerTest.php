@@ -33,11 +33,7 @@ require_once 'DummyController.php';
 
 class ControllerTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @before
-     * @after
-     */
-    public function deleteApplicationInstance()
+    protected function setUp(): void
     {
         // Reset the instance
         $reflection = new \ReflectionClass(Application::class);
@@ -47,15 +43,12 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         $instance->setAccessible(false);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSetRequest()
     {
         // Simply expect that no exception or error happens
         $controller = new DummyController();
         $controller->setRequest(new Request());
-        $this->assertObjectHasAttribute('request', $controller);
+        $this->assertObjectHasProperty('request', $controller);
     }
 
     public function testOk()
@@ -69,9 +62,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRedirect()
     {
         $controller = new DummyController();
@@ -84,9 +74,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testNotFound()
     {
         $controller = new DummyController();
@@ -99,9 +86,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testBadRequest()
     {
         $controller = new DummyController();
@@ -114,9 +98,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInternalError()
     {
         $controller = new DummyController();
@@ -129,9 +110,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testUnauthorized()
     {
         $controller = new DummyController();
@@ -144,9 +122,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testJson()
     {
         $controller = new DummyController();
@@ -159,9 +134,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testExecute()
     {
         $route = new Route('application', 'dummy', 'index');
@@ -173,9 +145,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testForward()
     {
         $route = new Route('application', 'dummy', 'forward');
@@ -187,9 +156,6 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testExecute_errorMethodNotFound()
     {
         // Application instance needed for the configuration

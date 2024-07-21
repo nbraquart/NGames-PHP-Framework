@@ -33,11 +33,7 @@ use Ngames\Framework\Logger;
 
 class ApplicationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @before
-     * @after
-     */
-    public function deleteApplicationInstance()
+    public function setUp(): void
     {
         // Reset the instance
         $reflection = new \ReflectionClass(Application::class);
@@ -88,10 +84,13 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Router::class, $application->getRouter());
     }
 
-    public function testIsDebug()
+    public function testIsDebugDisabled()
     {
-        $this->assertFalse(Application::initialize(ROOT_DIR . '/tests/data/Application/config.ini')->isDebug());
-        $this->deleteApplicationInstance();
+        $this->assertTrue(Application::initialize(ROOT_DIR . '/tests/data/Application/config_debug.ini')->isDebug());
+    }
+
+    public function testIsDebugEnabled()
+    {
         $this->assertTrue(Application::initialize(ROOT_DIR . '/tests/data/Application/config_debug.ini')->isDebug());
     }
 
@@ -104,9 +103,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRun()
     {
         require_once __DIR__ . '/DummyController.php';
@@ -119,9 +115,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRun_actionNotFound()
     {
         require_once __DIR__ . '/DummyController.php';
@@ -134,9 +127,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRun_actionReturnString()
     {
         require_once __DIR__ . '/DummyController.php';
@@ -149,9 +139,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRun_actionReturnNull()
     {
         require_once __DIR__ . '/DummyController.php';

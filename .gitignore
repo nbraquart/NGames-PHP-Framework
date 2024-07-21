@@ -7,3 +7,5 @@ coverage.clover
 .phpunit.result.cache
 reports
 .php-cs-fixer.cache
+.vscode
+.phpunit.cache

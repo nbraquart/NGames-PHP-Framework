@@ -65,7 +65,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view = new View();
         $view->test = 'value';
         unset($view->test);
-        $this->assertObjectNotHasAttribute('test', $view);
+        $this->assertObjectNotHasProperty('test', $view);
     }
 
     public function testGetScript()

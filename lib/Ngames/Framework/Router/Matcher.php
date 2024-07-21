@@ -136,7 +136,7 @@ class Matcher
      */
     private function prepareForMatching($uri)
     {
-        return array_values(array_filter(explode('/', $uri), function ($uriPart) {
+        return array_values(array_filter(explode('/', $uri ?? ''), function ($uriPart) {
             return !empty($uriPart);
         }));
     }

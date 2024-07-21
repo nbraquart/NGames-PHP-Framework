@@ -25,7 +25,7 @@ namespace Ngames\Framework\Tests\Database;
 
 use Ngames\Framework\Database\Connection;
 
-class ConnectionTest extends AbstractDatabaseTest
+class ConnectionTest extends AbstractDatabaseTestCase
 {
     public function testQuery()
     {

@@ -29,32 +29,24 @@ use Ngames\Framework\Exception;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetSession()
     {
-        // Init a session
-        session_start();
+        PhpSession::clearInstance();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $_SESSION['session_key1'] = 'session_val1';
-
         $request = $this->getRequest();
         $this->assertInstanceOf(PhpSession::class, $request->getSession());
         $this->assertEquals('session_val1', $request->getSession()->get('session_key1'));
         $this->assertEquals(null, $request->getSession()->get('session_key2'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetMethod()
     {
         $this->assertEquals('GET', $this->getRequest()->getMethod());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetGetParameter()
     {
         $request = $this->getRequest();
@@ -63,9 +55,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('default', $request->getGetParameter('get_key2', 'default'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetPostParameter()
     {
         $request = $this->getRequest();
@@ -74,9 +63,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('default', $request->getPostParameter('post_key2', 'default'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetCookie()
     {
         $request = $this->getRequest();
@@ -85,9 +71,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('default', $request->getCookie('cookie_key2', 'default'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testMethod()
     {
         $this->assertTrue($this->getRequest('GET')->isGet());
@@ -96,9 +79,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->getRequest('DELETE')->isDelete());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetHeader()
     {
         $request = $this->getRequest();
@@ -107,9 +87,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('default', $request->getHeader('not-set', 'default'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetFile()
     {
         $request = $this->getRequest();
@@ -117,18 +94,12 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($request->getFile('not-set'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testIsCli()
     {
         $this->assertTrue((new Request())->isCli());
         $this->assertFalse($this->getRequest()->isCli());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetRequestUri()
     {
         $request = $this->getRequest('GET', '/test/test2/TEST-3?key=val');
@@ -143,9 +114,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('/', $request->getRequestUri());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetRequestUri_errorInvalid()
     {
         $this->expectException(Exception::class);
@@ -153,9 +121,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $request = $this->getRequest('GET', 'é');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetRemoteAddress()
     {
         $request = new Request([], [], [], array(
@@ -184,7 +149,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      */
     private function getRequest($method = 'GET', $uri = '/test')
     {
-        $request = $this->getMockBuilder(Request::class)->setMethods(['isCli'])->setConstructorArgs(array(
+        $request = $this->getMockBuilder(Request::class)->onlyMethods(['isCli'])->setConstructorArgs(array(
             array('get_key1' => 'get_val1'),
             array('post_key1' => 'post_val1'),
             array('cookie_key1' => 'cookie_val1'),

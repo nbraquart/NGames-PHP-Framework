@@ -29,24 +29,24 @@ namespace Ngames\Framework\Storage;
  */
 abstract class AbstractStorage implements StorageInterface, \ArrayAccess
 {
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
-        return $this->set($offset, $value);
+        $this->set($offset, $value);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
-        return $this->clear($offset);
+        $this->clear($offset);
     }
 
     /**

@@ -27,18 +27,16 @@ use Ngames\Framework\Storage\PhpSession;
 
 class PhpSessionTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @before
-     */
-    public function before()
+    public function setUp(): void
     {
-        session_start();
+        PhpSession::clearInstance();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $_SESSION['test'] = 'value';
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testGetter()
     {
         $session = new PhpSession();
@@ -48,9 +46,7 @@ class PhpSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('default', $session->get('test2', 'default'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testGetInstance()
     {
         $session = PhpSession::getInstance();
@@ -58,9 +54,7 @@ class PhpSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('value', $session->get('test'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testSetter()
     {
         $session = new PhpSession();
@@ -70,9 +64,7 @@ class PhpSessionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('value2', $session->get('test2'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
+
     public function testResetSession()
     {
         $session = new PhpSession();

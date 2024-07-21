@@ -47,6 +47,15 @@ class PhpSession extends PhpArray implements StorageInterface
         return self::$instance;
     }
 
+    public static function clearInstance()
+    {
+        if (self::$instance !== null) {
+            self::$instance->reset();
+        }
+
+        self::$instance = null;
+    }
+
     // Should not be public but PHP does not allow it.
     public function __construct()
     {

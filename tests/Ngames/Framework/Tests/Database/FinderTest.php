@@ -26,7 +26,7 @@ namespace Ngames\Framework\Tests\Database;
 use Ngames\Framework\Tests\Database\Model\Book;
 use Ngames\Framework\Tests\Database\Model\Author;
 
-class FinderTest extends AbstractDatabaseTest
+class FinderTest extends AbstractDatabaseTestCase
 {
     public function testQuery()
     {
